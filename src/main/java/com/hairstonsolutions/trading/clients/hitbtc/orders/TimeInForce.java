@@ -35,4 +35,9 @@ public class TimeInForce {
         else
             this.force = GTC_GOOD_TILL_CANCELLED;
     }
+
+    @Override
+    public String toString() {
+        return force;
+    }
 }

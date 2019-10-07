@@ -70,4 +70,10 @@ public class TestTimeInForce {
 
         assert (timeInForce.getForce().equals(TimeInForce.GTC_GOOD_TILL_CANCELLED));
     }
+
+    @Test
+    public void testObjectPrintout() {
+        TimeInForce timeInForce = new TimeInForce();
+        assert (timeInForce.toString().equals(TimeInForce.GTC_GOOD_TILL_CANCELLED));
+    }
 }
