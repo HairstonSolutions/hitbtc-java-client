@@ -28,12 +28,14 @@ public class CreateOrder {
         this.symbol = "BTCUSD";
         this.side = BUY;
         this.tradeType = new TradeType(TradeType.LIMIT);
+        this.timeInForce = new TimeInForce(TimeInForce.GTC_GOOD_TILL_CANCELLED);
     }
 
-    public CreateOrder(String symbol, String side, String tradeType) {
+    public CreateOrder(String symbol, String side, String tradeType, String timeInForce) {
         this.symbol = symbol;
         this.side = side;
         this.tradeType = new TradeType(tradeType);
+        this.timeInForce = new TimeInForce(timeInForce);
     }
 
     public String getSymbol() {
@@ -48,4 +50,7 @@ public class CreateOrder {
         return tradeType.getType();
     }
 
+    public String getTimeInForce() {
+        return timeInForce.getForce();
+    }
 }
