@@ -56,4 +56,18 @@ public class testTimeInForce {
         assert(myTimeInForce.getForce().equals("GTD"));
         assert(myTimeInForce.getForce().equals(TimeInForce.GTD_GOOD_TILL_DATETIME));
     }
+
+    @Test
+    public void testEmptyInput() {
+        TimeInForce timeInForce = new TimeInForce("");
+
+        assert (timeInForce.getForce().equals(TimeInForce.GTC_GOOD_TILL_CANCELLED));
+    }
+
+    @Test
+    public void testWrongInput() {
+        TimeInForce timeInForce = new TimeInForce("fdafdsa");
+
+        assert (timeInForce.getForce().equals(TimeInForce.GTC_GOOD_TILL_CANCELLED));
+    }
 }
