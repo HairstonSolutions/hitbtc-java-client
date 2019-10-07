@@ -1,43 +1,39 @@
-package com.hairstonsolutions.trading.clients.hitbtc;
+package com.hairstonsolutions.trading.clients.hitbtc.orders;
+
+import com.hairstonsolutions.trading.clients.hitbtc.trades.TradeType;
+
+/*
+    {
+  "symbol": "BTCUSD",
+  "side": "buy",
+  "type": "limit",
+  "timeInForce": "GTC",
+  "price": "10055.16",
+  "quantity": "0.0001",
+  "postOnly": false
+}
+*/
 
 public class CreateOrder {
     public static final String BUY = "buy";
     public static final String SELL = "sell";
 
-    public static final String LIMIT = "limit";
-    public static final String MARKET = "market";
-    public static final String STOPLIMIT = "stopLimit";
-    public static final String STOPMARKET = "stopMarket";
-
-    public static final String TIMEINFORCE_GTC = "GTC";
-    public static final String TIMEINFORCE_GTC = "GTC";
-    public static final String TIMEINFORCE_GTC = "GTC";
-    public static final String TIMEINFORCE_GTC = "GTC";
-    public static final String TIMEINFORCE_GTC = "GTC";
-
-
     private String symbol;
     private String side;
-    private String type;
-    private String timeInForce;
-
+    private TradeType tradeType;
+    private TimeInForce timeInForce;
 
 
     public CreateOrder() {
         this.symbol = "BTCUSD";
         this.side = BUY;
-        this.type = LIMIT;
+        this.tradeType = new TradeType(TradeType.LIMIT);
     }
 
-    public CreateOrder(String symbol, String side, String type) {
+    public CreateOrder(String symbol, String side, String tradeType) {
         this.symbol = symbol;
         this.side = side;
-        this.type = type;
-    }
-
-    public CreateOrder(String symbol, String side) {
-        this.symbol = symbol;
-        this.side = side;
+        this.tradeType = new TradeType(tradeType);
     }
 
     public String getSymbol() {
@@ -48,19 +44,8 @@ public class CreateOrder {
         return side;
     }
 
-    public String getType() {
-        return type;
+    public String getTradeType() {
+        return tradeType.getType();
     }
 
-    /*
-    {
-  "symbol": "BTCUSD",
-  "side": "buy",
-  "type": "limit",
-  "timeInForce": "GTC",
-  "price": "10055.16",
-  "quantity": "0.0001",
-  "postOnly": false
-}
-     */
 }

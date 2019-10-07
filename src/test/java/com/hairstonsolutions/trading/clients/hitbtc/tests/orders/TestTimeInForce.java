@@ -3,7 +3,7 @@ package com.hairstonsolutions.trading.clients.hitbtc.tests.orders;
 import com.hairstonsolutions.trading.clients.hitbtc.orders.TimeInForce;
 import org.junit.Test;
 
-public class testTimeInForce {
+public class TestTimeInForce {
 
     @Test
     public void testDefault() {
