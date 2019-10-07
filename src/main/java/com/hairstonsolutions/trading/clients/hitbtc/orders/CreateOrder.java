@@ -1,6 +1,8 @@
 package com.hairstonsolutions.trading.clients.hitbtc.orders;
 
-import com.hairstonsolutions.trading.clients.hitbtc.trades.TradeType;
+import com.hairstonsolutions.trading.clients.hitbtc.attributes.Side;
+import com.hairstonsolutions.trading.clients.hitbtc.attributes.TimeInForce;
+import com.hairstonsolutions.trading.clients.hitbtc.attributes.TradeType;
 
 /*
     {
@@ -15,25 +17,22 @@ import com.hairstonsolutions.trading.clients.hitbtc.trades.TradeType;
 */
 
 public class CreateOrder {
-    public static final String BUY = "buy";
-    public static final String SELL = "sell";
-
     private String symbol;
-    private String side;
+    private Side side;
     private TradeType tradeType;
     private TimeInForce timeInForce;
 
 
     public CreateOrder() {
         this.symbol = "BTCUSD";
-        this.side = BUY;
+        this.side = new Side(Side.BUY);
         this.tradeType = new TradeType(TradeType.LIMIT);
         this.timeInForce = new TimeInForce(TimeInForce.GTC_GOOD_TILL_CANCELLED);
     }
 
     public CreateOrder(String symbol, String side, String tradeType, String timeInForce) {
         this.symbol = symbol;
-        this.side = side;
+        this.side = new Side(side);
         this.tradeType = new TradeType(tradeType);
         this.timeInForce = new TimeInForce(timeInForce);
     }
@@ -43,7 +42,7 @@ public class CreateOrder {
     }
 
     public String getSide() {
-        return side;
+        return side.getSide();
     }
 
     public String getTradeType() {

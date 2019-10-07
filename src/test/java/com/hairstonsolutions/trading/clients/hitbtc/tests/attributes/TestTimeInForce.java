@@ -1,6 +1,6 @@
-package com.hairstonsolutions.trading.clients.hitbtc.tests.orders;
+package com.hairstonsolutions.trading.clients.hitbtc.tests.attributes;
 
-import com.hairstonsolutions.trading.clients.hitbtc.orders.TimeInForce;
+import com.hairstonsolutions.trading.clients.hitbtc.attributes.TimeInForce;
 import org.junit.Test;
 
 public class TestTimeInForce {

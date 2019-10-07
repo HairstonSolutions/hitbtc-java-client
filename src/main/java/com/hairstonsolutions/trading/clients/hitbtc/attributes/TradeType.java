@@ -1,4 +1,4 @@
-package com.hairstonsolutions.trading.clients.hitbtc.trades;
+package com.hairstonsolutions.trading.clients.hitbtc.attributes;
 
 public class TradeType {
     public static final String LIMIT = "limit";

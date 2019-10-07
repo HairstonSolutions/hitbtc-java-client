@@ -1,4 +1,4 @@
-package com.hairstonsolutions.trading.clients.hitbtc.orders;
+package com.hairstonsolutions.trading.clients.hitbtc.attributes;
 
 public class TimeInForce {
     public static final String GTC_GOOD_TILL_CANCELLED = "GTC";

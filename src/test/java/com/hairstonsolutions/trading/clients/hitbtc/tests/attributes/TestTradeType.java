@@ -1,10 +1,9 @@
-package com.hairstonsolutions.trading.clients.hitbtc.tests.trades;
+package com.hairstonsolutions.trading.clients.hitbtc.tests.attributes;
 
-import com.hairstonsolutions.trading.clients.hitbtc.Trade;
-import com.hairstonsolutions.trading.clients.hitbtc.trades.TradeType;
+import com.hairstonsolutions.trading.clients.hitbtc.attributes.TradeType;
 import org.junit.Test;
 
-public class testTradeType {
+public class TestTradeType {
 
     @Test
     public void testDefault() {
@@ -60,5 +59,12 @@ public class testTradeType {
 
         assert (tradeType.getType().equals("limit"));
         assert (tradeType.getType().equals(TradeType.LIMIT));
+    }
+
+    @Test
+    public void testObjectPrintout() {
+        TradeType tradeType = new TradeType();
+
+        assert (tradeType.toString().equals(TradeType.LIMIT));
     }
 }

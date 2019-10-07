@@ -1,4 +1,4 @@
-package com.hairstonsolutions.trading.clients.hitbtc;
+package com.hairstonsolutions.trading.clients.hitbtc.orders;
 
 /*
 

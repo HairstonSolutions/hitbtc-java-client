@@ -1,9 +1,10 @@
 package com.hairstonsolutions.trading.clients.hitbtc.tests;
 
+import com.hairstonsolutions.trading.clients.hitbtc.attributes.Side;
 import com.hairstonsolutions.trading.clients.hitbtc.orders.CreateOrder;
 
-import com.hairstonsolutions.trading.clients.hitbtc.orders.TimeInForce;
-import com.hairstonsolutions.trading.clients.hitbtc.trades.TradeType;
+import com.hairstonsolutions.trading.clients.hitbtc.attributes.TimeInForce;
+import com.hairstonsolutions.trading.clients.hitbtc.attributes.TradeType;
 import org.junit.Test;
 
 public class TestCreateOrder {
@@ -13,7 +14,7 @@ public class TestCreateOrder {
         CreateOrder myCreateOrder = new CreateOrder();
 
         assert("BTCUSD".equals(myCreateOrder.getSymbol()));
-        assert(myCreateOrder.getSide().equals(CreateOrder.BUY));
+        assert(myCreateOrder.getSide().equals(Side.BUY));
         assert(myCreateOrder.getTradeType().equals(TradeType.LIMIT));
         assert(myCreateOrder.getTimeInForce().equals(TimeInForce.GTC_GOOD_TILL_CANCELLED));
     }
