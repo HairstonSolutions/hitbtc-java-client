@@ -52,19 +52,6 @@ HISTORY ORDER: /history/order
     "createdAt": "2017-01-16T14:18:47.321Z",
     "updatedAt": "2017-01-19T15:23:54.876Z"
   }
-
-  HISTORY ORDER TRADES: /history/order/{id}/trades
-    {
-    "id": 0,
-    "clientOrderId": "string",
-    "orderId": 0,
-    "symbol": "string",
-    "side": "sell",
-    "quantity": "string",
-    "fee": "string",
-    "price": "string",
-    "timestamp": "2019-10-05T20:17:27.687Z"
-  }
  */
 
 public class Order {
