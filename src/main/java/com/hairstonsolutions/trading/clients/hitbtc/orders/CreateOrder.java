@@ -22,6 +22,7 @@ public class CreateOrder {
     private TradeType tradeType;
     private TimeInForce timeInForce;
     private String price;
+    private String quantity;
 
 
     public CreateOrder() {
@@ -30,14 +31,16 @@ public class CreateOrder {
         this.tradeType = new TradeType(TradeType.LIMIT);
         this.timeInForce = new TimeInForce(TimeInForce.GTC_GOOD_TILL_CANCELLED);
         this.price = "10000.00";
+        this.quantity = "0.0001";
     }
 
-    public CreateOrder(String symbol, String side, String tradeType, String timeInForce, String price) {
+    public CreateOrder(String symbol, String side, String tradeType, String timeInForce, String price, String quantity) {
         this.symbol = symbol;
         this.side = new Side(side);
         this.tradeType = new TradeType(tradeType);
         this.timeInForce = new TimeInForce(timeInForce);
         this.price = price;
+        this.quantity = quantity;
     }
 
     public String getSymbol() {
@@ -58,5 +61,9 @@ public class CreateOrder {
 
     public String getPrice() {
         return price;
+    }
+
+    public String getQuantity() {
+        return quantity;
     }
 }
