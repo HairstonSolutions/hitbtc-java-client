@@ -17,6 +17,7 @@ public class TestCreateOrder {
         assert(myCreateOrder.getSide().equals(Side.BUY));
         assert(myCreateOrder.getTradeType().equals(TradeType.LIMIT));
         assert(myCreateOrder.getTimeInForce().equals(TimeInForce.GTC_GOOD_TILL_CANCELLED));
+        assert(myCreateOrder.getPrice().equals("10000.00"));
     }
 
     @Test
@@ -25,12 +26,14 @@ public class TestCreateOrder {
         String buyside = "sell";
         String tradeType = "market";
         String timeforce = "FOK";
-        CreateOrder myCreateOrder = new CreateOrder(mySymbol,buyside,tradeType,timeforce);
+        String price = "8500.53";
+        CreateOrder myCreateOrder = new CreateOrder(mySymbol,buyside,tradeType,timeforce,price);
 
         assert(myCreateOrder.getSymbol().equals("LTCBTC"));
         assert(myCreateOrder.getSide().equals("sell"));
         assert(myCreateOrder.getTradeType().equals("market"));
         assert(myCreateOrder.getTimeInForce().equals("FOK"));
+        assert (myCreateOrder.getPrice().equals("8500.53"));
     }
 
 }
