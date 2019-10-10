@@ -19,6 +19,7 @@ public class TestCreateOrder {
         assert(myCreateOrder.getTimeInForce().equals(TimeInForce.GTC_GOOD_TILL_CANCELLED));
         assert(myCreateOrder.getPrice().equals("10000.00"));
         assert(myCreateOrder.getQuantity().equals("0.0001"));
+        assert(myCreateOrder.isPostOnly() == false);
     }
 
     @Test
@@ -29,7 +30,8 @@ public class TestCreateOrder {
         String timeforce = "FOK";
         String price = "8500.53";
         String quantity = "1.1234";
-        CreateOrder myCreateOrder = new CreateOrder(mySymbol,buyside,tradeType,timeforce,price,quantity);
+        boolean postOnly = true;
+        CreateOrder myCreateOrder = new CreateOrder(mySymbol,buyside,tradeType,timeforce,price,quantity,postOnly);
 
         assert(myCreateOrder.getSymbol().equals("LTCBTC"));
         assert(myCreateOrder.getSide().equals("sell"));
@@ -37,6 +39,7 @@ public class TestCreateOrder {
         assert(myCreateOrder.getTimeInForce().equals("FOK"));
         assert(myCreateOrder.getPrice().equals("8500.53"));
         assert(myCreateOrder.getQuantity().equals("1.1234"));
+        assert(myCreateOrder.isPostOnly() == true);
     }
 
 }
