@@ -1,26 +1,18 @@
-package com.hairstonsolutions.trading.clients.hitbtc.tests;
+package com.hairstonsolutions.trading.clients.hitbtc.tests.api.open;
 
 import com.hairstonsolutions.trading.clients.hitbtc.Symbol;
 import com.hairstonsolutions.trading.clients.hitbtc.api.open.SymbolRestClient;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 public class TestSymbol {
-
-    Logger LOG = LoggerFactory.getLogger(SymbolRestClient.class);
 
     @Test
     public void getBTCSymbol() {
         SymbolRestClient symbolRestClient = new SymbolRestClient(new RestTemplate());
 
         ResponseEntity<Symbol> myGetSymbolResponseEntity = symbolRestClient.getForEntity("BTCUSD");
-
-        LOG.info("Status Code: " + myGetSymbolResponseEntity.getStatusCode());
-        LOG.info("Return Headers: " + myGetSymbolResponseEntity.getHeaders());
-        LOG.info("Return values: " + myGetSymbolResponseEntity.toString());
 
         assert (myGetSymbolResponseEntity.getStatusCode().toString().equals("200 OK"));
 
@@ -42,10 +34,6 @@ public class TestSymbol {
         SymbolRestClient symbolRestClient = new SymbolRestClient(new RestTemplate());
 
         ResponseEntity<Symbol> myGetSymbolResponseEntity = symbolRestClient.getForEntity("DENTBTC");
-
-        LOG.info("Status Code: " + myGetSymbolResponseEntity.getStatusCode());
-        LOG.info("Return Headers: " + myGetSymbolResponseEntity.getHeaders());
-        LOG.info("Return values: " + myGetSymbolResponseEntity.toString());
 
         assert (myGetSymbolResponseEntity.getStatusCode().toString().equals("200 OK"));
 
