@@ -21,14 +21,22 @@ public class SymbolRestClient {
         this.REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
     }
 
-    public ResponseEntity<Symbol> getForEntity(String id) {
-        ResponseEntity<Symbol> entity = restTemplate.getForEntity(REQUEST_URI + "/{id}",
-                                                                    Symbol.class, id);
-        LOG.info("Status Code: " + entity.getStatusCode());
-        LOG.info("Return Headers: " + entity.getHeaders());
-        LOG.info("Return values: " + entity.toString());
+    public ResponseEntity<Symbol> getForEntity(String symbol) {
+        ResponseEntity<Symbol> entity = restTemplate.getForEntity(REQUEST_URI + "/{symbol}",
+                                                                    Symbol.class, symbol);
+        LOG.info(String.format("Status Code: %s", entity.getStatusCode()));
+        LOG.info(String.format("Return values: %s", entity.toString()));
 
         return entity;
+    }
+
+    public Symbol getSymbol(String id) {
+        ResponseEntity<Symbol> entity = restTemplate.getForEntity(REQUEST_URI + "/{id}",
+                Symbol.class, id);
+        LOG.info(String.format("Status Code: %s", entity.getStatusCode()));
+        LOG.info(String.format("Return values: %s", entity.toString()));
+
+        return entity.getBody();
     }
 
 }

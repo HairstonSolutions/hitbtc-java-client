@@ -1,9 +1,8 @@
 package com.hairstonsolutions.trading.clients.hitbtc;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.core.json.JsonWriteContext;
+import lombok.Data;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Data
 public class Ticker {
     private String symbol;
     private String ask;
@@ -15,7 +14,7 @@ public class Ticker {
     private String volume;
     private String volumeQuote                                                                                                     ;
     private String timestamp;
-    private JsonWriteContext jsonWriteContext;
+
 
     public Ticker() {
     }

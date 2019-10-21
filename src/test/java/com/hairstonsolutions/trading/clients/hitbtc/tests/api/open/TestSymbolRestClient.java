@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-public class TestSymbol {
+public class TestSymbolRestClient {
 
     @Test
     public void getBTCSymbol() {
@@ -48,5 +48,12 @@ public class TestSymbol {
         assert (mySymbol.getTakeLiquidityRate().equals("0.002"));
         assert (mySymbol.getProvideLiquidityRate().equals("0.001"));
         assert (mySymbol.getFeeCurrency().equals("BTC"));
+    }
+
+    @Test
+    public void getObjectSymbol () {
+        SymbolRestClient symbolRestClient = new SymbolRestClient(new RestTemplate());
+        Symbol mySymbol = symbolRestClient.getSymbol("DENTBTC");
+        System.out.println(mySymbol);
     }
 }
