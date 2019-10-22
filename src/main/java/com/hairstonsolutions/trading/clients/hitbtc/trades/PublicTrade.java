@@ -1,9 +1,10 @@
 package com.hairstonsolutions.trading.clients.hitbtc.trades;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.core.json.JsonWriteContext;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.Side;
+import lombok.Data;
 
+@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PublicTrade {
     private int id;
@@ -11,7 +12,6 @@ public class PublicTrade {
     private String quantity;
     private Side side;
     private String timestamp;
-    private JsonWriteContext jsonWriteContext;
 
     public PublicTrade() {
         this.id = 12345678;
