@@ -3,6 +3,7 @@ package com.hairstonsolutions.trading.clients.hitbtc.api;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 import java.util.Properties;
 
 public class HitBtcAPI {
@@ -31,6 +32,10 @@ public class HitBtcAPI {
         return apiSecret;
     }
 
+    public String getApiAuth() {
+        return apiKey+":"+apiSecret;
+    }
+
     public void setApiKey(String apiKey) {
         this.apiKey = apiKey;
     }
@@ -56,6 +61,10 @@ public class HitBtcAPI {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public String getEncodedCredentials() {
+        return Base64.getEncoder().encodeToString(getApiAuth().getBytes());
     }
 
 }
