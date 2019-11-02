@@ -27,10 +27,10 @@ public class BalanceRestClient {
     }
 
     public ResponseEntity<Balance[]> getForEntity() {
-        String encodedcredentials = hitBtcAPI.getEncodedCredentials();
+        String encodedCredentials = hitBtcAPI.getEncodedCredentials();
         HttpHeaders headers = new HttpHeaders();
 
-        headers.set("Authorization", "Basic " + encodedcredentials);
+        headers.set("Authorization", "Basic " + encodedCredentials);
 
         HttpEntity<String> httpEntity = new HttpEntity<String>(headers);
 

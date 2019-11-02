@@ -65,7 +65,7 @@ public class TestTransferRestClient {
         hitBtcAPI.loadKeysFromPropertiesFile(TESTCONFIGFILE);
 
         String currency = "BTC";
-        String amount = "0.0008";
+        String amount = "0.0009";
 
         TransferRestClient.moveToTrading(hitBtcAPI,currency,amount);
     }
@@ -77,7 +77,7 @@ public class TestTransferRestClient {
         hitBtcAPI.loadKeysFromPropertiesFile(TESTCONFIGFILE);
 
         String currency = "BTC";
-        String amount = "0.0008";
+        String amount = "0.0009";
 
         TransferRestClient.moveToMain(hitBtcAPI,currency,amount);
     }

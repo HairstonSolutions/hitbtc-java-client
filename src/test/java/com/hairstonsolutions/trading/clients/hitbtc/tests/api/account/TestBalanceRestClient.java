@@ -4,12 +4,8 @@ import com.hairstonsolutions.trading.clients.hitbtc.account.Balance;
 import com.hairstonsolutions.trading.clients.hitbtc.api.HitBtcAPI;
 import com.hairstonsolutions.trading.clients.hitbtc.api.account.BalanceRestClient;
 import org.junit.Test;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Base64;
 
 public class TestBalanceRestClient {
 

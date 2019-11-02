@@ -3,7 +3,6 @@ package com.hairstonsolutions.trading.clients.hitbtc.api.account;
 import com.hairstonsolutions.trading.clients.hitbtc.account.Direction;
 import com.hairstonsolutions.trading.clients.hitbtc.account.TransferResponse;
 import com.hairstonsolutions.trading.clients.hitbtc.api.HitBtcAPI;
-import com.oracle.tools.packager.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
@@ -13,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 public class TransferRestClient {
 
-    Logger LOG = LoggerFactory.getLogger(TransferRestClient.class);
+    private static Logger LOG = LoggerFactory.getLogger(TransferRestClient.class);
     private static final String RESOURCE_PATH = "/account/transfer";
 
     private String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
@@ -64,10 +63,10 @@ public class TransferRestClient {
 
         ResponseEntity<TransferResponse> responseEntity = transferRestClient.transferExecution(currency, direction, amount);
 
-        Log.info(responseEntity.getStatusCode().toString());
+        LOG.info(responseEntity.getStatusCode().toString());
 
         TransferResponse transferResponse = responseEntity.getBody();
-        Log.info(transferResponse.toString());
+        LOG.info(transferResponse.toString());
     }
 
 }
