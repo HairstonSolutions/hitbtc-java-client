@@ -14,17 +14,16 @@ public class TransferRestClient {
 
     private static Logger LOG = LoggerFactory.getLogger(TransferRestClient.class);
     private static final String RESOURCE_PATH = "/account/transfer";
+    private static String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
 
-    private String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
     private HitBtcAPI hitBtcAPI;
-    private RestTemplate restTemplate;
 
-    public TransferRestClient(RestTemplate restTemplate, HitBtcAPI hitBtcAPI) {
-        this.restTemplate = restTemplate;
+    public TransferRestClient(HitBtcAPI hitBtcAPI) {
         this.hitBtcAPI = hitBtcAPI;
     }
 
     public ResponseEntity<TransferResponse> transferExecution(String currency, String direction, String amount) {
+        RestTemplate restTemplate = new RestTemplate();
         String encodedCredentials = hitBtcAPI.getEncodedCredentials();
 
         HttpHeaders headers = new HttpHeaders();
@@ -59,7 +58,7 @@ public class TransferRestClient {
     }
 
     private static void transfer(HitBtcAPI hitBtcAPI, String currency, String amount, String direction) {
-        TransferRestClient transferRestClient = new TransferRestClient(new RestTemplate(), hitBtcAPI);
+        TransferRestClient transferRestClient = new TransferRestClient(hitBtcAPI);
 
         ResponseEntity<TransferResponse> responseEntity = transferRestClient.transferExecution(currency, direction, amount);
 

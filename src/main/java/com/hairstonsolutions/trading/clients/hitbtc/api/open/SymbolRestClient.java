@@ -9,19 +9,15 @@ import org.springframework.web.client.RestTemplate;
 
 public class SymbolRestClient {
 
-    Logger LOG = LoggerFactory.getLogger(SymbolRestClient.class);
-
+    private static Logger LOG = LoggerFactory.getLogger(SymbolRestClient.class);
     private static final String RESOURCE_PATH = "/public/symbol";
+    private static String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
 
-    private String REQUEST_URI;
-    private RestTemplate restTemplate;
-
-    public SymbolRestClient(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-        this.REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
+    public SymbolRestClient() {
     }
 
     public ResponseEntity<Symbol> getForEntity(String symbol) {
+        RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Symbol> entity = restTemplate.getForEntity(REQUEST_URI + "/{symbol}",
                                                                     Symbol.class, symbol);
         LOG.info(String.format("Status Code: %s", entity.getStatusCode()));
@@ -31,6 +27,7 @@ public class SymbolRestClient {
     }
 
     public Symbol getSymbol(String id) {
+        RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Symbol> entity = restTemplate.getForEntity(REQUEST_URI + "/{id}",
                 Symbol.class, id);
         LOG.info(String.format("Status Code: %s", entity.getStatusCode()));
@@ -38,5 +35,4 @@ public class SymbolRestClient {
 
         return entity.getBody();
     }
-
 }

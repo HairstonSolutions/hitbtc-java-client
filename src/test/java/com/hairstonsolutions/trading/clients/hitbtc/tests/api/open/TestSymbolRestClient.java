@@ -10,7 +10,7 @@ public class TestSymbolRestClient {
 
     @Test
     public void getBTCSymbol() {
-        SymbolRestClient symbolRestClient = new SymbolRestClient(new RestTemplate());
+        SymbolRestClient symbolRestClient = new SymbolRestClient();
 
         ResponseEntity<Symbol> myGetSymbolResponseEntity = symbolRestClient.getForEntity("BTCUSD");
 
@@ -31,7 +31,7 @@ public class TestSymbolRestClient {
 
     @Test
     public void getDENTSymbol() {
-        SymbolRestClient symbolRestClient = new SymbolRestClient(new RestTemplate());
+        SymbolRestClient symbolRestClient = new SymbolRestClient();
 
         ResponseEntity<Symbol> myGetSymbolResponseEntity = symbolRestClient.getForEntity("DENTBTC");
 
@@ -52,7 +52,7 @@ public class TestSymbolRestClient {
 
     @Test
     public void getObjectSymbol () {
-        SymbolRestClient symbolRestClient = new SymbolRestClient(new RestTemplate());
+        SymbolRestClient symbolRestClient = new SymbolRestClient();
         Symbol mySymbol = symbolRestClient.getSymbol("DENTBTC");
         System.out.println(mySymbol);
     }

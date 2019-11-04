@@ -22,9 +22,9 @@ public class TestTransferRestClient {
 
         String currency = "BTC";
         String direction = Direction.TO_MAIN_BANK;
-        String amount = "0.0008";
+        String amount = "0.0003";
 
-        TransferRestClient transferRestClient = new TransferRestClient(new RestTemplate(), hitBtcAPI);
+        TransferRestClient transferRestClient = new TransferRestClient(hitBtcAPI);
 
         ResponseEntity<TransferResponse> responseEntity = transferRestClient.transferExecution(currency, direction, amount);
 
@@ -44,9 +44,9 @@ public class TestTransferRestClient {
 
         String currency = "BTC";
         String direction = Direction.TO_TRADING;
-        String amount = "0.0008";
+        String amount = "0.0003";
 
-        TransferRestClient transferRestClient = new TransferRestClient(new RestTemplate(), hitBtcAPI);
+        TransferRestClient transferRestClient = new TransferRestClient(hitBtcAPI);
 
         ResponseEntity<TransferResponse> responseEntity = transferRestClient.transferExecution(currency, direction, amount);
 

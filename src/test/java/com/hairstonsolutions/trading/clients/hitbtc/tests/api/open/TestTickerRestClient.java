@@ -16,7 +16,7 @@ public class TestTickerRestClient {
     @Test
     public void getBTCUSDTicker() {
         String tickerSymbol = "BTCUSD";
-        TickerRestClient tickerRestClient = new TickerRestClient(new RestTemplate());
+        TickerRestClient tickerRestClient = new TickerRestClient();
 
         ResponseEntity<Ticker> myGetTickerResponseEntity = tickerRestClient.getForEntity(tickerSymbol);
 
@@ -30,7 +30,7 @@ public class TestTickerRestClient {
 
     @Test
     public void getTickerObjectByTickerID() {
-        TickerRestClient tickerRestClient = new TickerRestClient(new RestTemplate());
+        TickerRestClient tickerRestClient = new TickerRestClient();
 
         Ticker myTicker = tickerRestClient.getTicker("BTCUSD");
 

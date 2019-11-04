@@ -12,21 +12,18 @@ import org.springframework.web.client.RestTemplate;
 
 public class BalanceRestClient {
 
-    Logger LOG = LoggerFactory.getLogger(BalanceRestClient.class);
-
+    private static Logger LOG = LoggerFactory.getLogger(BalanceRestClient.class);
     private static final String RESOURCE_PATH = "/account/balance";
+    private static String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
 
-    private String REQUEST_URI;
-    private RestTemplate restTemplate;
-    HitBtcAPI hitBtcAPI;
+    private HitBtcAPI hitBtcAPI;
 
-    public BalanceRestClient(RestTemplate restTemplate, HitBtcAPI hitBtcAPI) {
-        this.restTemplate = restTemplate;
+    public BalanceRestClient(HitBtcAPI hitBtcAPI) {
         this.hitBtcAPI = hitBtcAPI;
-        this.REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
     }
 
     public ResponseEntity<Balance[]> getForEntity() {
+        RestTemplate restTemplate = new RestTemplate();
         String encodedCredentials = hitBtcAPI.getEncodedCredentials();
         HttpHeaders headers = new HttpHeaders();
 

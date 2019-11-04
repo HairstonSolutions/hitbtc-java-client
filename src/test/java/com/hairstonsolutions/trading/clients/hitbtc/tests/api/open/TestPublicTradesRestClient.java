@@ -11,7 +11,7 @@ public class TestPublicTradesRestClient {
     @Test
     public void getTradesForSymbol() {
         String tickerId = "BTCUSD";
-        PublicTradesRestClient publicTradesRestClient = new PublicTradesRestClient(new RestTemplate());
+        PublicTradesRestClient publicTradesRestClient = new PublicTradesRestClient();
 
         ResponseEntity<PublicTrade[]> myGetTradesResponseEntity = publicTradesRestClient.getForEntity(tickerId);
 
@@ -32,7 +32,7 @@ public class TestPublicTradesRestClient {
     public void getTradesBySymbolAmount() {
         String tickerId = "BTCUSD";
         int amountToRetrieve = 23;
-        PublicTradesRestClient publicTradesRestClient = new PublicTradesRestClient(new RestTemplate());
+        PublicTradesRestClient publicTradesRestClient = new PublicTradesRestClient();
 
         ResponseEntity<PublicTrade[]> myGetTradesResponseEntity = publicTradesRestClient.getForEntity(tickerId, amountToRetrieve);
 

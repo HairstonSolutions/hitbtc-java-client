@@ -15,7 +15,8 @@ public class TestBalanceRestClient {
         HitBtcAPI hitBtcAPI = new HitBtcAPI();
         hitBtcAPI.loadKeysFromPropertiesFile(testConfigFile);
 
-        BalanceRestClient balanceRestClient = new BalanceRestClient(new RestTemplate(), hitBtcAPI);
+        //BalanceRestClient balanceRestClient = new BalanceRestClient(new RestTemplate(), hitBtcAPI);
+        BalanceRestClient balanceRestClient = new BalanceRestClient(hitBtcAPI);
 
         ResponseEntity<Balance[]> myGetBalanceResponseEntity = balanceRestClient.getForEntity();
 
