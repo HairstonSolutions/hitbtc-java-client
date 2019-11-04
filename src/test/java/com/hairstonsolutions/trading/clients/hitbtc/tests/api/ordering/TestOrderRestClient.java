@@ -38,4 +38,19 @@ public class TestOrderRestClient {
         Order orderResponse = OrderRestClient.getOrderByClientId(clientOrderId, hitBtcAPI);
         System.out.println(orderResponse);
     }
+
+    @Test
+    public void getAllOpenOrders() {
+        HitBtcAPI hitBtcAPI = new HitBtcAPI();
+        hitBtcAPI.loadKeysFromPropertiesFile(TESTCONFIGFILE);
+
+        Order[] openOrders = OrderRestClient.getOpenOrders(hitBtcAPI);
+
+        int count = 0;
+        for ( Order orders : openOrders ) {
+            System.out.println(orders);
+            count++;
+        }
+        System.out.println(String.format("Orders Total: %s", count));
+    }
 }

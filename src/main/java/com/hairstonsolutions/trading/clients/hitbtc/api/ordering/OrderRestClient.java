@@ -57,5 +57,20 @@ public class OrderRestClient {
         return responseEntity.getBody();
     }
 
+    public static Order[] getOpenOrders(HitBtcAPI hitBtcAPI) {
+        RestTemplate restTemplate = new RestTemplate();
+        String encodedCredentials = hitBtcAPI.getEncodedCredentials();
+        HttpHeaders httpHeaders = new HttpHeaders();
 
+        httpHeaders.set("Authorization", "Basic " + encodedCredentials);
+
+        HttpEntity<String> httpEntity = new HttpEntity<String>(httpHeaders);
+
+        ResponseEntity<Order[]> responseEntity = restTemplate.exchange(REQUEST_URI, HttpMethod.GET, httpEntity, Order[].class);
+
+        LOG.info(String.format("Status Code: %s", responseEntity.getStatusCode()));
+        LOG.info(String.format("Return Values: %s", responseEntity.toString()));
+
+        return responseEntity.getBody();
+    }
 }
