@@ -1,5 +1,9 @@
 package com.hairstonsolutions.trading.clients.hitbtc.orders;
 
+import com.hairstonsolutions.trading.clients.hitbtc.Symbol;
+import com.hairstonsolutions.trading.clients.hitbtc.attributes.Side;
+import lombok.Data;
+
 /*
 
 LIST ALL ACTIVE ORDERS: /order
@@ -54,5 +58,19 @@ HISTORY ORDER: /history/order
   }
  */
 
+@Data
 public class Order {
+    long id;
+    String clientOrderId;
+    String symbol;
+    Side side;
+    String status;
+    String type;        //@TODO Convert to Object TradeType
+    String timeInForce; //@TODO Convert to Object TimeInForce
+    String price;
+    String quantity;
+    String postOnly;
+    String cumQuantity;
+    String createdAt;   //@TODO Convert to Object TimeStamp
+    String updatedAt;   //@TODO Convert to Object TimeStamp
 }
