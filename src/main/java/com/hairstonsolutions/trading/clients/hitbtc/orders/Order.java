@@ -2,6 +2,8 @@ package com.hairstonsolutions.trading.clients.hitbtc.orders;
 
 import com.hairstonsolutions.trading.clients.hitbtc.Symbol;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.Side;
+import com.hairstonsolutions.trading.clients.hitbtc.attributes.TimeInForce;
+import com.hairstonsolutions.trading.clients.hitbtc.attributes.TradeType;
 import lombok.Data;
 
 /*
@@ -65,12 +67,14 @@ public class Order {
     String symbol;
     Side side;
     String status;
-    String type;        //@TODO Convert to Object TradeType
-    String timeInForce; //@TODO Convert to Object TimeInForce
+    TradeType type;
+    TimeInForce timeInForce;
     String price;
     String quantity;
-    String postOnly;
+    boolean postOnly;
     String cumQuantity;
     String createdAt;   //@TODO Convert to Object TimeStamp
     String updatedAt;   //@TODO Convert to Object TimeStamp
+    String stopPrice;
+    String expireTime;
 }
