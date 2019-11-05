@@ -4,6 +4,7 @@ import com.hairstonsolutions.trading.clients.hitbtc.account.Direction;
 import com.hairstonsolutions.trading.clients.hitbtc.account.TransferResponse;
 import com.hairstonsolutions.trading.clients.hitbtc.api.HitBtcAPI;
 import com.hairstonsolutions.trading.clients.hitbtc.api.account.TransferRestClient;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
@@ -12,14 +13,17 @@ import org.springframework.web.client.RestTemplate;
 public class TestTransferRestClient {
 
     final String TESTCONFIGFILE = "src/test/resources/hitbtckey.properties";
+    private HitBtcAPI hitBtcAPI;
+
+    @Before
+    public void load() {
+        hitBtcAPI = new HitBtcAPI();
+        hitBtcAPI.loadKeysFromPropertiesFile(TESTCONFIGFILE);
+    }
 
     @Ignore
     @Test
     public void moveBTCtoMain() {
-
-        HitBtcAPI hitBtcAPI = new HitBtcAPI();
-        hitBtcAPI.loadKeysFromPropertiesFile(TESTCONFIGFILE);
-
         String currency = "BTC";
         String direction = Direction.TO_MAIN_BANK;
         String amount = "0.0003";
@@ -39,9 +43,6 @@ public class TestTransferRestClient {
     @Ignore
     @Test
     public void moveBTCtoTrading() {
-        HitBtcAPI hitBtcAPI = new HitBtcAPI();
-        hitBtcAPI.loadKeysFromPropertiesFile(TESTCONFIGFILE);
-
         String currency = "BTC";
         String direction = Direction.TO_TRADING;
         String amount = "0.0003";
@@ -61,9 +62,6 @@ public class TestTransferRestClient {
     @Ignore
     @Test
     public void simpleMoveBTCtoTrading() {
-        HitBtcAPI hitBtcAPI = new HitBtcAPI();
-        hitBtcAPI.loadKeysFromPropertiesFile(TESTCONFIGFILE);
-
         String currency = "BTC";
         String amount = "0.0009";
 
@@ -73,9 +71,6 @@ public class TestTransferRestClient {
     @Ignore
     @Test
     public void simpleMoveBTCtoMain() {
-        HitBtcAPI hitBtcAPI = new HitBtcAPI();
-        hitBtcAPI.loadKeysFromPropertiesFile(TESTCONFIGFILE);
-
         String currency = "BTC";
         String amount = "0.0009";
 

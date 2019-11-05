@@ -12,9 +12,9 @@ import org.springframework.web.client.RestTemplate;
 
 public class OrderRestClient {
 
+    private static final String RESOURCE_PATH = "/order";
+    private static final String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
     private static Logger LOG = LoggerFactory.getLogger(OrderRestClient.class);
-    private static String RESOURCE_PATH = "/order";
-    private static String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
 
     private HitBtcAPI hitBtcAPI;
 

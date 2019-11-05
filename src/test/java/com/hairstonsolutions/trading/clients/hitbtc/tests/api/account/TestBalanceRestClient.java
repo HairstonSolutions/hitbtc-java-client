@@ -3,19 +3,24 @@ package com.hairstonsolutions.trading.clients.hitbtc.tests.api.account;
 import com.hairstonsolutions.trading.clients.hitbtc.account.Balance;
 import com.hairstonsolutions.trading.clients.hitbtc.api.HitBtcAPI;
 import com.hairstonsolutions.trading.clients.hitbtc.api.account.BalanceRestClient;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 public class TestBalanceRestClient {
 
+    final String TESTCONFIGFILE = "src/test/resources/hitbtckey.properties";
+    private HitBtcAPI hitBtcAPI;
+
+    @Before
+    public void load() {
+        hitBtcAPI = new HitBtcAPI();
+        hitBtcAPI.loadKeysFromPropertiesFile(TESTCONFIGFILE);
+    }
+
     @Test
     public void testAuth() {
-        String testConfigFile = "src/test/resources/hitbtckey.properties";
-        HitBtcAPI hitBtcAPI = new HitBtcAPI();
-        hitBtcAPI.loadKeysFromPropertiesFile(testConfigFile);
-
-        //BalanceRestClient balanceRestClient = new BalanceRestClient(new RestTemplate(), hitBtcAPI);
         BalanceRestClient balanceRestClient = new BalanceRestClient(hitBtcAPI);
 
         ResponseEntity<Balance[]> myGetBalanceResponseEntity = balanceRestClient.getForEntity();

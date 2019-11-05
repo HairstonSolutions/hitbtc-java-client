@@ -3,18 +3,23 @@ package com.hairstonsolutions.trading.clients.hitbtc.tests.api.ordering;
 import com.hairstonsolutions.trading.clients.hitbtc.api.HitBtcAPI;
 import com.hairstonsolutions.trading.clients.hitbtc.api.ordering.OrderRestClient;
 import com.hairstonsolutions.trading.clients.hitbtc.orders.Order;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
 public class TestOrderRestClient {
 
     final String TESTCONFIGFILE = "src/test/resources/hitbtckey.properties";
+    private HitBtcAPI hitBtcAPI;
+
+    @Before
+    public void load() {
+        hitBtcAPI = new HitBtcAPI();
+        hitBtcAPI.loadKeysFromPropertiesFile(TESTCONFIGFILE);
+    }
 
     @Test
     public void getOrderByClientIdString() {
-        HitBtcAPI hitBtcAPI = new HitBtcAPI();
-        hitBtcAPI.loadKeysFromPropertiesFile(TESTCONFIGFILE);
-
         String clientOrderId = "9dde33f8-afbb-4d3f-a182-6fa90dc";
 
         OrderRestClient orderRestClient = new OrderRestClient(hitBtcAPI);
@@ -30,9 +35,6 @@ public class TestOrderRestClient {
 
     @Test
     public void getOrderByClientIdObject() {
-        HitBtcAPI hitBtcAPI = new HitBtcAPI();
-        hitBtcAPI.loadKeysFromPropertiesFile(TESTCONFIGFILE);
-
         String clientOrderId = "9dde33f8-afbb-4d3f-a182-6fa90dc";
 
         Order orderResponse = OrderRestClient.getOrderByClientId(clientOrderId, hitBtcAPI);
@@ -41,9 +43,6 @@ public class TestOrderRestClient {
 
     @Test
     public void getAllOpenOrders() {
-        HitBtcAPI hitBtcAPI = new HitBtcAPI();
-        hitBtcAPI.loadKeysFromPropertiesFile(TESTCONFIGFILE);
-
         Order[] openOrders = OrderRestClient.getOpenOrders(hitBtcAPI);
 
         int count = 0;
