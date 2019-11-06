@@ -21,16 +21,22 @@ public class TradeType {
     }
 
     public void setType(String type) {
-        if (type.equals("limit"))
-            this.type = LIMIT;
-        else if (type.equals("market"))
-            this.type = MARKET;
-        else if (type.equals("stopLimit"))
-            this.type = STOPLIMIT;
-        else if (type.equals("stopMarket"))
-            this.type = STOPMARKET;
-        else
-            this.type = LIMIT;
+        switch(type) {
+            case "limit":
+                this.type = LIMIT;
+                break;
+            case "market":
+                this.type = MARKET;
+                break;
+            case "stopLimit":
+                this.type = STOPLIMIT;
+                break;
+            case "stopMarket":
+                this.type = STOPMARKET;
+                break;
+            default:
+                this.type = LIMIT;
+        }
     }
 
     @Override
