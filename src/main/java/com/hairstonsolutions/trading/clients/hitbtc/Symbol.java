@@ -4,19 +4,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-/*
-{
-  "id": "BTCUSDT20",
-  "baseCurrency": "BTC",
-  "quoteCurrency": "USDT20",
-  "quantityIncrement": "0.00001",
-  "tickSize": "0.01",
-  "takeLiquidityRate": "0.002",
-  "provideLiquidityRate": "0.001",
-  "feeCurrency": "USDT20"
-}
- */
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -63,3 +50,16 @@ public class Symbol {
         return feeCurrency;
     }
 }
+
+/*
+{
+  "id": "BTCUSDT20",
+  "baseCurrency": "BTC",
+  "quoteCurrency": "USDT20",
+  "quantityIncrement": "0.00001",
+  "tickSize": "0.01",
+  "takeLiquidityRate": "0.002",
+  "provideLiquidityRate": "0.001",
+  "feeCurrency": "USDT20"
+}
+ */

@@ -22,18 +22,25 @@ public class TimeInForce {
     }
 
     public void setForce(String force) {
-        if (force.equals("GTC"))
-            this.force = GTC_GOOD_TILL_CANCELLED;
-        else if (force.equals("IOC"))
-            this.force = IOC_IMMEDIATE_OR_CANCEL;
-        else if (force.equals("FOK"))
-            this.force = FOK_FILL_OR_KILL;
-        else if (force.equals("Day"))
-            this.force = DAY;
-        else if (force.equals("GTD"))
-            this.force = GTD_GOOD_TILL_DATETIME;
-        else
-            this.force = GTC_GOOD_TILL_CANCELLED;
+        switch(force) {
+            case "GTC":
+                this.force = GTC_GOOD_TILL_CANCELLED;
+                break;
+            case "IOC":
+                this.force = IOC_IMMEDIATE_OR_CANCEL;
+                break;
+            case "FOK":
+                this.force = FOK_FILL_OR_KILL;
+                break;
+            case "Day":
+                this.force = DAY;
+                break;
+            case "GTD":
+                this.force = GTD_GOOD_TILL_DATETIME;
+                break;
+            default:
+                this.force = GTC_GOOD_TILL_CANCELLED;
+        }
     }
 
     @Override

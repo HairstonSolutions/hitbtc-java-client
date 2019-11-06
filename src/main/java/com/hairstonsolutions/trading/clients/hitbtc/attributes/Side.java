@@ -19,12 +19,16 @@ public class Side {
     }
 
     public void setSide(String side) {
-        if (side.equals("buy"))
-            this.side = BUY;
-        else if (side.equals("sell"))
-            this.side = SELL;
-        else
-            this.side = BUY;
+        switch (side) {
+            case "buy":
+                this.side = BUY;
+                break;
+            case "sell":
+                this.side = SELL;
+                break;
+            default:
+                this.side = BUY;
+        }
     }
 
     @Override
