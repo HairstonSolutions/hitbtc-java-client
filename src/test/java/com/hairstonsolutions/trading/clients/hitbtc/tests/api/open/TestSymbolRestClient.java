@@ -51,9 +51,35 @@ public class TestSymbolRestClient {
     }
 
     @Test
-    public void getObjectSymbol () {
+    public void getObjectSymbol() {
         SymbolRestClient symbolRestClient = new SymbolRestClient();
         Symbol mySymbol = symbolRestClient.getSymbol("DENTBTC");
         System.out.println(mySymbol);
+
+        assert mySymbol != null;
+        assert (mySymbol.getId().equals("DENTBTC"));
+        assert (mySymbol.getBaseCurrency().equals("DENT"));
+        assert (mySymbol.getQuoteCurrency().equals("BTC"));
+        assert (mySymbol.getQuantityIncrement().equals("100"));
+        assert (mySymbol.getTickSize().equals("0.00000000001"));
+        assert (mySymbol.getTakeLiquidityRate().equals("0.002"));
+        assert (mySymbol.getProvideLiquidityRate().equals("0.001"));
+        assert (mySymbol.getFeeCurrency().equals("BTC"));
+    }
+
+    @Test
+    public void getObjectSymbol2() {
+        Symbol mySymbol = SymbolRestClient.getSymbolByTickerId("DENTBTC");
+        System.out.println(mySymbol);
+
+        assert mySymbol != null;
+        assert (mySymbol.getId().equals("DENTBTC"));
+        assert (mySymbol.getBaseCurrency().equals("DENT"));
+        assert (mySymbol.getQuoteCurrency().equals("BTC"));
+        assert (mySymbol.getQuantityIncrement().equals("100"));
+        assert (mySymbol.getTickSize().equals("0.00000000001"));
+        assert (mySymbol.getTakeLiquidityRate().equals("0.002"));
+        assert (mySymbol.getProvideLiquidityRate().equals("0.001"));
+        assert (mySymbol.getFeeCurrency().equals("BTC"));
     }
 }

@@ -9,9 +9,9 @@ import org.springframework.web.client.RestTemplate;
 
 public class SymbolRestClient {
 
-    private static Logger LOG = LoggerFactory.getLogger(SymbolRestClient.class);
     private static final String RESOURCE_PATH = "/public/symbol";
-    private static String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
+    private static final String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
+    private static final Logger LOG = LoggerFactory.getLogger(SymbolRestClient.class);
 
     public SymbolRestClient() {
     }
@@ -27,6 +27,10 @@ public class SymbolRestClient {
     }
 
     public Symbol getSymbol(String id) {
+        return getSymbolByTickerId(id);
+    }
+
+    public static Symbol getSymbolByTickerId(String id) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Symbol> entity = restTemplate.getForEntity(REQUEST_URI + "/{id}",
                 Symbol.class, id);
