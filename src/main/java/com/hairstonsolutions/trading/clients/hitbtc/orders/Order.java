@@ -4,6 +4,7 @@ import com.hairstonsolutions.trading.clients.hitbtc.Symbol;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.Side;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.TimeInForce;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.TradeType;
+import com.hairstonsolutions.trading.clients.hitbtc.trades.Trade;
 import lombok.Data;
 
 /*
@@ -77,4 +78,5 @@ public class Order {
     String updatedAt;   //@TODO Convert to Object TimeStamp
     String stopPrice;
     String expireTime;
+    Trade tradesReport[];
 }
