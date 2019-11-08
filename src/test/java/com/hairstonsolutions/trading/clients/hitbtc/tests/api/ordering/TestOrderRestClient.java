@@ -2,6 +2,9 @@ package com.hairstonsolutions.trading.clients.hitbtc.tests.api.ordering;
 
 import com.hairstonsolutions.trading.clients.hitbtc.api.HitBtcAPI;
 import com.hairstonsolutions.trading.clients.hitbtc.api.ordering.OrderRestClient;
+import com.hairstonsolutions.trading.clients.hitbtc.attributes.Side;
+import com.hairstonsolutions.trading.clients.hitbtc.attributes.TimeInForce;
+import com.hairstonsolutions.trading.clients.hitbtc.attributes.TradeType;
 import com.hairstonsolutions.trading.clients.hitbtc.orders.Order;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,5 +54,49 @@ public class TestOrderRestClient {
             count++;
         }
         System.out.println(String.format("Orders Total: %s", count));
+    }
+
+    @Test
+    public void postLowLimitBuyOrder() {
+        String symbol="BTCUSD";
+        Side side = new Side(Side.BUY);
+        TradeType tradeType = new TradeType(TradeType.LIMIT);
+        TimeInForce timeInForce = new TimeInForce(TimeInForce.GTC_GOOD_TILL_CANCELLED);
+        String quantity = "0.00130";
+        String price = "8002.16";
+
+        Order OrderReponse = OrderRestClient.sendLimitOrder(
+                hitBtcAPI, symbol, side, timeInForce, quantity, price);
+
+        System.out.println(OrderReponse);
+    }
+
+    @Test
+    public void postHighLimitSellOrder() {
+
+    }
+
+    @Test
+    public void buyMarketOrder() {
+        String symbol="BTCUSD";
+        Side side = new Side(Side.BUY);
+        TradeType tradeType = new TradeType(TradeType.LIMIT);
+        TimeInForce timeInForce = new TimeInForce(TimeInForce.IOC_IMMEDIATE_OR_CANCEL);
+
+    }
+
+    @Test
+    public void sellMarketOrder() {
+
+    }
+
+    @Test
+    public void stopLimitOrder() {
+
+    }
+
+    @Test
+    public void stopMarketOrder() {
+
     }
 }
