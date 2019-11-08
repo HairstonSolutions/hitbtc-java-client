@@ -2,6 +2,9 @@ package com.hairstonsolutions.trading.clients.hitbtc;
 
 import lombok.Data;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 @Data
 public class Ticker {
     private String symbol;
@@ -125,6 +128,12 @@ public class Ticker {
                 "\"volumeQuote\": \"" + volumeQuote + "\", " +
                 "\"timestamp\": \"" + timestamp + "\"" +
                 " }";
+    }
+
+    public String getMarketQuantityByUSDAmount(float usdAmount) {
+        DecimalFormat df = new DecimalFormat("##.#####");
+        df.setRoundingMode(RoundingMode.UP);
+        return df.format(usdAmount / Float.valueOf(getAsk()));
     }
 
     @Override
