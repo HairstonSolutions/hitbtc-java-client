@@ -2,19 +2,36 @@ package com.hairstonsolutions.trading.clients.hitbtc.trades;
 
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.Side;
 import lombok.Data;
+import lombok.ToString;
+
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 @Data
 public class Trade {
-    long id;
-    String clientOrderId;
-    long orderId;
-    String symbol;
-    Side side;
-    String quantity;
-    String price;
-    String fee;
-    String timestamp;
+    private long id;
+    private String clientOrderId;
+    private long orderId;
+    private String symbol;
+    private Side side;
+    private String quantity;
+    private String price;
+    private String fee;
+    private String timestamp;
+
+    @ToString.Include
+    public String totalCost() {
+        float fQuantity = Float.valueOf(quantity);
+        float fPrice = Float.valueOf(price);
+        DecimalFormat df = new DecimalFormat("##.##");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+
+        float totalCost = fQuantity * fPrice;
+
+        return df.format(totalCost);
+    }
 }
+
 
 /*
 HISTORY TRADES: /history/trades
