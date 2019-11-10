@@ -7,6 +7,7 @@ import com.hairstonsolutions.trading.clients.hitbtc.attributes.TimeInForce;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.TradeType;
 import com.hairstonsolutions.trading.clients.hitbtc.orders.Order;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
@@ -56,6 +57,7 @@ public class TestOrderRestClient {
         System.out.println(String.format("Orders Total: %s", count));
     }
 
+    @Ignore
     @Test
     public void postLowLimitBuyOrder() {
         String symbol="BTCUSD";
@@ -66,7 +68,7 @@ public class TestOrderRestClient {
         String price = "8002.16";
 
         Order OrderReponse = OrderRestClient.sendLimitOrder(
-                hitBtcAPI, symbol, side, timeInForce, quantity, price);
+                hitBtcAPI, symbol, side, quantity, price);
 
         System.out.println(OrderReponse);
     }
@@ -76,18 +78,28 @@ public class TestOrderRestClient {
 
     }
 
+    @Ignore
     @Test
     public void buyMarketOrder() {
         String symbol="BTCUSD";
-        Side side = new Side(Side.BUY);
-        TradeType tradeType = new TradeType(TradeType.LIMIT);
-        TimeInForce timeInForce = new TimeInForce(TimeInForce.IOC_IMMEDIATE_OR_CANCEL);
+        String amount = "15.00";
 
+        Order myMarketOrder = OrderRestClient.sendMarketBuyOrder(hitBtcAPI,symbol,amount);
+
+        System.out.println(myMarketOrder);
+        assert (myMarketOrder.getTradesReport() != null);
     }
 
+    @Ignore
     @Test
     public void sellMarketOrder() {
+        String symbol="BTCUSD";
+        String amount = "21.00";
 
+        Order myMarketOrder = OrderRestClient.sendMarketSellOrder(hitBtcAPI,symbol,amount);
+
+        System.out.println(myMarketOrder);
+        assert (myMarketOrder.getTradesReport() != null);
     }
 
     @Test

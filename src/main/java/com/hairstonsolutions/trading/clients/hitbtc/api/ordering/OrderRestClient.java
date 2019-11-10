@@ -1,6 +1,8 @@
 package com.hairstonsolutions.trading.clients.hitbtc.api.ordering;
 
+import com.hairstonsolutions.trading.clients.hitbtc.Ticker;
 import com.hairstonsolutions.trading.clients.hitbtc.api.HitBtcAPI;
+import com.hairstonsolutions.trading.clients.hitbtc.api.open.TickerRestClient;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.Side;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.TimeInForce;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.TradeType;
@@ -76,9 +78,49 @@ public class OrderRestClient {
         return responseEntity.getBody();
     }
 
-    public static Order sendLimitOrder(HitBtcAPI hitBtcAPI, String symbol, Side side, TimeInForce timeInForce,
-                                                    String quantity, String price) {
-        //symbol=BTCUSD&side=buy&type=market&timeInForce=IOC&quantity=0.00130&price=8300.16
+    public static Order sendLimitOrder(HitBtcAPI hitBtcAPI, String symbol, Side side, String quantity, String price) {
+        TradeType tradeType = new TradeType(TradeType.LIMIT);
+        TimeInForce timeInForce = new TimeInForce(TimeInForce.GTC_GOOD_TILL_CANCELLED);
+        boolean postOnly = false;
+
+        Order limitOrder = OrderRestClient.sendOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
+
+        return limitOrder;
+    }
+
+    public static Order sendMarketBuyOrder(HitBtcAPI hitBtcAPI, String symbol, String amount) {
+        return sendMarketOrder(hitBtcAPI, symbol, amount, new Side(Side.BUY));
+    }
+
+    public static Order sendMarketSellOrder(HitBtcAPI hitBtcAPI, String symbol, String amount) {
+        return sendMarketOrder(hitBtcAPI, symbol, amount, new Side(Side.SELL));
+    }
+
+    public static Order sendMarketOrder(HitBtcAPI hitBtcAPI, String symbol, String amount, Side side) {
+        Ticker ticker = TickerRestClient.getTickerById(symbol.toString());
+        String price = ticker.getLast();
+        String quantity="";
+
+        switch (side.getSide()){
+            case "buy":
+                quantity = ticker.getMarketBuyQuantityByAmount(Float.valueOf(amount));
+                break;
+            case "sell":
+                quantity = ticker.getMarketSellQuantityByAmount(Float.valueOf(amount));
+                break;
+        }
+
+        TradeType tradeType = new TradeType(TradeType.MARKET);
+        TimeInForce timeInForce = new TimeInForce(TimeInForce.IOC_IMMEDIATE_OR_CANCEL);
+        boolean postOnly = false;
+
+        Order limitOrder = OrderRestClient.sendOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
+
+        return limitOrder;
+    }
+
+    public static Order sendOrder(HitBtcAPI hitBtcAPI, String symbol, Side side, String quantity, String price,
+                                  TradeType tradeType, TimeInForce timeInForce, boolean postOnly) {
         RestTemplate restTemplate = new RestTemplate();
         String encodedCredentials = hitBtcAPI.getEncodedCredentials();
 
@@ -89,10 +131,13 @@ public class OrderRestClient {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
         map.add("symbol", symbol);
         map.add("side", side.toString());
-        map.add("type", TradeType.LIMIT);
+        map.add("type", tradeType.toString());
         map.add("timeInForce", timeInForce.toString());
         map.add("quantity", quantity);
         map.add("price", price);
+        if (postOnly)
+            map.add("postOnly", "true");
+        else map.add("postOnly", "false");
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
 

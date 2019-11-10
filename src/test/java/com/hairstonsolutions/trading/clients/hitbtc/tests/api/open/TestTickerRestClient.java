@@ -9,7 +9,6 @@ import com.hairstonsolutions.trading.clients.hitbtc.Ticker;
 import com.hairstonsolutions.trading.clients.hitbtc.api.open.TickerRestClient;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 
 public class TestTickerRestClient {
 
@@ -68,7 +67,7 @@ public class TestTickerRestClient {
     public void marketQuantity() {
         float marketAmount = 10.4f;
         String symbol = "BTCUSD";
-        System.out.println(TickerRestClient.getMarketQuantityByUSDAmount(marketAmount, symbol));
+        System.out.println(TickerRestClient.getMarketBuyQuantityByUSDAmount(marketAmount, symbol));
     }
 
     @Test

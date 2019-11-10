@@ -1,6 +1,5 @@
 package com.hairstonsolutions.trading.clients.hitbtc.orders;
 
-import com.hairstonsolutions.trading.clients.hitbtc.Symbol;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.Side;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.TimeInForce;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.TradeType;
@@ -63,20 +62,76 @@ HISTORY ORDER: /history/order
 
 @Data
 public class Order {
-    long id;
-    String clientOrderId;
-    String symbol;
-    Side side;
-    String status;
-    TradeType type;
-    TimeInForce timeInForce;
-    String price;
-    String quantity;
-    boolean postOnly;
-    String cumQuantity;
-    String createdAt;   //@TODO Convert to Object TimeStamp
-    String updatedAt;   //@TODO Convert to Object TimeStamp
-    String stopPrice;
-    String expireTime;
-    Trade tradesReport[];
+    private long id;
+    private String clientOrderId;
+    private String symbol;
+    private Side side;
+    private String status;
+    private TradeType type;
+    private TimeInForce timeInForce;
+    private String price;
+    private String quantity;
+    private boolean postOnly;
+    private String cumQuantity;
+    private String createdAt;   //@TODO Convert to Object TimeStamp
+    private String updatedAt;   //@TODO Convert to Object TimeStamp
+    private String stopPrice;
+    private String expireTime;
+    private Trade tradesReport[];
+
+    public long getId() {
+        return id;
+    }
+
+    public String getClientOrderId() {
+        return clientOrderId;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public Side getSide() {
+        return side;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public TradeType getType() {
+        return type;
+    }
+
+    public TimeInForce getTimeInForce() {
+        return timeInForce;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public boolean isPostOnly() {
+        return postOnly;
+    }
+
+    public String getCumQuantity() {
+        return cumQuantity;
+    }
+
+    public String getStopPrice() {
+        return stopPrice;
+    }
+
+    public String getExpireTime() {
+        return expireTime;
+    }
+
+    public Trade[] getTradesReport() {
+        return tradesReport;
+    }
 }
