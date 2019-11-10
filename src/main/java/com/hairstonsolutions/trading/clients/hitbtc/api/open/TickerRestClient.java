@@ -9,7 +9,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-//import java.text.DecimalFormat;
 
 public class TickerRestClient {
 
@@ -42,11 +41,18 @@ public class TickerRestClient {
         return ticker;
     }
 
-    public static String getMarketQuantityByUSDAmount(float usdAmount, String symbol) {
+    public static String getMarketBuyQuantityByUSDAmount(float usdAmount, String symbol) {
         Ticker myTicker = TickerRestClient.getTickerById(symbol);
         DecimalFormat df = new DecimalFormat("##.#####");
         df.setRoundingMode(RoundingMode.UP);
         return df.format(usdAmount / Float.valueOf(myTicker.getAsk()));
+    }
+
+    public static String getMarketSellQuantityByUSDAmount(float usdAmount, String symbol) {
+        Ticker myTicker = TickerRestClient.getTickerById(symbol);
+        DecimalFormat df = new DecimalFormat("##.#####");
+        df.setRoundingMode(RoundingMode.UP);
+        return df.format(usdAmount / Float.valueOf(myTicker.getBid()));
     }
 
     public static String getCurrentPrice(String symbol) {

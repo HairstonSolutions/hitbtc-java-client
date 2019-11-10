@@ -130,10 +130,16 @@ public class Ticker {
                 " }";
     }
 
-    public String getMarketQuantityByUSDAmount(float usdAmount) {
+    public String getMarketBuyQuantityByAmount(float amount) {
         DecimalFormat df = new DecimalFormat("##.#####");
         df.setRoundingMode(RoundingMode.UP);
-        return df.format(usdAmount / Float.valueOf(getAsk()));
+        return df.format(amount / Float.valueOf(getAsk()));
+    }
+
+    public String getMarketSellQuantityByAmount(float amount) {
+        DecimalFormat df = new DecimalFormat("##.#####");
+        df.setRoundingMode(RoundingMode.UP);
+        return df.format(amount / Float.valueOf(getBid()));
     }
 
     @Override
