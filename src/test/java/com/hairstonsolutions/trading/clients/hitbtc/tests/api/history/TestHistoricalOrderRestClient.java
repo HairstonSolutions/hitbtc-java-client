@@ -57,4 +57,14 @@ public class TestHistoricalOrderRestClient {
         }
         System.out.println(String.format("Order Trades Total: %s", count));
     }
+
+    @Test
+    public void getHistoricalOrderbyClientOrderID() {
+        String clientOrderId = "84c5b2b6a1dc0ad12d257a5ce77cf58f";
+
+        Order order = HistoricalOrderRestClient.getHistoricalOrder(hitBtcAPI, clientOrderId);
+
+        assert order.getClientOrderId().equals(clientOrderId);
+        System.out.println(order);
+    }
 }
