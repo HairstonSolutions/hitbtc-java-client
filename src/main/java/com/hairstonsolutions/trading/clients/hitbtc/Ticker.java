@@ -142,6 +142,16 @@ public class Ticker {
         return df.format(amount / Float.valueOf(getBid()));
     }
 
+    public String getPotentialProfit(String quantity) {
+        DecimalFormat df = new DecimalFormat("##.##");
+        df.setRoundingMode(RoundingMode.UP);
+
+        float fQuantity = Float.valueOf(quantity);
+        float fAsk = Float.valueOf(bid);
+
+        return df.format(fQuantity * fAsk);
+    }
+
     @Override
     public String toString() {
         return toJSON();
