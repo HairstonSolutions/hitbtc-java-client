@@ -37,4 +37,47 @@ public class TestBalanceRestClient {
 
         System.out.println(String.format("Balances Retrived: %s", count));
     }
+
+    @Test
+    public void getAllBalances() {
+        BalanceRestClient balanceRestClient = new BalanceRestClient(hitBtcAPI);
+        Balance[] balances = balanceRestClient.getBalances();
+
+        int count = 0;
+        for ( Balance bal : balances ) {
+            System.out.println(bal);
+            count++;
+        }
+
+        System.out.println(String.format("Balances Retrived: %s", count));
+    }
+
+    @Test
+    public void getAllBalancesStatic() {
+        Balance[] balances = BalanceRestClient.retrieveBalances(hitBtcAPI);
+
+        int count = 0;
+        for ( Balance bal : balances ) {
+            System.out.println(bal);
+            count++;
+        }
+
+        System.out.println(String.format("Balances Retrived: %s", count));
+    }
+
+    @Test
+    public void getOneBalance() {
+        String currency = "BTC";
+        Balance balance = BalanceRestClient.getBalance(hitBtcAPI, currency);
+        System.out.println(balance);
+        assert balance.getCurrency().equals(currency);
+    }
+
+    @Test
+    public void getOneBalance2() {
+        String currency = "USDT";
+        Balance balance = BalanceRestClient.getBalance(hitBtcAPI, currency);
+        System.out.println(balance);
+        assert balance.getCurrency().equals("USD");
+    }
 }
