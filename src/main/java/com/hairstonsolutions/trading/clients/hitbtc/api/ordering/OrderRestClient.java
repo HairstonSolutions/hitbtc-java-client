@@ -114,9 +114,9 @@ public class OrderRestClient {
         TimeInForce timeInForce = new TimeInForce(TimeInForce.IOC_IMMEDIATE_OR_CANCEL);
         boolean postOnly = false;
 
-        Order limitOrder = OrderRestClient.sendOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
+        Order marketOrder = OrderRestClient.sendOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
 
-        return limitOrder;
+        return marketOrder;
     }
 
     public static Order sendOrder(HitBtcAPI hitBtcAPI, String symbol, Side side, String quantity, String price,
@@ -143,7 +143,8 @@ public class OrderRestClient {
 
         ResponseEntity<Order> responseEntity = restTemplate.exchange(REQUEST_URI, HttpMethod.POST, request, Order.class);
 
-        LOG.info(String.format("Status Code: %s", responseEntity.getStatusCode()));
+        LOG.info(String.format("Submitted %s %s Order: Price=%s, Quantity=%s, Symbol=%s, TimeInForce=%s %s",
+                tradeType.toString(), side.toString(), quantity, symbol, timeInForce.toString()));
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
         return responseEntity.getBody();
