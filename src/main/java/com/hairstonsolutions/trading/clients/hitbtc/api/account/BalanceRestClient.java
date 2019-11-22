@@ -29,7 +29,7 @@ public class BalanceRestClient {
 
         headers.set("Authorization", "Basic " + encodedCredentials);
 
-        HttpEntity<String> httpEntity = new HttpEntity<String>(headers);
+        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
         ResponseEntity<Balance[]> responseEntity = restTemplate.exchange(REQUEST_URI, HttpMethod.GET, httpEntity, Balance[].class);
 
@@ -49,7 +49,7 @@ public class BalanceRestClient {
 
         headers.set("Authorization", "Basic " + encodedCredentials);
 
-        HttpEntity<String> httpEntity = new HttpEntity<String>(headers);
+        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
         ResponseEntity<Balance[]> responseEntity = restTemplate.exchange(REQUEST_URI, HttpMethod.GET, httpEntity, Balance[].class);
 

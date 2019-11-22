@@ -30,12 +30,12 @@ public class TransferRestClient {
         headers.set("Authorization", "Basic " + encodedCredentials);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("currency", currency);
         map.add("type", direction);
         map.add("amount", amount);
 
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
 
         ResponseEntity<TransferResponse> responseEntity = restTemplate.exchange(REQUEST_URI, HttpMethod.POST, request, TransferResponse.class);
 
@@ -64,6 +64,7 @@ public class TransferRestClient {
         LOG.info(responseEntity.getStatusCode().toString());
 
         TransferResponse transferResponse = responseEntity.getBody();
+        assert transferResponse != null;
         LOG.info(transferResponse.toString());
     }
 

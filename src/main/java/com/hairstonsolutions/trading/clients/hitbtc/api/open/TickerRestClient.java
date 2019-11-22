@@ -37,6 +37,7 @@ public class TickerRestClient {
         RestTemplate restTemplate = new RestTemplate();
         Ticker ticker = restTemplate.getForObject(REQUEST_URI + "/{tickerId}", Ticker.class, tickerId);
 
+        assert ticker != null;
         LOG.info(String.format("Return Values: %s", ticker.toString()));
 
         return ticker;
@@ -47,7 +48,7 @@ public class TickerRestClient {
         DecimalFormat df = new DecimalFormat("##.#####");
         df.setRoundingMode(RoundingMode.UP);
 
-        return df.format(usdAmount / Float.valueOf(myTicker.getAsk()));
+        return df.format(usdAmount / Float.parseFloat(myTicker.getAsk()));
     }
 
     public static String getMarketSellQuantityByUSDAmount(float usdAmount, String symbol) {
@@ -55,7 +56,7 @@ public class TickerRestClient {
         DecimalFormat df = new DecimalFormat("##.#####");
         df.setRoundingMode(RoundingMode.UP);
 
-        return df.format(usdAmount / Float.valueOf(myTicker.getBid()));
+        return df.format(usdAmount / Float.parseFloat(myTicker.getBid()));
     }
 
     public static String getCurrentPrice(String symbol) {

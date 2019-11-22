@@ -30,7 +30,7 @@ public class HistoricalOrderRestClient {
 
         httpHeaders.set("Authorization", "Basic " + encodedCredentials);
 
-        HttpEntity<String> httpEntity = new HttpEntity<String>(httpHeaders);
+        HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
 
         ResponseEntity<Order[]> responseEntity = restTemplate.exchange(REQUEST_URI, HttpMethod.GET, httpEntity, Order[].class);
 
@@ -46,7 +46,7 @@ public class HistoricalOrderRestClient {
 
         httpHeaders.set("Authorization", "Basic " + encodedCredentials);
 
-        HttpEntity<String> httpEntity = new HttpEntity<String>(httpHeaders);
+        HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
 
         ResponseEntity<Order[]> responseEntity = restTemplate.exchange(REQUEST_URI + "?limit="+count, HttpMethod.GET, httpEntity, Order[].class);
 
@@ -62,7 +62,7 @@ public class HistoricalOrderRestClient {
 
         httpHeaders.set("Authorization", "Basic " + encodedCredentials);
 
-        HttpEntity<String> httpEntity = new HttpEntity<String>(httpHeaders);
+        HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
 
         ResponseEntity<Trade[]> responseEntity = restTemplate.exchange(REQUEST_URI+"/"+orderId+"/trades", HttpMethod.GET, httpEntity, Trade[].class);
 
@@ -78,12 +78,13 @@ public class HistoricalOrderRestClient {
 
         httpHeaders.set("Authorization", "Basic " + encodedCredentials);
 
-        HttpEntity<String> httpEntity = new HttpEntity<String>(httpHeaders);
+        HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
 
         ResponseEntity<Order[]> responseEntity = restTemplate.exchange(REQUEST_URI+"?clientOrderId="+clientOrderId, HttpMethod.GET, httpEntity, Order[].class);
 
-        Order orders[] = responseEntity.getBody();
+        Order[] orders = responseEntity.getBody();
 
+        assert orders != null;
         return orders[0];
     }
 }

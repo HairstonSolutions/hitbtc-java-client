@@ -66,7 +66,7 @@ public class OrderRestClient {
 
         httpHeaders.set("Authorization", "Basic " + encodedCredentials);
 
-        HttpEntity<String> httpEntity = new HttpEntity<String>(httpHeaders);
+        HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
 
         ResponseEntity<Order[]> responseEntity = restTemplate.exchange(REQUEST_URI, HttpMethod.GET, httpEntity, Order[].class);
 
@@ -80,9 +80,7 @@ public class OrderRestClient {
         TimeInForce timeInForce = new TimeInForce(TimeInForce.GTC_GOOD_TILL_CANCELLED);
         boolean postOnly = false;
 
-        Order limitOrder = OrderRestClient.sendOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
-
-        return limitOrder;
+        return OrderRestClient.sendOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
     }
 
     public static Order sendMarketBuyOrder(HitBtcAPI hitBtcAPI, String symbol, String amount) {
@@ -93,17 +91,17 @@ public class OrderRestClient {
         return sendMarketOrder(hitBtcAPI, symbol, amount, new Side(Side.SELL));
     }
 
-    public static Order sendMarketOrder(HitBtcAPI hitBtcAPI, String symbol, String amount, Side side) {
-        Ticker ticker = TickerRestClient.getTickerById(symbol.toString());
+    private static Order sendMarketOrder(HitBtcAPI hitBtcAPI, String symbol, String amount, Side side) {
+        Ticker ticker = TickerRestClient.getTickerById(symbol);
         String price = ticker.getLast();
         String quantity="";
 
         switch (side.getSide()){
             case "buy":
-                quantity = ticker.getMarketBuyQuantityByAmount(Float.valueOf(amount));
+                quantity = ticker.getMarketBuyQuantityByAmount(Float.parseFloat(amount));
                 break;
             case "sell":
-                quantity = ticker.getMarketSellQuantityByAmount(Float.valueOf(amount));
+                quantity = ticker.getMarketSellQuantityByAmount(Float.parseFloat(amount));
                 break;
         }
 
@@ -111,13 +109,11 @@ public class OrderRestClient {
         TimeInForce timeInForce = new TimeInForce(TimeInForce.IOC_IMMEDIATE_OR_CANCEL);
         boolean postOnly = false;
 
-        Order marketOrder = OrderRestClient.sendOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
-
-        return marketOrder;
+        return OrderRestClient.sendOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
     }
 
-    public static Order sendOrder(HitBtcAPI hitBtcAPI, String symbol, Side side, String quantity, String price,
-                                  TradeType tradeType, TimeInForce timeInForce, boolean postOnly) {
+    private static Order sendOrder(HitBtcAPI hitBtcAPI, String symbol, Side side, String quantity, String price,
+                                   TradeType tradeType, TimeInForce timeInForce, boolean postOnly) {
         RestTemplate restTemplate = new RestTemplate();
         String encodedCredentials = hitBtcAPI.getEncodedCredentials();
 
@@ -125,7 +121,7 @@ public class OrderRestClient {
         headers.set("Authorization", "Basic " + encodedCredentials);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("symbol", symbol);
         map.add("side", side.toString());
         map.add("type", tradeType.toString());
@@ -136,12 +132,12 @@ public class OrderRestClient {
             map.add("postOnly", "true");
         else map.add("postOnly", "false");
 
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
 
         ResponseEntity<Order> responseEntity = restTemplate.exchange(REQUEST_URI, HttpMethod.POST, request, Order.class);
 
-        LOG.info(String.format("Submitted %s %s Order: Price=%s, Quantity=%s, Symbol=%s, TimeInForce=%s %s",
-                tradeType.toString(), side.toString(), quantity, symbol, timeInForce.toString()));
+        LOG.info(String.format("Submitted %s %s Order: Price=%s, Quantity=%s, Symbol=%s, TimeInForce=%s",
+                tradeType.toString(), side.toString(), price, quantity, symbol, timeInForce.toString()));
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
         return responseEntity.getBody();
