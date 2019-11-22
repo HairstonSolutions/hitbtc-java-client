@@ -37,7 +37,6 @@ public class OrderRestClient {
 
         ResponseEntity<String> responseEntity = restTemplate.exchange(REQUEST_URI + "/"+clientOrderId, HttpMethod.GET, httpEntity, String.class);
 
-        LOG.info(String.format("Status Code: %s", responseEntity.getStatusCode()));
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
         return responseEntity;
@@ -55,7 +54,6 @@ public class OrderRestClient {
 
         ResponseEntity<Order> responseEntity = restTemplate.exchange(REQUEST_URI + "/"+clientOrderId, HttpMethod.GET, httpEntity, Order.class);
 
-        LOG.info(String.format("Status Code: %s", responseEntity.getStatusCode()));
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
         return responseEntity.getBody();
@@ -72,7 +70,6 @@ public class OrderRestClient {
 
         ResponseEntity<Order[]> responseEntity = restTemplate.exchange(REQUEST_URI, HttpMethod.GET, httpEntity, Order[].class);
 
-        LOG.info(String.format("Status Code: %s", responseEntity.getStatusCode()));
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
         return responseEntity.getBody();

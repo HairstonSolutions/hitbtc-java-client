@@ -34,7 +34,6 @@ public class HistoricalOrderRestClient {
 
         ResponseEntity<Order[]> responseEntity = restTemplate.exchange(REQUEST_URI, HttpMethod.GET, httpEntity, Order[].class);
 
-        LOG.info(String.format("Status Code: %s", responseEntity.getStatusCode()));
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
         return responseEntity.getBody();
@@ -51,7 +50,6 @@ public class HistoricalOrderRestClient {
 
         ResponseEntity<Order[]> responseEntity = restTemplate.exchange(REQUEST_URI + "?limit="+count, HttpMethod.GET, httpEntity, Order[].class);
 
-        LOG.info(String.format("Status Code: %s", responseEntity.getStatusCode()));
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
         return responseEntity.getBody();
@@ -68,7 +66,6 @@ public class HistoricalOrderRestClient {
 
         ResponseEntity<Trade[]> responseEntity = restTemplate.exchange(REQUEST_URI+"/"+orderId+"/trades", HttpMethod.GET, httpEntity, Trade[].class);
 
-        LOG.info(String.format("Status Code: %s", responseEntity.getStatusCode()));
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
         return responseEntity.getBody();

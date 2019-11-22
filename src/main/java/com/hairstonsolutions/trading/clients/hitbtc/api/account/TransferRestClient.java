@@ -39,7 +39,6 @@ public class TransferRestClient {
 
         ResponseEntity<TransferResponse> responseEntity = restTemplate.exchange(REQUEST_URI, HttpMethod.POST, request, TransferResponse.class);
 
-        LOG.info(String.format("Status Code: %s", responseEntity.getStatusCode()));
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
         return responseEntity;

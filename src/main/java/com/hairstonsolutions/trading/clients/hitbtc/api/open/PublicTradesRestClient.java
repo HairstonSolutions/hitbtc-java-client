@@ -18,21 +18,19 @@ public class PublicTradesRestClient {
 
     public ResponseEntity<PublicTrade[]> getForEntity(String tickerId) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<PublicTrade[]> entity = restTemplate.getForEntity(REQUEST_URI + "/{tickerId}", PublicTrade[].class, tickerId);
+        ResponseEntity<PublicTrade[]> responseEntity = restTemplate.getForEntity(REQUEST_URI + "/{tickerId}", PublicTrade[].class, tickerId);
 
-        LOG.info(String.format("Status Code: %s", entity.getStatusCode()));
-        LOG.info(String.format("Return Values: %s", entity.toString()));
+        LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
-        return entity;
+        return responseEntity;
     }
 
     public ResponseEntity<PublicTrade[]> getForEntity(String tickerId, int amountToRetrieve) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<PublicTrade[]> entity = restTemplate.getForEntity(REQUEST_URI + "/{tickerId}?limit={amountToRetrieve}", PublicTrade[].class, tickerId, amountToRetrieve);
+        ResponseEntity<PublicTrade[]> responseEntity = restTemplate.getForEntity(REQUEST_URI + "/{tickerId}?limit={amountToRetrieve}", PublicTrade[].class, tickerId, amountToRetrieve);
 
-        LOG.info(String.format("Status Code: %s", entity.getStatusCode()));
-        LOG.info(String.format("Return Values: %s", entity.toString()));
+        LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
-        return entity;
+        return responseEntity;
     }
 }

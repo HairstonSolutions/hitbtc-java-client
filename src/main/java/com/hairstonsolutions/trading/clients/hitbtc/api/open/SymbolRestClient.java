@@ -18,12 +18,12 @@ public class SymbolRestClient {
 
     public ResponseEntity<Symbol> getForEntity(String symbol) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Symbol> entity = restTemplate.getForEntity(REQUEST_URI + "/{symbol}",
+        ResponseEntity<Symbol> responseEntity = restTemplate.getForEntity(REQUEST_URI + "/{symbol}",
                                                                     Symbol.class, symbol);
-        LOG.info(String.format("Status Code: %s", entity.getStatusCode()));
-        LOG.info(String.format("Return values: %s", entity.toString()));
 
-        return entity;
+        LOG.info(String.format("Return values: %s", responseEntity.toString()));
+
+        return responseEntity;
     }
 
     public Symbol getSymbol(String id) {
@@ -32,11 +32,11 @@ public class SymbolRestClient {
 
     public static Symbol getSymbolByTickerId(String id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Symbol> entity = restTemplate.getForEntity(REQUEST_URI + "/{id}",
+        ResponseEntity<Symbol> responseEntity = restTemplate.getForEntity(REQUEST_URI + "/{id}",
                 Symbol.class, id);
-        LOG.info(String.format("Status Code: %s", entity.getStatusCode()));
-        LOG.info(String.format("Return values: %s", entity.toString()));
 
-        return entity.getBody();
+        LOG.info(String.format("Return values: %s", responseEntity.toString()));
+
+        return responseEntity.getBody();
     }
 }

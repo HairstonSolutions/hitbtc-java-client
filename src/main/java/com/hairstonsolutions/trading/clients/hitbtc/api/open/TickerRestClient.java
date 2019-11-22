@@ -21,12 +21,12 @@ public class TickerRestClient {
 
     public ResponseEntity<Ticker> getForEntity(String tickerId) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Ticker> entity = restTemplate.getForEntity(REQUEST_URI + "/{tickerId}",
+        ResponseEntity<Ticker> responseEntity = restTemplate.getForEntity(REQUEST_URI + "/{tickerId}",
                 Ticker.class, tickerId);
-        LOG.info(String.format("Status Code: %s", entity.getStatusCode()));
-        LOG.info(String.format("Return Values: %s", entity.toString()));
 
-        return entity;
+        LOG.info(String.format("Return Values: %s", responseEntity.toString()));
+
+        return responseEntity;
     }
 
     public Ticker getTicker(String tickerId) {
@@ -36,6 +36,7 @@ public class TickerRestClient {
     public static Ticker getTickerById(String tickerId) {
         RestTemplate restTemplate = new RestTemplate();
         Ticker ticker = restTemplate.getForObject(REQUEST_URI + "/{tickerId}", Ticker.class, tickerId);
+
         LOG.info(String.format("Return Values: %s", ticker.toString()));
 
         return ticker;
@@ -45,6 +46,7 @@ public class TickerRestClient {
         Ticker myTicker = TickerRestClient.getTickerById(symbol);
         DecimalFormat df = new DecimalFormat("##.#####");
         df.setRoundingMode(RoundingMode.UP);
+
         return df.format(usdAmount / Float.valueOf(myTicker.getAsk()));
     }
 
@@ -52,11 +54,13 @@ public class TickerRestClient {
         Ticker myTicker = TickerRestClient.getTickerById(symbol);
         DecimalFormat df = new DecimalFormat("##.#####");
         df.setRoundingMode(RoundingMode.UP);
+
         return df.format(usdAmount / Float.valueOf(myTicker.getBid()));
     }
 
     public static String getCurrentPrice(String symbol) {
         Ticker ticker = TickerRestClient.getTickerById(symbol);
+
         return ticker.getAsk();
     }
 }

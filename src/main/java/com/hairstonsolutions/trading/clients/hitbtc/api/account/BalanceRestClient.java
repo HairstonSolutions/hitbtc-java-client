@@ -33,7 +33,6 @@ public class BalanceRestClient {
 
         ResponseEntity<Balance[]> responseEntity = restTemplate.exchange(REQUEST_URI, HttpMethod.GET, httpEntity, Balance[].class);
 
-        LOG.info(String.format("Status Code: %s", responseEntity.getStatusCode()));
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
         return responseEntity;
@@ -54,7 +53,6 @@ public class BalanceRestClient {
 
         ResponseEntity<Balance[]> responseEntity = restTemplate.exchange(REQUEST_URI, HttpMethod.GET, httpEntity, Balance[].class);
 
-        LOG.info(String.format("Status Code: %s", responseEntity.getStatusCode()));
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
         return responseEntity.getBody();
