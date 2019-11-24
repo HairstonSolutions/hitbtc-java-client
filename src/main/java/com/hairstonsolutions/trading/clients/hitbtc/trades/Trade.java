@@ -19,16 +19,67 @@ public class Trade {
     private String fee;
     private String timestamp;
 
+    public long getId() {
+        return id;
+    }
+
+    public String getClientOrderId() {
+        return clientOrderId;
+    }
+
+    public long getOrderId() {
+        return orderId;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public Side getSide() {
+        return side;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public String getFee() {
+        return fee;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
     @ToString.Include
     public String totalCost() {
-        float fQuantity = Float.valueOf(quantity);
-        float fPrice = Float.valueOf(price);
+        float fQuantity = Float.parseFloat(quantity);
+        float fPrice = Float.parseFloat(price);
         DecimalFormat df = new DecimalFormat("##.##");
         df.setRoundingMode(RoundingMode.HALF_UP);
 
         float totalCost = fQuantity * fPrice;
 
         return df.format(totalCost);
+    }
+
+    public static String getAveragePrice(Trade[] tradeReport) {
+        if ( tradeReport.length == 0)
+            return "0.0";
+
+        DecimalFormat df = new DecimalFormat("##.##");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+
+        float sum = 0f;
+        for ( Trade trades : tradeReport ) {
+            sum = sum + Float.parseFloat(trades.getPrice());
+        }
+
+        return df.format(sum / tradeReport.length);
     }
 }
 
