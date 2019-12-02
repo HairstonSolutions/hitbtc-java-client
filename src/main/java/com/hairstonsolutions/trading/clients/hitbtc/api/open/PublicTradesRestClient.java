@@ -33,4 +33,22 @@ public class PublicTradesRestClient {
 
         return responseEntity;
     }
+
+    public static PublicTrade[] getPublicTrades(String tickerId) {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<PublicTrade[]> responseEntity = restTemplate.getForEntity(REQUEST_URI + "/{tickerId}", PublicTrade[].class, tickerId);
+
+        LOG.info(String.format("Return Values: %s", responseEntity.toString()));
+
+        return responseEntity.getBody();
+    }
+
+    public static PublicTrade[] getPublicTrades(String tickerId, int amount) {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<PublicTrade[]> responseEntity = restTemplate.getForEntity(REQUEST_URI + "/{tickerId}?limit={amountToRetrieve}", PublicTrade[].class, tickerId, amount);
+
+        LOG.info(String.format("Return Values: %s", responseEntity.toString()));
+
+        return responseEntity.getBody();
+    }
 }
