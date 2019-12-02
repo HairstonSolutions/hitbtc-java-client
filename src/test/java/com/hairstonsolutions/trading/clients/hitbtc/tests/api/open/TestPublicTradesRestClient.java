@@ -19,6 +19,8 @@ public class TestPublicTradesRestClient {
 
         PublicTrade[] publicTrade = myGetTradesResponseEntity.getBody();
 
+        assert publicTrade != null;
+
         int count = 0;
         for ( PublicTrade pb : publicTrade ) {
             System.out.println(pb);
@@ -39,6 +41,42 @@ public class TestPublicTradesRestClient {
         assert myGetTradesResponseEntity.getStatusCode().toString().equals("200 OK");
 
         PublicTrade[] publicTrade = myGetTradesResponseEntity.getBody();
+
+        assert publicTrade != null;
+
+        int count = 0;
+        for ( PublicTrade pb : publicTrade ) {
+            System.out.println(pb);
+            count++;
+        }
+
+        System.out.println(String.format("Public Trades Retrieved for Ticker %s : %s", tickerId, count));
+    }
+
+    @Test
+    public void getPublicTradesforSymbol() {
+        String tickerId = "BTCUSD";
+
+        PublicTrade[] publicTrade = PublicTradesRestClient.getPublicTrades(tickerId);
+
+        assert publicTrade != null;
+
+        int count = 0;
+        for ( PublicTrade pb : publicTrade ) {
+            System.out.println(pb);
+            count++;
+        }
+
+        System.out.println(String.format("Public Trades Retrieved for Ticker %s : %s", tickerId, count));
+    }
+
+    @Test
+    public void getPublicTradesforSymbolByAmount() {
+        String tickerId = "BTCUSD";
+        int amountToRetrieve = 23;
+        PublicTrade[] publicTrade = PublicTradesRestClient.getPublicTrades(tickerId,amountToRetrieve);
+
+        assert publicTrade != null;
 
         int count = 0;
         for ( PublicTrade pb : publicTrade ) {
