@@ -36,3 +36,12 @@ public class Side {
         return side;
     }
 }
+
+/*
+MYSQL TABLE CREATION SCHEMA:
+create table side
+(
+    public_trade    int             UNIQUE,
+    side            varchar(255)
+);
+ */

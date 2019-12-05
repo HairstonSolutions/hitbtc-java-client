@@ -9,51 +9,6 @@ import org.springframework.web.client.RestTemplate;
 public class TestPublicTradesRestClient {
 
     @Test
-    public void getTradesForSymbol() {
-        String tickerId = "BTCUSD";
-        PublicTradesRestClient publicTradesRestClient = new PublicTradesRestClient();
-
-        ResponseEntity<PublicTrade[]> myGetTradesResponseEntity = publicTradesRestClient.getForEntity(tickerId);
-
-        assert myGetTradesResponseEntity.getStatusCode().toString().equals("200 OK");
-
-        PublicTrade[] publicTrade = myGetTradesResponseEntity.getBody();
-
-        assert publicTrade != null;
-
-        int count = 0;
-        for ( PublicTrade pb : publicTrade ) {
-            System.out.println(pb);
-            count++;
-        }
-
-        System.out.println(String.format("Public Trades Retrieved for Ticker %s : %s", tickerId, count));
-    }
-
-    @Test
-    public void getTradesBySymbolAmount() {
-        String tickerId = "BTCUSD";
-        int amountToRetrieve = 23;
-        PublicTradesRestClient publicTradesRestClient = new PublicTradesRestClient();
-
-        ResponseEntity<PublicTrade[]> myGetTradesResponseEntity = publicTradesRestClient.getForEntity(tickerId, amountToRetrieve);
-
-        assert myGetTradesResponseEntity.getStatusCode().toString().equals("200 OK");
-
-        PublicTrade[] publicTrade = myGetTradesResponseEntity.getBody();
-
-        assert publicTrade != null;
-
-        int count = 0;
-        for ( PublicTrade pb : publicTrade ) {
-            System.out.println(pb);
-            count++;
-        }
-
-        System.out.println(String.format("Public Trades Retrieved for Ticker %s : %s", tickerId, count));
-    }
-
-    @Test
     public void getPublicTradesforSymbol() {
         String tickerId = "BTCUSD";
 
@@ -73,7 +28,7 @@ public class TestPublicTradesRestClient {
     @Test
     public void getPublicTradesforSymbolByAmount() {
         String tickerId = "BTCUSD";
-        int amountToRetrieve = 23;
+        int amountToRetrieve = 2;
         PublicTrade[] publicTrade = PublicTradesRestClient.getPublicTrades(tickerId,amountToRetrieve);
 
         assert publicTrade != null;

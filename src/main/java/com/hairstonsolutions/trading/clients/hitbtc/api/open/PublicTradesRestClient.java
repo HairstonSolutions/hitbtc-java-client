@@ -13,26 +13,6 @@ public class PublicTradesRestClient {
     private static final String RESOURCE_PATH = "/public/trades";
     private static String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
 
-    public PublicTradesRestClient() {
-    }
-
-    public ResponseEntity<PublicTrade[]> getForEntity(String tickerId) {
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<PublicTrade[]> responseEntity = restTemplate.getForEntity(REQUEST_URI + "/{tickerId}", PublicTrade[].class, tickerId);
-
-        LOG.info(String.format("Return Values: %s", responseEntity.toString()));
-
-        return responseEntity;
-    }
-
-    public ResponseEntity<PublicTrade[]> getForEntity(String tickerId, int amountToRetrieve) {
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<PublicTrade[]> responseEntity = restTemplate.getForEntity(REQUEST_URI + "/{tickerId}?limit={amountToRetrieve}", PublicTrade[].class, tickerId, amountToRetrieve);
-
-        LOG.info(String.format("Return Values: %s", responseEntity.toString()));
-
-        return responseEntity;
-    }
 
     public static PublicTrade[] getPublicTrades(String tickerId) {
         RestTemplate restTemplate = new RestTemplate();
