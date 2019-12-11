@@ -5,6 +5,7 @@ public class TradeType {
     public static final String MARKET = "market";
     public static final String STOPLIMIT = "stopLimit";
     public static final String STOPMARKET = "stopMarket";
+    public static final String DEFAULT = LIMIT;
 
     private String type;
 
@@ -35,7 +36,7 @@ public class TradeType {
                 this.type = STOPMARKET;
                 break;
             default:
-                this.type = LIMIT;
+                this.type = DEFAULT;
         }
     }
 

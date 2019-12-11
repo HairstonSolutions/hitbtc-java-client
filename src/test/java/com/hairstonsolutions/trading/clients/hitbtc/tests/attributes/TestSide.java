@@ -8,7 +8,7 @@ public class TestSide {
     public void testDefault() {
         Side side = new Side();
         assert (side.getSide().equals("buy"));
-        assert (side.getSide().equals(Side.BUY));
+        assert (side.getSide().equals(Side.DEFAULT));
     }
 
     @Test
@@ -26,18 +26,18 @@ public class TestSide {
     @Test
     public void testEmptyInput() {
         Side side = new Side("");
-        assert (side.getSide().equals(Side.BUY));
+        assert (side.getSide().equals(Side.DEFAULT));
     }
 
     @Test
     public void testWrongInput() {
         Side side = new Side("dsafasf");
-        assert (side.getSide().equals(Side.BUY));
+        assert (side.getSide().equals(Side.DEFAULT));
     }
 
     @Test
     public void testObjectPrintout() {
         Side side = new Side();
-        assert (side.getSide().toString().equals(Side.BUY));
+        assert (side.getSide().equals(Side.DEFAULT));
     }
 }

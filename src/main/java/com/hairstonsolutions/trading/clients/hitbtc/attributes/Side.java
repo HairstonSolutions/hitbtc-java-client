@@ -3,6 +3,7 @@ package com.hairstonsolutions.trading.clients.hitbtc.attributes;
 public class Side {
     public static final String BUY = "buy";
     public static final String SELL = "sell";
+    public static final String DEFAULT = BUY;
 
     private String side;
 
@@ -27,7 +28,7 @@ public class Side {
                 this.side = SELL;
                 break;
             default:
-                this.side = BUY;
+                this.side = DEFAULT;
         }
     }
 

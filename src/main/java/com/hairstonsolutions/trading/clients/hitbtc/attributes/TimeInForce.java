@@ -6,6 +6,7 @@ public class TimeInForce {
     public static final String FOK_FILL_OR_KILL = "FOK";
     public static final String DAY = "Day";
     public static final String GTD_GOOD_TILL_DATETIME = "GTD";
+    public static final String DEFAULT = GTC_GOOD_TILL_CANCELLED;
 
     private String force;
 
@@ -39,7 +40,7 @@ public class TimeInForce {
                 this.force = GTD_GOOD_TILL_DATETIME;
                 break;
             default:
-                this.force = GTC_GOOD_TILL_CANCELLED;
+                this.force = DEFAULT;
         }
     }
 
