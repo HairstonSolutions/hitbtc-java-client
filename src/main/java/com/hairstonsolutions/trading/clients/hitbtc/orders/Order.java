@@ -1,6 +1,7 @@
 package com.hairstonsolutions.trading.clients.hitbtc.orders;
 
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.Side;
+import com.hairstonsolutions.trading.clients.hitbtc.attributes.Status;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.TimeInForce;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.TradeType;
 import com.hairstonsolutions.trading.clients.hitbtc.trades.Trade;
@@ -66,7 +67,7 @@ public class Order {
     private String clientOrderId;
     private String symbol;
     private Side side;
-    private String status;
+    private Status status;
     private TradeType type;
     private TimeInForce timeInForce;
     private String price;
@@ -77,7 +78,7 @@ public class Order {
     private String updatedAt;   //@TODO Convert to Object TimeStamp
     private String stopPrice;
     private String expireTime;
-    private Trade tradesReport[];
+    private Trade[] tradesReport;
 
     public long getId() {
         return id;
@@ -95,7 +96,7 @@ public class Order {
         return side;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
