@@ -7,6 +7,8 @@ import com.hairstonsolutions.trading.clients.hitbtc.trades.Trade;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 public class TestHistoricalOrderRestClient {
 
     final String TESTCONFIGFILE = "src/test/resources/hitbtckey.properties";
@@ -66,5 +68,19 @@ public class TestHistoricalOrderRestClient {
 
         assert order.getClientOrderId().equals(clientOrderId);
         System.out.println(order);
+    }
+
+    @Test
+    public void getHistoricalOrdersListByCount() {
+        int number = 10;
+
+        List<Order> historicalOrders = HistoricalOrderRestClient.getHistoricalOrdersList(hitBtcAPI, number);
+
+        int count = 0;
+        for ( Order orders : historicalOrders ) {
+            System.out.println(orders);
+            count++;
+        }
+        System.out.println(String.format("Orders Total: %s", count));
     }
 }

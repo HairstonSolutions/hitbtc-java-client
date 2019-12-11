@@ -11,6 +11,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class HistoricalOrderRestClient {
 
     private static final String RESOURCE_PATH = "/history/order";
@@ -86,5 +90,29 @@ public class HistoricalOrderRestClient {
 
         assert orders != null;
         return orders[0];
+    }
+
+    public static List<Order> getHistoricalOrdersList(HitBtcAPI hitBtcAPI, int count) {
+        RestTemplate restTemplate = new RestTemplate();
+        String encodedCredentials = hitBtcAPI.getEncodedCredentials();
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        httpHeaders.set("Authorization", "Basic " + encodedCredentials);
+
+        HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
+
+        ResponseEntity<Order[]> responseEntity = restTemplate.exchange(REQUEST_URI + "?limit="+count, HttpMethod.GET, httpEntity, Order[].class);
+
+        LOG.info(String.format("Return Values: %s", responseEntity.toString()));
+
+        Order[] orderArray = responseEntity.getBody();
+
+        List<Order> orderList = new ArrayList<>();
+
+        assert orderArray != null;
+        Collections.addAll(orderList, orderArray);
+
+        return orderList;
+
     }
 }
