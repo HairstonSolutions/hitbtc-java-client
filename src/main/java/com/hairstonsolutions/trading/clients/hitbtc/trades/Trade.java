@@ -9,6 +9,7 @@ import java.text.DecimalFormat;
 
 @Data
 public class Trade {
+
     private long id;
     private String clientOrderId;
     private long orderId;

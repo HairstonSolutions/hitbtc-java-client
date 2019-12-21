@@ -3,13 +3,10 @@ package com.hairstonsolutions.trading.clients.hitbtc.trades;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.Side;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 @Data
 @AllArgsConstructor
 public class PublicTrade {
-    @Id
-    private long aggregateId;
 
     private long id;
     private String price;
@@ -40,17 +37,3 @@ public class PublicTrade {
                 " }";
     }
 }
-
-/*
-MYSQL TABLE CREATION SCHEMA:
-create table public_trade
-(
-    aggregate_id    double            auto_increment  primary key,
-    id              double             null            UNIQUE,
-    price           varchar(255)    null,
-    quantity        varchar(255)    null,
-    timestamp       varchar(255)    null
-);
-
-HAS A DEPENDANCY ON THE SIDE TABLE WITHIN THE SIDE CLASS
- */
