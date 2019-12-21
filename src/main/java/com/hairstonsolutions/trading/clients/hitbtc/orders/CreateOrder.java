@@ -59,7 +59,7 @@ public class CreateOrder {
     }
 
     public String getTimeInForce() {
-        return timeInForce.getForce();
+        return timeInForce.getTimeInForce();
     }
 
     public String getPrice() {

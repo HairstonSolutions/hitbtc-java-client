@@ -8,44 +8,44 @@ public class TimeInForce {
     public static final String GTD_GOOD_TILL_DATETIME = "GTD";
     public static final String DEFAULT = GTC_GOOD_TILL_CANCELLED;
 
-    private String force;
+    private String timeInForce;
 
     public TimeInForce() {
-        this.force = GTC_GOOD_TILL_CANCELLED;
+        this.timeInForce = GTC_GOOD_TILL_CANCELLED;
     }
 
-    public TimeInForce(String force) {
-        this.setForce(force);
+    public TimeInForce(String timeInForce) {
+        this.setTimeInForce(timeInForce);
     }
 
-    public String getForce() {
-        return force;
+    public String getTimeInForce() {
+        return timeInForce;
     }
 
-    public void setForce(String force) {
-        switch(force) {
+    public void setTimeInForce(String timeInForce) {
+        switch(timeInForce) {
             case "GTC":
-                this.force = GTC_GOOD_TILL_CANCELLED;
+                this.timeInForce = GTC_GOOD_TILL_CANCELLED;
                 break;
             case "IOC":
-                this.force = IOC_IMMEDIATE_OR_CANCEL;
+                this.timeInForce = IOC_IMMEDIATE_OR_CANCEL;
                 break;
             case "FOK":
-                this.force = FOK_FILL_OR_KILL;
+                this.timeInForce = FOK_FILL_OR_KILL;
                 break;
             case "Day":
-                this.force = DAY;
+                this.timeInForce = DAY;
                 break;
             case "GTD":
-                this.force = GTD_GOOD_TILL_DATETIME;
+                this.timeInForce = GTD_GOOD_TILL_DATETIME;
                 break;
             default:
-                this.force = DEFAULT;
+                this.timeInForce = DEFAULT;
         }
     }
 
     @Override
     public String toString() {
-        return force;
+        return timeInForce;
     }
 }
