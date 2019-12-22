@@ -2,8 +2,8 @@ package com.hairstonsolutions.trading.clients.hitbtc.api.account;
 
 import com.hairstonsolutions.trading.clients.hitbtc.account.Balance;
 import com.hairstonsolutions.trading.clients.hitbtc.api.HitBtcAPI;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -14,7 +14,7 @@ public class BalanceRestClient {
 
     private static final String RESOURCE_PATH = "/account/balance";
     private static final String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
-    private static final Logger LOG = LoggerFactory.getLogger(BalanceRestClient.class);
+    private static final Log LOG = LogFactory.getLog(BalanceRestClient.class);
 
     private HitBtcAPI hitBtcAPI;
 

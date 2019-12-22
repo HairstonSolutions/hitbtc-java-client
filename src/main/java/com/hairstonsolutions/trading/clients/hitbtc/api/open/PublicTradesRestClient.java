@@ -2,16 +2,17 @@ package com.hairstonsolutions.trading.clients.hitbtc.api.open;
 
 import com.hairstonsolutions.trading.clients.hitbtc.api.HitBtcAPI;
 import com.hairstonsolutions.trading.clients.hitbtc.trades.PublicTrade;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 public class PublicTradesRestClient {
 
-    private static Logger LOG = LoggerFactory.getLogger(TickerRestClient.class);
+
     private static final String RESOURCE_PATH = "/public/trades";
-    private static String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
+    private static final String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
+    private static final Log LOG = LogFactory.getLog(TickerRestClient.class);
 
 
     public static PublicTrade[] getPublicTrades(String tickerId) {

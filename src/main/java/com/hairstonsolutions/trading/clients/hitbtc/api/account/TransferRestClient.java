@@ -3,8 +3,8 @@ package com.hairstonsolutions.trading.clients.hitbtc.api.account;
 import com.hairstonsolutions.trading.clients.hitbtc.account.Direction;
 import com.hairstonsolutions.trading.clients.hitbtc.account.TransferResponse;
 import com.hairstonsolutions.trading.clients.hitbtc.api.HitBtcAPI;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -12,9 +12,9 @@ import org.springframework.web.client.RestTemplate;
 
 public class TransferRestClient {
 
-    private static Logger LOG = LoggerFactory.getLogger(TransferRestClient.class);
     private static final String RESOURCE_PATH = "/account/transfer";
-    private static String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
+    private static final String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
+    private static final Log LOG = LogFactory.getLog(TransferRestClient.class);
 
     private HitBtcAPI hitBtcAPI;
 

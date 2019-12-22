@@ -1,10 +1,5 @@
 package com.hairstonsolutions.trading.clients.hitbtc.tests.api.open;
 
-/*
-THERE AREN'T MANY TEST IN THIS CLASS AS THERE ARE ONLY
-GENERAL GETTERS AND SETTERS FOR THE TICKER OBJECT.
- */
-
 import com.hairstonsolutions.trading.clients.hitbtc.Ticker;
 import com.hairstonsolutions.trading.clients.hitbtc.api.open.TickerRestClient;
 import org.junit.Test;
@@ -81,7 +76,7 @@ public class TestTickerRestClient {
 
         System.out.printf("The Current %s price is: $%s\n",symbol, myTicker.getAsk());
 
-        float calculatedQuantify = marketAmount / Float.valueOf(myTicker.getAsk());
+        float calculatedQuantify = marketAmount / Float.parseFloat(myTicker.getAsk());
         System.out.printf("Final Quantity: %s", calculatedQuantify);
     }
 }

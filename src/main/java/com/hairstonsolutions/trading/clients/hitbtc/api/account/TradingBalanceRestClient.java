@@ -3,8 +3,8 @@ package com.hairstonsolutions.trading.clients.hitbtc.api.account;
 import com.hairstonsolutions.trading.clients.hitbtc.account.Balance;
 import com.hairstonsolutions.trading.clients.hitbtc.api.HitBtcAPI;
 import com.hairstonsolutions.trading.clients.hitbtc.api.history.HistoricalOrderRestClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -15,7 +15,7 @@ public class TradingBalanceRestClient {
 
     private static final String RESOURCE_PATH = "/trading/balance";
     private static final String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
-    private static final Logger LOG = LoggerFactory.getLogger(HistoricalOrderRestClient.class);
+    private static final Log LOG = LogFactory.getLog(HistoricalOrderRestClient.class);
 
     public static Balance[] getBalances(HitBtcAPI hitBtcAPI) {
         RestTemplate restTemplate = new RestTemplate();
@@ -24,7 +24,7 @@ public class TradingBalanceRestClient {
 
         headers.set("Authorization", "Basic " + encodedCredentials);
 
-        HttpEntity<String> httpEntity = new HttpEntity<String>(headers);
+        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
         ResponseEntity<Balance[]> responseEntity = restTemplate.exchange(REQUEST_URI, HttpMethod.GET, httpEntity, Balance[].class);
 

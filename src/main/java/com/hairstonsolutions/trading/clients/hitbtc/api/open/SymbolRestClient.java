@@ -2,8 +2,8 @@ package com.hairstonsolutions.trading.clients.hitbtc.api.open;
 
 import com.hairstonsolutions.trading.clients.hitbtc.Symbol;
 import com.hairstonsolutions.trading.clients.hitbtc.api.HitBtcAPI;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
@@ -11,7 +11,7 @@ public class SymbolRestClient {
 
     private static final String RESOURCE_PATH = "/public/symbol";
     private static final String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
-    private static final Logger LOG = LoggerFactory.getLogger(SymbolRestClient.class);
+    private static final Log LOG = LogFactory.getLog(SymbolRestClient.class);
 
     public SymbolRestClient() {
     }

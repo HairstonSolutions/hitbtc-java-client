@@ -7,8 +7,8 @@ import com.hairstonsolutions.trading.clients.hitbtc.attributes.Side;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.TimeInForce;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.TradeType;
 import com.hairstonsolutions.trading.clients.hitbtc.orders.Order;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -18,7 +18,7 @@ public class OrderRestClient {
 
     private static final String RESOURCE_PATH = "/order";
     private static final String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
-    private static final Logger LOG = LoggerFactory.getLogger(OrderRestClient.class);
+    private static final Log LOG = LogFactory.getLog(OrderRestClient.class);
 
     private HitBtcAPI hitBtcAPI;
 
