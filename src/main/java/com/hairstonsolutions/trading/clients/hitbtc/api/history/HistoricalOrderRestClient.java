@@ -75,6 +75,22 @@ public class HistoricalOrderRestClient {
         return responseEntity.getBody();
     }
 
+    public static Trade[] pullOrderTradeReport(HitBtcAPI hitBtcAPI, Order order) {
+        RestTemplate restTemplate = new RestTemplate();
+        String encodedCredentials = hitBtcAPI.getEncodedCredentials();
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        httpHeaders.set("Authorization", "Basic " + encodedCredentials);
+
+        HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
+
+        ResponseEntity<Trade[]> responseEntity = restTemplate.exchange(REQUEST_URI+"/"+order.getId()+"/trades", HttpMethod.GET, httpEntity, Trade[].class);
+
+        LOG.info(String.format("Return Values: %s", responseEntity.toString()));
+
+        return responseEntity.getBody();
+    }
+
     public static Order getHistoricalOrder(HitBtcAPI hitBtcAPI, String clientOrderId) {
         RestTemplate restTemplate = new RestTemplate();
         String encodedCredentials = hitBtcAPI.getEncodedCredentials();

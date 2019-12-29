@@ -61,6 +61,40 @@ public class TestHistoricalOrderRestClient {
     }
 
     @Test
+    public void historicalTradesPullForOrder() {
+        Order order = HistoricalOrderRestClient.getHistoricalOrder(hitBtcAPI, "84c5b2b6a1dc0ad12d257a5ce77cf58f");
+
+        order.setTradesReport(HistoricalOrderRestClient.pullOrderTradeReport(hitBtcAPI, order));
+
+        assert order.getTradesReport() != null;
+
+        int count = 0;
+        for ( Trade trades : order.getTradesReport() ) {
+            System.out.println(trades);
+            count++;
+        }
+        System.out.println(String.format("Order Trades Total: %s", count));
+        System.out.println(order);
+    }
+
+    @Test
+    public void historicalTradesPullWithinAnOrder() {
+        Order order = HistoricalOrderRestClient.getHistoricalOrder(hitBtcAPI, "84c5b2b6a1dc0ad12d257a5ce77cf58f");
+
+        order.pullTradesReport(hitBtcAPI);
+
+        assert order.getTradesReport() != null;
+
+        int count = 0;
+        for ( Trade trades : order.getTradesReport() ) {
+            System.out.println(trades);
+            count++;
+        }
+        System.out.println(String.format("Order Trades Total: %s", count));
+        System.out.println(order);
+    }
+
+    @Test
     public void getHistoricalOrderbyClientOrderID() {
         String clientOrderId = "84c5b2b6a1dc0ad12d257a5ce77cf58f";
 

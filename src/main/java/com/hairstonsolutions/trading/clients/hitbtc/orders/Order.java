@@ -1,5 +1,7 @@
 package com.hairstonsolutions.trading.clients.hitbtc.orders;
 
+import com.hairstonsolutions.trading.clients.hitbtc.api.HitBtcAPI;
+import com.hairstonsolutions.trading.clients.hitbtc.api.history.HistoricalOrderRestClient;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.Side;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.Status;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.TimeInForce;
@@ -80,6 +82,15 @@ public class Order {
 
     public Trade[] getTradesReport() {
         return tradesReport;
+    }
+
+    public void setTradesReport(Trade[] tradesReport) {
+        this.tradesReport = tradesReport;
+    }
+
+    public void pullTradesReport(HitBtcAPI hitBtcAPI) {
+        if (this.getStatus().toString().equals(Status.FILLED))
+            this.tradesReport = HistoricalOrderRestClient.getHistoricalTradesByOrderId(hitBtcAPI, getId());
     }
 }
 
