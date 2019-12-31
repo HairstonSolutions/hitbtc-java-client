@@ -11,9 +11,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class HistoricalOrderRestClient {
 
@@ -27,7 +27,7 @@ public class HistoricalOrderRestClient {
         this.hitBtcAPI = hitBtcAPI;
     }
 
-    public static Order[] getHistoricalOrders(HitBtcAPI hitBtcAPI) {
+    public static List<Order> getHistoricalOrders(HitBtcAPI hitBtcAPI) {
         RestTemplate restTemplate = new RestTemplate();
         String encodedCredentials = hitBtcAPI.getEncodedCredentials();
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -40,10 +40,10 @@ public class HistoricalOrderRestClient {
 
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
-        return responseEntity.getBody();
+        return Arrays.asList(Objects.requireNonNull(responseEntity.getBody()));
     }
 
-    public static Order[] getHistoricalOrders(HitBtcAPI hitBtcAPI, int count) {
+    public static List<Order> getHistoricalOrders(HitBtcAPI hitBtcAPI, int count) {
         RestTemplate restTemplate = new RestTemplate();
         String encodedCredentials = hitBtcAPI.getEncodedCredentials();
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -56,10 +56,10 @@ public class HistoricalOrderRestClient {
 
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
-        return responseEntity.getBody();
+        return Arrays.asList(Objects.requireNonNull(responseEntity.getBody()));
     }
 
-    public static Trade[] getHistoricalTradesByOrderId(HitBtcAPI hitBtcAPI, long orderId) {
+    public static List<Trade> getHistoricalTradesByOrderId(HitBtcAPI hitBtcAPI, long orderId) {
         RestTemplate restTemplate = new RestTemplate();
         String encodedCredentials = hitBtcAPI.getEncodedCredentials();
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -72,10 +72,26 @@ public class HistoricalOrderRestClient {
 
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
-        return responseEntity.getBody();
+        return Arrays.asList(Objects.requireNonNull(responseEntity.getBody()));
     }
 
-    public static Trade[] pullOrderTradeReport(HitBtcAPI hitBtcAPI, Order order) {
+    public static List<Trade> getHistoricalTradesListByOrderId(HitBtcAPI hitBtcAPI, long orderId) {
+        RestTemplate restTemplate = new RestTemplate();
+        String encodedCredentials = hitBtcAPI.getEncodedCredentials();
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        httpHeaders.set("Authorization", "Basic " + encodedCredentials);
+
+        HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
+
+        ResponseEntity<Trade[]> responseEntity = restTemplate.exchange(REQUEST_URI+"/"+orderId+"/trades", HttpMethod.GET, httpEntity, Trade[].class);
+
+        LOG.info(String.format("Return Values: %s", responseEntity.toString()));
+
+        return Arrays.asList(Objects.requireNonNull(responseEntity.getBody()));
+    }
+
+    public static List<Trade> pullOrderTradeReport(HitBtcAPI hitBtcAPI, Order order) {
         RestTemplate restTemplate = new RestTemplate();
         String encodedCredentials = hitBtcAPI.getEncodedCredentials();
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -88,7 +104,7 @@ public class HistoricalOrderRestClient {
 
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
-        return responseEntity.getBody();
+        return Arrays.asList(Objects.requireNonNull(responseEntity.getBody()));
     }
 
     public static Order getHistoricalOrder(HitBtcAPI hitBtcAPI, String clientOrderId) {
@@ -121,14 +137,6 @@ public class HistoricalOrderRestClient {
 
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
-        Order[] orderArray = responseEntity.getBody();
-
-        List<Order> orderList = new ArrayList<>();
-
-        assert orderArray != null;
-        Collections.addAll(orderList, orderArray);
-
-        return orderList;
-
+        return Arrays.asList(Objects.requireNonNull(responseEntity.getBody()));
     }
 }

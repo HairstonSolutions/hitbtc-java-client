@@ -9,6 +9,8 @@ import com.hairstonsolutions.trading.clients.hitbtc.attributes.TradeType;
 import com.hairstonsolutions.trading.clients.hitbtc.trades.Trade;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class Order {
     private long id;
@@ -26,7 +28,7 @@ public class Order {
     private String updatedAt;   //@TODO Convert to Object TimeStamp
     private String stopPrice;
     private String expireTime;
-    private Trade[] tradesReport;
+    private List<Trade> tradesReport;
 
     public long getId() {
         return id;
@@ -80,20 +82,20 @@ public class Order {
         return expireTime;
     }
 
-    public Trade[] getTradesReport() {
+    public List<Trade> getTradesReport() {
         return tradesReport;
     }
 
-    public void setTradesReport(Trade[] tradesReport) {
+    public void setTradesReport(List<Trade> tradesReport) {
         this.tradesReport = tradesReport;
     }
 
     public void pullTradesReport(HitBtcAPI hitBtcAPI) {
-        if (this.getStatus().toString().equals(Status.FILLED))
-            this.tradesReport = HistoricalOrderRestClient.getHistoricalTradesByOrderId(hitBtcAPI, getId());
+        if (this.getTradesReport() == null)
+            if (this.getStatus().toString().equals(Status.FILLED))
+                this.tradesReport = HistoricalOrderRestClient.getHistoricalTradesListByOrderId(hitBtcAPI, getId());
     }
 }
-
 
 
 /*

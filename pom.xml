@@ -6,7 +6,7 @@
 
     <groupId>com.hairstonsolutions.trading</groupId>
     <artifactId>hitbtc-client</artifactId>
-    <version>0.7.3+buid-1</version>
+    <version>0.7.4+buid-0</version>
 
     <build>
         <plugins>

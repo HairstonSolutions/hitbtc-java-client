@@ -22,7 +22,7 @@ public class TestHistoricalOrderRestClient {
 
     @Test
     public void getAllHistoricalOrders() {
-        Order[] historicalOrders = HistoricalOrderRestClient.getHistoricalOrders(hitBtcAPI);
+        List<Order> historicalOrders = HistoricalOrderRestClient.getHistoricalOrders(hitBtcAPI);
 
         int count = 0;
         for ( Order orders : historicalOrders ) {
@@ -36,7 +36,7 @@ public class TestHistoricalOrderRestClient {
     public void getHistoricalOrdersByCount() {
         int number = 10;
 
-        Order[] historicalOrders = HistoricalOrderRestClient.getHistoricalOrders(hitBtcAPI, number);
+        List<Order> historicalOrders = HistoricalOrderRestClient.getHistoricalOrders(hitBtcAPI, number);
 
         int count = 0;
         for ( Order orders : historicalOrders ) {
@@ -50,14 +50,12 @@ public class TestHistoricalOrderRestClient {
     public void getHistoricalTradesByHistoricalOrderID() {
         long orderId = 169111509127L;
 
-        Trade[] historicalTrades = HistoricalOrderRestClient.getHistoricalTradesByOrderId(hitBtcAPI, orderId);
+        List<Trade> historicalTrades = HistoricalOrderRestClient.getHistoricalTradesByOrderId(hitBtcAPI, orderId);
 
-        int count = 0;
         for ( Trade trades : historicalTrades ) {
             System.out.println(trades);
-            count++;
         }
-        System.out.println(String.format("Order Trades Total: %s", count));
+        System.out.println(String.format("Order Trades Total: %s", historicalTrades.size()));
     }
 
     @Test

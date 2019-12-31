@@ -14,6 +14,10 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
 public class OrderRestClient {
 
     private static final String RESOURCE_PATH = "/order";
@@ -59,7 +63,7 @@ public class OrderRestClient {
         return responseEntity.getBody();
     }
 
-    public static Order[] getOpenOrders(HitBtcAPI hitBtcAPI) {
+    public static List<Order> getOpenOrders(HitBtcAPI hitBtcAPI) {
         RestTemplate restTemplate = new RestTemplate();
         String encodedCredentials = hitBtcAPI.getEncodedCredentials();
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -72,7 +76,7 @@ public class OrderRestClient {
 
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
-        return responseEntity.getBody();
+        return Arrays.asList(Objects.requireNonNull(responseEntity.getBody()));
     }
 
     public static Order sendLimitOrder(HitBtcAPI hitBtcAPI, String symbol, Side side, String quantity, String price) {

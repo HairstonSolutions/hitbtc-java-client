@@ -11,6 +11,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public class TestOrderRestClient {
 
     final String TESTCONFIGFILE = "src/test/resources/hitbtckey.properties";
@@ -47,14 +49,12 @@ public class TestOrderRestClient {
 
     @Test
     public void getAllOpenOrders() {
-        Order[] openOrders = OrderRestClient.getOpenOrders(hitBtcAPI);
+        List<Order> openOrders = OrderRestClient.getOpenOrders(hitBtcAPI);
 
-        int count = 0;
         for ( Order orders : openOrders ) {
             System.out.println(orders);
-            count++;
         }
-        System.out.println(String.format("Orders Total: %s", count));
+        System.out.println(String.format("Orders Total: %s", openOrders.size()));
     }
 
     @Ignore

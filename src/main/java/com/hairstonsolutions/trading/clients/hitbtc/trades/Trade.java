@@ -6,6 +6,7 @@ import lombok.ToString;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.List;
 
 @Data
 public class Trade {
@@ -57,7 +58,7 @@ public class Trade {
     }
 
     @ToString.Include
-    public String totalCost() {
+    public String getTotalCost() {
         float fQuantity = Float.parseFloat(quantity);
         float fPrice = Float.parseFloat(price);
         DecimalFormat df = new DecimalFormat("##.##");
@@ -68,8 +69,8 @@ public class Trade {
         return df.format(totalCost);
     }
 
-    public static String getAveragePrice(Trade[] tradeReport) {
-        if ( tradeReport.length == 0)
+    public static String getAveragePrice(List<Trade> tradeReport) {
+        if ( tradeReport.size() == 0)
             return "0.0";
 
         DecimalFormat df = new DecimalFormat("##.##");
@@ -80,7 +81,7 @@ public class Trade {
             sum = sum + Float.parseFloat(trades.getPrice());
         }
 
-        return df.format(sum / tradeReport.length);
+        return df.format(sum / tradeReport.size());
     }
 }
 
