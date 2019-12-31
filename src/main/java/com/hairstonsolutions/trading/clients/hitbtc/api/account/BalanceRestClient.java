@@ -10,6 +10,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
 public class BalanceRestClient {
 
     private static final String RESOURCE_PATH = "/account/balance";
@@ -38,11 +42,11 @@ public class BalanceRestClient {
         return responseEntity;
     }
 
-    public Balance[] getBalances() {
+    public List<Balance> getBalances() {
         return retrieveBalances(hitBtcAPI);
     }
 
-    public static Balance[] retrieveBalances(HitBtcAPI hitBtcAPI) {
+    public static List<Balance> retrieveBalances(HitBtcAPI hitBtcAPI) {
         RestTemplate restTemplate = new RestTemplate();
         String encodedCredentials = hitBtcAPI.getEncodedCredentials();
         HttpHeaders headers = new HttpHeaders();
@@ -55,11 +59,11 @@ public class BalanceRestClient {
 
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
-        return responseEntity.getBody();
+        return Arrays.asList(Objects.requireNonNull(responseEntity.getBody()));
     }
 
     public static Balance getBalance(HitBtcAPI hitBtcAPI, String currency) {
-        Balance[] balances = retrieveBalances(hitBtcAPI);
+        List<Balance> balances = retrieveBalances(hitBtcAPI);
         Balance selectedBalance = new Balance("USD", "0.0", "0.0");
 
         for ( Balance bal : balances ) {

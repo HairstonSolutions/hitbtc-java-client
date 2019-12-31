@@ -6,6 +6,8 @@ import com.hairstonsolutions.trading.clients.hitbtc.api.account.TradingBalanceRe
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 public class TestTradingBalanceRestClient {
 
     final String TESTCONFIGFILE = "src/test/resources/hitbtckey.properties";
@@ -19,15 +21,13 @@ public class TestTradingBalanceRestClient {
 
     @Test
     public void getAllBalances() {
-        Balance[] balances = TradingBalanceRestClient.getBalances(hitBtcAPI);
+        List<Balance> balances = TradingBalanceRestClient.getBalances(hitBtcAPI);
 
-        int count = 0;
         for ( Balance bal : balances ) {
             System.out.println(bal);
-            count++;
         }
 
-        System.out.println(String.format("Balances Retrived: %s", count));
+        System.out.println(String.format("Balances Retrived: %s", balances.size()));
     }
 
     @Test

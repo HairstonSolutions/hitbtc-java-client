@@ -7,29 +7,32 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-public class PublicTradesRestClient {
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
+public class PublicTradesRestClient {
 
     private static final String RESOURCE_PATH = "/public/trades";
     private static final String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
     private static final Log LOG = LogFactory.getLog(TickerRestClient.class);
 
 
-    public static PublicTrade[] getPublicTrades(String tickerId) {
+    public static List<PublicTrade> getPublicTrades(String tickerId) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<PublicTrade[]> responseEntity = restTemplate.getForEntity(REQUEST_URI + "/{tickerId}", PublicTrade[].class, tickerId);
 
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
-        return responseEntity.getBody();
+        return Arrays.asList(Objects.requireNonNull(responseEntity.getBody()));
     }
 
-    public static PublicTrade[] getPublicTrades(String tickerId, int amount) {
+    public static List<PublicTrade> getPublicTrades(String tickerId, int amount) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<PublicTrade[]> responseEntity = restTemplate.getForEntity(REQUEST_URI + "/{tickerId}?limit={amountToRetrieve}", PublicTrade[].class, tickerId, amount);
 
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
-        return responseEntity.getBody();
+        return Arrays.asList(Objects.requireNonNull(responseEntity.getBody()));
     }
 }

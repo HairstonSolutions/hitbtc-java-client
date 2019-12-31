@@ -3,8 +3,8 @@ package com.hairstonsolutions.trading.clients.hitbtc.tests.api.open;
 import com.hairstonsolutions.trading.clients.hitbtc.api.open.PublicTradesRestClient;
 import com.hairstonsolutions.trading.clients.hitbtc.trades.PublicTrade;
 import org.junit.Test;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 public class TestPublicTradesRestClient {
 
@@ -12,33 +12,25 @@ public class TestPublicTradesRestClient {
     public void getPublicTradesforSymbol() {
         String tickerId = "BTCUSD";
 
-        PublicTrade[] publicTrade = PublicTradesRestClient.getPublicTrades(tickerId);
+        List<PublicTrade> publicTrade = PublicTradesRestClient.getPublicTrades(tickerId);
 
-        assert publicTrade != null;
-
-        int count = 0;
         for ( PublicTrade pb : publicTrade ) {
             System.out.println(pb);
-            count++;
         }
 
-        System.out.println(String.format("Public Trades Retrieved for Ticker %s : %s", tickerId, count));
+        System.out.println(String.format("Public Trades Retrieved for Ticker %s : %s", tickerId, publicTrade.size()));
     }
 
     @Test
     public void getPublicTradesforSymbolByAmount() {
         String tickerId = "BTCUSD";
         int amountToRetrieve = 2;
-        PublicTrade[] publicTrade = PublicTradesRestClient.getPublicTrades(tickerId,amountToRetrieve);
+        List<PublicTrade> publicTrade = PublicTradesRestClient.getPublicTrades(tickerId,amountToRetrieve);
 
-        assert publicTrade != null;
-
-        int count = 0;
         for ( PublicTrade pb : publicTrade ) {
             System.out.println(pb);
-            count++;
         }
 
-        System.out.println(String.format("Public Trades Retrieved for Ticker %s : %s", tickerId, count));
+        System.out.println(String.format("Public Trades Retrieved for Ticker %s : %s", tickerId, publicTrade.size()));
     }
 }

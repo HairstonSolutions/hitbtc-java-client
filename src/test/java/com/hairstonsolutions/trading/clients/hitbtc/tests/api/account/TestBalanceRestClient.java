@@ -6,7 +6,8 @@ import com.hairstonsolutions.trading.clients.hitbtc.api.account.BalanceRestClien
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 public class TestBalanceRestClient {
 
@@ -29,40 +30,36 @@ public class TestBalanceRestClient {
 
         Balance[] balances = myGetBalanceResponseEntity.getBody();
 
-        int count = 0;
+        assert balances != null;
+
         for ( Balance bal : balances ) {
             System.out.println(bal);
-            count++;
         }
 
-        System.out.println(String.format("Balances Retrived: %s", count));
+        System.out.println(String.format("Balances Retrived: %s", balances.length));
     }
 
     @Test
     public void getAllBalances() {
         BalanceRestClient balanceRestClient = new BalanceRestClient(hitBtcAPI);
-        Balance[] balances = balanceRestClient.getBalances();
+        List<Balance> balances = balanceRestClient.getBalances();
 
-        int count = 0;
         for ( Balance bal : balances ) {
             System.out.println(bal);
-            count++;
         }
 
-        System.out.println(String.format("Balances Retrived: %s", count));
+        System.out.println(String.format("Balances Retrived: %s", balances.size()));
     }
 
     @Test
     public void getAllBalancesStatic() {
-        Balance[] balances = BalanceRestClient.retrieveBalances(hitBtcAPI);
+        List<Balance> balances = BalanceRestClient.retrieveBalances(hitBtcAPI);
 
-        int count = 0;
         for ( Balance bal : balances ) {
             System.out.println(bal);
-            count++;
         }
 
-        System.out.println(String.format("Balances Retrived: %s", count));
+        System.out.println(String.format("Balances Retrived: %s", balances.size()));
     }
 
     @Test
