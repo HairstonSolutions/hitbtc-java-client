@@ -61,7 +61,7 @@ public class TestOrderRestClient {
     @Test
     public void postLowLimitBuyOrder() {
         String symbol="BTCUSD";
-        Side side = new Side(Side.BUY);
+        String side = Side.BUY;
         TradeType tradeType = new TradeType(TradeType.LIMIT);
         TimeInForce timeInForce = new TimeInForce(TimeInForce.GTC_GOOD_TILL_CANCELLED);
         String quantity = "0.00130";

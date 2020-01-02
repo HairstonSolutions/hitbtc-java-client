@@ -1,6 +1,5 @@
 package com.hairstonsolutions.trading.clients.hitbtc.trades;
 
-import com.hairstonsolutions.trading.clients.hitbtc.attributes.Side;
 import lombok.Data;
 import lombok.ToString;
 
@@ -15,7 +14,7 @@ public class Trade {
     private String clientOrderId;
     private long orderId;
     private String symbol;
-    private Side side;
+    private String side;
     private String quantity;
     private String price;
     private String fee;
@@ -37,7 +36,7 @@ public class Trade {
         return symbol;
     }
 
-    public Side getSide() {
+    public String getSide() {
         return side;
     }
 

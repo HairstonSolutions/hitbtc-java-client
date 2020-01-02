@@ -5,44 +5,20 @@ public class Side {
     public static final String SELL = "sell";
     public static final String DEFAULT = BUY;
 
-    private String side;
+    public static String selectSide(String side) {
 
-    public Side() {
-        this.side = BUY;
-    }
+        String sideSetting;
 
-    public Side(String side) {
-        setSide(side);
-    }
-
-    public String getSide() {
-        return side;
-    }
-
-    public void setSide(String side) {
         switch (side) {
             case "buy":
-                this.side = BUY;
+                sideSetting = BUY;
                 break;
             case "sell":
-                this.side = SELL;
+                sideSetting = SELL;
                 break;
             default:
-                this.side = DEFAULT;
+                sideSetting = DEFAULT;
         }
-    }
-
-    @Override
-    public String toString() {
-        return side;
+        return sideSetting;
     }
 }
-
-/*
-MYSQL TABLE CREATION SCHEMA:
-create table side
-(
-    public_trade    int             UNIQUE,
-    side            varchar(255)
-);
- */

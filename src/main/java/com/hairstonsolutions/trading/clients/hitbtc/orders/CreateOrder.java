@@ -18,7 +18,7 @@ import com.hairstonsolutions.trading.clients.hitbtc.attributes.TradeType;
 
 public class CreateOrder {
     private String symbol;
-    private Side side;
+    private String side;
     private TradeType tradeType;
     private TimeInForce timeInForce;
     private String price;
@@ -28,7 +28,7 @@ public class CreateOrder {
 
     public CreateOrder() {
         this.symbol = "BTCUSD";
-        this.side = new Side(Side.BUY);
+        this.side = Side.BUY;
         this.tradeType = new TradeType(TradeType.LIMIT);
         this.timeInForce = new TimeInForce(TimeInForce.GTC_GOOD_TILL_CANCELLED);
         this.price = "10000.00";
@@ -38,7 +38,7 @@ public class CreateOrder {
 
     public CreateOrder(String symbol, String side, String tradeType, String timeInForce, String price, String quantity, boolean postOnly) {
         this.symbol = symbol;
-        this.side = new Side(side);
+        this.side = Side.selectSide(side);
         this.tradeType = new TradeType(tradeType);
         this.timeInForce = new TimeInForce(timeInForce);
         this.price = price;
@@ -51,7 +51,7 @@ public class CreateOrder {
     }
 
     public String getSide() {
-        return side.getSide();
+        return side;
     }
 
     public String getTradeType() {

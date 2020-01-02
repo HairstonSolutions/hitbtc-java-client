@@ -2,7 +2,6 @@ package com.hairstonsolutions.trading.clients.hitbtc.orders;
 
 import com.hairstonsolutions.trading.clients.hitbtc.api.HitBtcAPI;
 import com.hairstonsolutions.trading.clients.hitbtc.api.history.HistoricalOrderRestClient;
-import com.hairstonsolutions.trading.clients.hitbtc.attributes.Side;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.Status;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.TimeInForce;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.TradeType;
@@ -16,7 +15,7 @@ public class Order {
     private long id;
     private String clientOrderId;
     private String symbol;
-    private Side side;
+    private String side;
     private Status status;
     private TradeType type;
     private TimeInForce timeInForce;
@@ -42,7 +41,7 @@ public class Order {
         return symbol;
     }
 
-    public Side getSide() {
+    public String getSide() {
         return side;
     }
 

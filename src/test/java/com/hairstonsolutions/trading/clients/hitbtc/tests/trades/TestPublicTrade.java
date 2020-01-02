@@ -12,7 +12,7 @@ public class TestPublicTrade {
         long id = 87654321L;
         String price = "100.00";
         String quantity = "12.0";
-        Side side = new Side("sell");
+        String side = Side.selectSide("sell");
         String timestamp = "2019-12-11T12:12:02.579Z";
         PublicTrade publicTrade = new PublicTrade(id,price,quantity,side,timestamp);
 
@@ -28,7 +28,7 @@ public class TestPublicTrade {
         long id = 87654321L;
         String price = "100.00";
         String quantity = "12.0";
-        Side side = new Side("buy");
+        String side = Side.selectSide("buy");
         String timestamp = "2019-12-11T12:12:02.579Z";
         PublicTrade publicTrade = new PublicTrade(id,price,quantity,side,timestamp);
 
@@ -44,7 +44,5 @@ public class TestPublicTrade {
         assert(publicTrade.getSide().equals(Side.SELL));
         assert(publicTrade.getTimestamp().equals("2019-10-08T03:04:11.123Z"));
     }
-
-
 
 }

@@ -79,7 +79,7 @@ public class OrderRestClient {
         return Arrays.asList(Objects.requireNonNull(responseEntity.getBody()));
     }
 
-    public static Order sendLimitOrder(HitBtcAPI hitBtcAPI, String symbol, Side side, String quantity, String price) {
+    public static Order sendLimitOrder(HitBtcAPI hitBtcAPI, String symbol, String side, String quantity, String price) {
         TradeType tradeType = new TradeType(TradeType.LIMIT);
         TimeInForce timeInForce = new TimeInForce(TimeInForce.GTC_GOOD_TILL_CANCELLED);
         boolean postOnly = false;
@@ -88,19 +88,19 @@ public class OrderRestClient {
     }
 
     public static Order sendMarketBuyOrder(HitBtcAPI hitBtcAPI, String symbol, String amount) {
-        return sendMarketOrder(hitBtcAPI, symbol, amount, new Side(Side.BUY));
+        return sendMarketOrder(hitBtcAPI, symbol, amount, Side.BUY);
     }
 
     public static Order sendMarketSellOrder(HitBtcAPI hitBtcAPI, String symbol, String amount) {
-        return sendMarketOrder(hitBtcAPI, symbol, amount, new Side(Side.SELL));
+        return sendMarketOrder(hitBtcAPI, symbol, amount, Side.SELL);
     }
 
-    private static Order sendMarketOrder(HitBtcAPI hitBtcAPI, String symbol, String amount, Side side) {
+    private static Order sendMarketOrder(HitBtcAPI hitBtcAPI, String symbol, String amount, String side) {
         Ticker ticker = TickerRestClient.getTickerById(symbol);
         String price = ticker.getLast();
         String quantity="";
 
-        switch (side.getSide()){
+        switch (side){
             case "buy":
                 quantity = ticker.getMarketBuyQuantityByAmount(Float.parseFloat(amount));
                 break;
@@ -116,7 +116,7 @@ public class OrderRestClient {
         return OrderRestClient.sendOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
     }
 
-    private static Order sendOrder(HitBtcAPI hitBtcAPI, String symbol, Side side, String quantity, String price,
+    private static Order sendOrder(HitBtcAPI hitBtcAPI, String symbol, String side, String quantity, String price,
                                    TradeType tradeType, TimeInForce timeInForce, boolean postOnly) {
         RestTemplate restTemplate = new RestTemplate();
         String encodedCredentials = hitBtcAPI.getEncodedCredentials();
@@ -127,7 +127,7 @@ public class OrderRestClient {
 
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("symbol", symbol);
-        map.add("side", side.toString());
+        map.add("side", side);
         map.add("type", tradeType.toString());
         map.add("timeInForce", timeInForce.toString());
         map.add("quantity", quantity);
@@ -141,7 +141,7 @@ public class OrderRestClient {
         ResponseEntity<Order> responseEntity = restTemplate.exchange(REQUEST_URI, HttpMethod.POST, request, Order.class);
 
         LOG.info(String.format("Submitted %s %s Order: Price=%s, Quantity=%s, Symbol=%s, TimeInForce=%s",
-                tradeType.toString(), side.toString(), price, quantity, symbol, timeInForce.toString()));
+                tradeType.toString(), side, price, quantity, symbol, timeInForce.toString()));
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
         return responseEntity.getBody();
