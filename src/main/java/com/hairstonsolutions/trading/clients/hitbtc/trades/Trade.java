@@ -1,5 +1,6 @@
 package com.hairstonsolutions.trading.clients.hitbtc.trades;
 
+import com.hairstonsolutions.trading.clients.hitbtc.attributes.Side;
 import lombok.Data;
 import lombok.ToString;
 
@@ -54,6 +55,10 @@ public class Trade {
 
     public String getTimestamp() {
         return timestamp;
+    }
+
+    public void setSide(String side) {
+        this.side = Side.selectSide(side);
     }
 
     @ToString.Include
