@@ -9,47 +9,32 @@ public class Status {
     public static final String EXPIRED = "expired";
     public static final String DEFAULT = NEW;
 
-    private String status;
+    public static String selectStatus(String status) {
 
-    public Status() {
-        this.status = DEFAULT;
-    }
+        String statusSetting;
 
-    public Status(String status) {
-        setStatus(status);
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
         switch (status) {
             case "new":
-                this.status = NEW;
+                statusSetting = NEW;
                 break;
             case "suspended":
-                this.status = SUSPENDED;
+                statusSetting = SUSPENDED;
                 break;
             case "partiallyFilled":
-                this.status = PARTIALLY_FILLED;
+                statusSetting = PARTIALLY_FILLED;
                 break;
             case "filled":
-                this.status = FILLED;
+                statusSetting = FILLED;
                 break;
             case "canceled":
-                this.status = CANCELED;
+                statusSetting = CANCELED;
                 break;
             case "expired":
-                this.status = EXPIRED;
+                statusSetting = EXPIRED;
                 break;
             default:
-                this.status = DEFAULT;
+                statusSetting = DEFAULT;
         }
-    }
-
-    @Override
-    public String toString() {
-        return status;
+        return statusSetting;
     }
 }

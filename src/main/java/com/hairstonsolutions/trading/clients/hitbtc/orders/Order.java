@@ -2,6 +2,7 @@ package com.hairstonsolutions.trading.clients.hitbtc.orders;
 
 import com.hairstonsolutions.trading.clients.hitbtc.api.HitBtcAPI;
 import com.hairstonsolutions.trading.clients.hitbtc.api.history.HistoricalOrderRestClient;
+import com.hairstonsolutions.trading.clients.hitbtc.attributes.Side;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.Status;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.TimeInForce;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.TradeType;
@@ -16,7 +17,7 @@ public class Order {
     private String clientOrderId;
     private String symbol;
     private String side;
-    private Status status;
+    private String status;
     private TradeType type;
     private TimeInForce timeInForce;
     private String price;
@@ -45,7 +46,7 @@ public class Order {
         return side;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
@@ -85,13 +86,21 @@ public class Order {
         return tradesReport;
     }
 
+    public void setSide(String side) {
+        this.side = Side.selectSide(side);
+    }
+
+    public void setStatus(String status) {
+        this.status = Status.selectStatus(status);
+    }
+
     public void setTradesReport(List<Trade> tradesReport) {
         this.tradesReport = tradesReport;
     }
 
     public void pullTradesReport(HitBtcAPI hitBtcAPI) {
         if (this.getTradesReport() == null)
-            if (this.getStatus().toString().equals(Status.FILLED))
+            if (this.getStatus().equals(Status.FILLED))
                 this.tradesReport = HistoricalOrderRestClient.getHistoricalTradesListByOrderId(hitBtcAPI, getId());
     }
 }
