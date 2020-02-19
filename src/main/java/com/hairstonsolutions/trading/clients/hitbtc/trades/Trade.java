@@ -87,6 +87,20 @@ public class Trade {
 
         return df.format(sum / tradeReport.size());
     }
+
+    public static String getTotalFee(List<Trade> tradeReport) {
+        if ( tradeReport.size() == 0)
+            return "0.0";
+
+        DecimalFormat df = new DecimalFormat("##.##################");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+
+        double sum = 0f;
+        for ( Trade trades : tradeReport )
+            sum += Double.parseDouble(trades.getFee());
+
+        return df.format(sum);
+    }
 }
 
 

@@ -33,4 +33,19 @@ public class TestTrade {
         System.out.printf("Average Price: %s\n", averagePrice);
         assert averagePrice.equals("8835.45");
     }
+
+    @Test
+    public void calculateTotalFee() {
+        long orderId =176617860956L;
+        List<Trade> tradeReport = HistoricalOrderRestClient.getHistoricalTradesByOrderId(hitBtcAPI, orderId);
+
+        for ( Trade trades : tradeReport ) {
+            System.out.println(trades);
+        }
+        System.out.println(String.format("Order Trades Total: %s", tradeReport.size()));
+
+        String totalFees = Trade.getTotalFee(tradeReport);
+        System.out.printf("Total Fees: %s\n", totalFees);
+        assert totalFees.equals("0.04205673360000001");
+    }
 }
