@@ -94,14 +94,43 @@ public class Order {
         this.status = Status.selectStatus(status);
     }
 
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
     public void setTradesReport(List<Trade> tradesReport) {
         this.tradesReport = tradesReport;
     }
 
     public void pullTradesReport(HitBtcAPI hitBtcAPI) {
         if (this.getTradesReport() == null)
-            if (this.getStatus().equals(Status.FILLED))
-                this.tradesReport = HistoricalOrderRestClient.getHistoricalTradesListByOrderId(hitBtcAPI, getId());
+            if (this.getStatus().equals(Status.FILLED)) {
+                this.tradesReport = HistoricalOrderRestClient.getHistoricalTradesListByOrderId(hitBtcAPI, id);
+                calculatePriceAsTradeReportPriceAverage();
+            }
+    }
+
+    /*
+      The HitBTC API response of Market (FOK / IOC) Trades naturally has incomplete data.
+      The good thing is that the missing info can be derived from the data that is returned.
+      This method Calculates those values & fills them in for both the Order and Trade Objects.
+    */
+    public void reconcileMarketOrder() {
+        reconcileRetrievedTradeReport();
+        calculatePriceAsTradeReportPriceAverage();
+    }
+
+    public void reconcileRetrievedTradeReport() {
+        for (Trade trade : tradesReport) {
+            trade.setClientOrderId(clientOrderId);
+            trade.setOrderId(id);
+            trade.setSymbol(symbol);
+            trade.setSide(side);
+        }
+    }
+
+    private void calculatePriceAsTradeReportPriceAverage() {
+        setPrice(Trade.getPreciseAveragePrice(tradesReport, cumQuantity));
     }
 }
 

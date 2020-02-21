@@ -113,7 +113,10 @@ public class OrderRestClient {
         TimeInForce timeInForce = new TimeInForce(TimeInForce.IOC_IMMEDIATE_OR_CANCEL);
         boolean postOnly = false;
 
-        return OrderRestClient.sendOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
+        Order responseOrder = OrderRestClient.sendOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
+        responseOrder.reconcileMarketOrder();
+
+        return responseOrder;
     }
 
     private static Order sendOrder(HitBtcAPI hitBtcAPI, String symbol, String side, String quantity, String price,
