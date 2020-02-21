@@ -1,4 +1,4 @@
-package com.hairstonsolutions.trading.clients.hitbtc.tests;
+package com.hairstonsolutions.trading.clients.hitbtc.tests.orders;
 
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.Side;
 import com.hairstonsolutions.trading.clients.hitbtc.orders.CreateOrder;
@@ -19,7 +19,7 @@ public class TestCreateOrder {
         assert(myCreateOrder.getTimeInForce().equals(TimeInForce.GTC_GOOD_TILL_CANCELLED));
         assert(myCreateOrder.getPrice().equals("10000.00"));
         assert(myCreateOrder.getQuantity().equals("0.0001"));
-        assert(myCreateOrder.isPostOnly() == false);
+        assert(!myCreateOrder.isPostOnly());
     }
 
     @Test
@@ -39,7 +39,7 @@ public class TestCreateOrder {
         assert(myCreateOrder.getTimeInForce().equals("FOK"));
         assert(myCreateOrder.getPrice().equals("8500.53"));
         assert(myCreateOrder.getQuantity().equals("1.1234"));
-        assert(myCreateOrder.isPostOnly() == true);
+        assert(myCreateOrder.isPostOnly());
     }
 
 }
