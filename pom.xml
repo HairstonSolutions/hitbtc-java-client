@@ -6,7 +6,7 @@
 
     <groupId>com.hairstonsolutions.trading</groupId>
     <artifactId>hitbtc-client</artifactId>
-    <version>0.7.4+buid-0</version>
+    <version>0.7.5+buid-0</version>
 
     <build>
         <plugins>
@@ -23,7 +23,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <spring.version>5.2.2.RELEASE</spring.version>
+        <spring.version>5.2.3.RELEASE</spring.version>
     </properties>
 
     <dependencies>
@@ -41,14 +41,14 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.2</version>
+            <version>1.18.12</version>
             <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.13</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
