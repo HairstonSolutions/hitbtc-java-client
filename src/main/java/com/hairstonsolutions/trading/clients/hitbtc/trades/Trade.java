@@ -88,6 +88,23 @@ public class Trade {
         return df.format(sum / tradeReport.size());
     }
 
+    public static String getPreciseAveragePrice(List<Trade> tradeReport, String cumQuantity) {
+        if ( tradeReport.size() == 0)
+            return "0.0";
+
+        DecimalFormat df = new DecimalFormat("##.##");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+
+        float sum = 0f;
+        for ( Trade trade : tradeReport ) {
+            float quantityWeightPercentage = Float.parseFloat(trade.getQuantity()) / Float.parseFloat(cumQuantity);
+            float weightedPrice = quantityWeightPercentage * Float.parseFloat(trade.getPrice());
+            sum += weightedPrice;
+        }
+
+        return df.format(sum);
+    }
+
     public static String getTotalFee(List<Trade> tradeReport) {
         if ( tradeReport.size() == 0)
             return "0.0";
