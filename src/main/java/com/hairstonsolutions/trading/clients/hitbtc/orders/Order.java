@@ -103,11 +103,10 @@ public class Order {
     }
 
     public void pullTradesReport(HitBtcAPI hitBtcAPI) {
-        if (this.getTradesReport() == null)
-            if (this.getStatus().equals(Status.FILLED)) {
-                this.tradesReport = HistoricalOrderRestClient.getHistoricalTradesListByOrderId(hitBtcAPI, id);
-                calculatePriceAsTradeReportPriceAverage();
-            }
+        if (this.getStatus().equals(Status.FILLED)) {
+            this.tradesReport = HistoricalOrderRestClient.getHistoricalTradesListByOrderId(hitBtcAPI, this.id);
+            calculatePriceAsTradeReportPriceAverage();
+        }
     }
 
     /*
