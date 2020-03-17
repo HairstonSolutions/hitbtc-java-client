@@ -6,7 +6,7 @@
 
     <groupId>com.hairstonsolutions.trading</groupId>
     <artifactId>hitbtc-client</artifactId>
-    <version>0.7.7+build-0</version>
+    <version>0.7.8-build-0</version>
 
     <build>
         <plugins>
@@ -52,5 +52,13 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHubOWNERApacheMavenPackages</name>
+            <url>https://maven.pkg.github.com/HairstonSolutions/hitbtc-java-client</url>
+        </repository>
+    </distributionManagement>
 
 </project>
