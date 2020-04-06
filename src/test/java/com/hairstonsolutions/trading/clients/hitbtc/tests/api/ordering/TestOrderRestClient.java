@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public class TestOrderRestClient {
 
@@ -100,6 +101,32 @@ public class TestOrderRestClient {
 
         System.out.println(myMarketOrder);
         assert (myMarketOrder.getTradesReport() != null);
+    }
+
+    @Ignore
+    @Test
+    public void marketLikeBuyOrder() {
+        String symbol = "BTCUSDC";
+        String amount = "15.00";
+
+        Optional<Order> myLikeMarketOrder = OrderRestClient.sendLikeMarketBuyOrder(hitBtcAPI, symbol, amount);
+
+        myLikeMarketOrder.ifPresent(System.out::println);
+
+        assert (myLikeMarketOrder.isPresent());
+    }
+
+    @Ignore
+    @Test
+    public void marketLikeSellOrder() {
+        String symbol = "BTCUSDC";
+        String amount = "15.00";
+
+        Optional<Order> myLikeMarketOrder = OrderRestClient.sendLikeMarketSellOrder(hitBtcAPI, symbol, amount);
+
+        myLikeMarketOrder.ifPresent(System.out::println);
+
+        assert (myLikeMarketOrder != null);
     }
 
     @Test
