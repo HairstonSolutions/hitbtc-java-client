@@ -154,9 +154,7 @@ public class OrderRestClient {
         TimeInForce timeInForce = new TimeInForce(TimeInForce.GTC_GOOD_TILL_CANCELLED);
         boolean postOnly = true;
 
-        Optional<Order> responseOrder = OrderRestClient.sendOptionalOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
-
-        return responseOrder;
+        return OrderRestClient.sendOptionalOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
     }
 
     private static Order sendOrder(HitBtcAPI hitBtcAPI, String symbol, String side, String quantity, String price,
@@ -191,7 +189,9 @@ public class OrderRestClient {
             return null;
         }
 
-        LOG.info(String.format("Return Values: %s", responseEntity.getBody().toString()));
+        LOG.debug(String.format("Return Status Code: %s", responseEntity.getStatusCode()));
+        if (responseEntity.getBody() != null)
+            LOG.info(String.format("Return Values: %s", responseEntity.getBody().toString()));
 
         return responseEntity.getBody();
     }
@@ -225,10 +225,12 @@ public class OrderRestClient {
 
         if (responseEntity.getStatusCodeValue() != 200) {
             LOG.error(String.format("Submitting Order Failed. HTTP Response: %s", responseEntity.toString()));
-            return null;
+            return Optional.empty();
         }
 
-        LOG.info(String.format("Return Values: %s", responseEntity.getBody().toString()));
+        LOG.debug(String.format("Return Status Code: %s", responseEntity.getStatusCode()));
+        if (responseEntity.getBody() != null)
+            LOG.info(String.format("Return Values: %s", responseEntity.getBody().toString()));
 
         return Optional.ofNullable(responseEntity.getBody());
     }
