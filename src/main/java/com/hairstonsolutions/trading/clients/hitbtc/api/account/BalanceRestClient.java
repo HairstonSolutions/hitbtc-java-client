@@ -17,7 +17,7 @@ import java.util.Objects;
 public class BalanceRestClient {
 
     private static final String RESOURCE_PATH = "/account/balance";
-    private static final String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
+    private static final String REQUEST_URI = HitBtcAPI.BASE_URL + RESOURCE_PATH;
     private static final Log LOG = LogFactory.getLog(BalanceRestClient.class);
 
     private HitBtcAPI hitBtcAPI;
@@ -66,7 +66,7 @@ public class BalanceRestClient {
         List<Balance> balances = retrieveBalances(hitBtcAPI);
         Balance selectedBalance = new Balance("USD", "0.0", "0.0");
 
-        for ( Balance bal : balances ) {
+        for (Balance bal : balances) {
             if (bal.getCurrency().equals(currency))
                 selectedBalance = bal;
         }

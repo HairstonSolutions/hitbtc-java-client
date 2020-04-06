@@ -14,7 +14,7 @@ import java.util.Objects;
 public class PublicTradesRestClient {
 
     private static final String RESOURCE_PATH = "/public/trades";
-    private static final String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
+    private static final String REQUEST_URI = HitBtcAPI.BASE_URL + RESOURCE_PATH;
     private static final Log LOG = LogFactory.getLog(TickerRestClient.class);
 
 

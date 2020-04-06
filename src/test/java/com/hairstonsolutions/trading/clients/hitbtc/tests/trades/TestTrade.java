@@ -21,10 +21,10 @@ public class TestTrade {
 
     @Test
     public void calculateAveragePrice() {
-        long orderId =176617860956L;
+        long orderId = 176617860956L;
         List<Trade> tradeReport = HistoricalOrderRestClient.getHistoricalTradesByOrderId(hitBtcAPI, orderId);
 
-        for ( Trade trades : tradeReport ) {
+        for (Trade trades : tradeReport) {
             System.out.println(trades);
         }
         System.out.println(String.format("Order Trades Total: %s", tradeReport.size()));
@@ -36,10 +36,10 @@ public class TestTrade {
 
     @Test
     public void calculateTotalFee() {
-        long orderId =176617860956L;
+        long orderId = 176617860956L;
         List<Trade> tradeReport = HistoricalOrderRestClient.getHistoricalTradesByOrderId(hitBtcAPI, orderId);
 
-        for ( Trade trades : tradeReport ) {
+        for (Trade trades : tradeReport) {
             System.out.println(trades);
         }
         System.out.println(String.format("Order Trades Total: %s", tradeReport.size()));

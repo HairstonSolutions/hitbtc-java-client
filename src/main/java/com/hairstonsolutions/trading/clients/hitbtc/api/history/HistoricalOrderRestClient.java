@@ -18,7 +18,7 @@ import java.util.Objects;
 public class HistoricalOrderRestClient {
 
     private static final String RESOURCE_PATH = "/history/order";
-    private static final String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
+    private static final String REQUEST_URI = HitBtcAPI.BASE_URL + RESOURCE_PATH;
     private static final Log LOG = LogFactory.getLog(HistoricalOrderRestClient.class);
 
     private HitBtcAPI hitBtcAPI;
@@ -52,7 +52,7 @@ public class HistoricalOrderRestClient {
 
         HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
 
-        ResponseEntity<Order[]> responseEntity = restTemplate.exchange(REQUEST_URI + "?limit="+count, HttpMethod.GET, httpEntity, Order[].class);
+        ResponseEntity<Order[]> responseEntity = restTemplate.exchange(REQUEST_URI + "?limit=" + count, HttpMethod.GET, httpEntity, Order[].class);
 
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
@@ -68,7 +68,7 @@ public class HistoricalOrderRestClient {
 
         HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
 
-        ResponseEntity<Trade[]> responseEntity = restTemplate.exchange(REQUEST_URI+"/"+orderId+"/trades", HttpMethod.GET, httpEntity, Trade[].class);
+        ResponseEntity<Trade[]> responseEntity = restTemplate.exchange(REQUEST_URI + "/" + orderId + "/trades", HttpMethod.GET, httpEntity, Trade[].class);
 
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
@@ -84,7 +84,7 @@ public class HistoricalOrderRestClient {
 
         HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
 
-        ResponseEntity<Trade[]> responseEntity = restTemplate.exchange(REQUEST_URI+"/"+orderId+"/trades", HttpMethod.GET, httpEntity, Trade[].class);
+        ResponseEntity<Trade[]> responseEntity = restTemplate.exchange(REQUEST_URI + "/" + orderId + "/trades", HttpMethod.GET, httpEntity, Trade[].class);
 
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
@@ -100,7 +100,7 @@ public class HistoricalOrderRestClient {
 
         HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
 
-        ResponseEntity<Trade[]> responseEntity = restTemplate.exchange(REQUEST_URI+"/"+order.getId()+"/trades", HttpMethod.GET, httpEntity, Trade[].class);
+        ResponseEntity<Trade[]> responseEntity = restTemplate.exchange(REQUEST_URI + "/" + order.getId() + "/trades", HttpMethod.GET, httpEntity, Trade[].class);
 
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
@@ -116,7 +116,7 @@ public class HistoricalOrderRestClient {
 
         HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
 
-        ResponseEntity<Order[]> responseEntity = restTemplate.exchange(REQUEST_URI+"?clientOrderId="+clientOrderId, HttpMethod.GET, httpEntity, Order[].class);
+        ResponseEntity<Order[]> responseEntity = restTemplate.exchange(REQUEST_URI + "?clientOrderId=" + clientOrderId, HttpMethod.GET, httpEntity, Order[].class);
 
         Order[] orders = responseEntity.getBody();
 
@@ -133,7 +133,7 @@ public class HistoricalOrderRestClient {
 
         HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
 
-        ResponseEntity<Order[]> responseEntity = restTemplate.exchange(REQUEST_URI + "?limit="+count, HttpMethod.GET, httpEntity, Order[].class);
+        ResponseEntity<Order[]> responseEntity = restTemplate.exchange(REQUEST_URI + "?limit=" + count, HttpMethod.GET, httpEntity, Order[].class);
 
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 

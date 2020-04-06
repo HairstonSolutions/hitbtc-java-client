@@ -14,7 +14,7 @@ public class TestPublicTradesRestClient {
 
         List<PublicTrade> publicTrade = PublicTradesRestClient.getPublicTrades(tickerId);
 
-        for ( PublicTrade pb : publicTrade ) {
+        for (PublicTrade pb : publicTrade) {
             System.out.println(pb);
         }
 
@@ -25,9 +25,9 @@ public class TestPublicTradesRestClient {
     public void getPublicTradesforSymbolByAmount() {
         String tickerId = "BTCUSD";
         int amountToRetrieve = 2;
-        List<PublicTrade> publicTrade = PublicTradesRestClient.getPublicTrades(tickerId,amountToRetrieve);
+        List<PublicTrade> publicTrade = PublicTradesRestClient.getPublicTrades(tickerId, amountToRetrieve);
 
-        for ( PublicTrade pb : publicTrade ) {
+        for (PublicTrade pb : publicTrade) {
             System.out.println(pb);
         }
 

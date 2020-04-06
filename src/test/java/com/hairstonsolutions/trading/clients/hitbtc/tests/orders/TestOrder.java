@@ -26,7 +26,7 @@ public class TestOrder {
 
         List<Order> retrievedHistoricalOrders = HistoricalOrderRestClient.getHistoricalOrders(hitBtcAPI, numberToRetrieve);
 
-        for ( Order order : retrievedHistoricalOrders ) {
+        for (Order order : retrievedHistoricalOrders) {
             order.pullTradesReport(hitBtcAPI);
             System.out.println(order);
         }

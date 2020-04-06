@@ -25,7 +25,7 @@ public class TestHistoricalOrderRestClient {
         List<Order> historicalOrders = HistoricalOrderRestClient.getHistoricalOrders(hitBtcAPI);
 
         int count = 0;
-        for ( Order orders : historicalOrders ) {
+        for (Order orders : historicalOrders) {
             System.out.println(orders);
             count++;
         }
@@ -39,7 +39,7 @@ public class TestHistoricalOrderRestClient {
         List<Order> historicalOrders = HistoricalOrderRestClient.getHistoricalOrders(hitBtcAPI, number);
 
         int count = 0;
-        for ( Order orders : historicalOrders ) {
+        for (Order orders : historicalOrders) {
             System.out.println(orders);
             count++;
         }
@@ -52,7 +52,7 @@ public class TestHistoricalOrderRestClient {
 
         List<Trade> historicalTrades = HistoricalOrderRestClient.getHistoricalTradesByOrderId(hitBtcAPI, orderId);
 
-        for ( Trade trades : historicalTrades ) {
+        for (Trade trades : historicalTrades) {
             System.out.println(trades);
         }
         System.out.println(String.format("Order Trades Total: %s", historicalTrades.size()));
@@ -67,7 +67,7 @@ public class TestHistoricalOrderRestClient {
         assert order.getTradesReport() != null;
 
         int count = 0;
-        for ( Trade trades : order.getTradesReport() ) {
+        for (Trade trades : order.getTradesReport()) {
             System.out.println(trades);
             count++;
         }
@@ -84,7 +84,7 @@ public class TestHistoricalOrderRestClient {
         assert order.getTradesReport() != null;
 
         int count = 0;
-        for ( Trade trades : order.getTradesReport() ) {
+        for (Trade trades : order.getTradesReport()) {
             System.out.println(trades);
             count++;
         }
@@ -109,7 +109,7 @@ public class TestHistoricalOrderRestClient {
         List<Order> historicalOrders = HistoricalOrderRestClient.getHistoricalOrdersList(hitBtcAPI, number);
 
         int count = 0;
-        for ( Order orders : historicalOrders ) {
+        for (Order orders : historicalOrders) {
             System.out.println(orders);
             count++;
         }

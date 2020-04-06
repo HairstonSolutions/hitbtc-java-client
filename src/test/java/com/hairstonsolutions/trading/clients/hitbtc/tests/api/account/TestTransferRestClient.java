@@ -65,7 +65,7 @@ public class TestTransferRestClient {
         String currency = "BTC";
         String amount = "0.0009";
 
-        TransferRestClient.moveToTrading(hitBtcAPI,currency,amount);
+        TransferRestClient.moveToTrading(hitBtcAPI, currency, amount);
     }
 
     @Ignore
@@ -74,6 +74,6 @@ public class TestTransferRestClient {
         String currency = "BTC";
         String amount = "0.0009";
 
-        TransferRestClient.moveToMain(hitBtcAPI,currency,amount);
+        TransferRestClient.moveToMain(hitBtcAPI, currency, amount);
     }
 }

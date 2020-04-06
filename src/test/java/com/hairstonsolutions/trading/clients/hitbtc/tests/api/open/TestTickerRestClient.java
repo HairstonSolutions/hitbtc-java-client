@@ -49,7 +49,7 @@ public class TestTickerRestClient {
 
         System.out.println(myTicker);
         assert myTicker.getSymbol().equals("BTCUSD");
-        System.out.printf("The Current %s price is: $%s",symbol, myTicker.getAsk());
+        System.out.printf("The Current %s price is: $%s", symbol, myTicker.getAsk());
     }
 
     @Test
@@ -74,7 +74,7 @@ public class TestTickerRestClient {
         System.out.println(myTicker);
         assert myTicker.getSymbol().equals("BTCUSD");
 
-        System.out.printf("The Current %s price is: $%s\n",symbol, myTicker.getAsk());
+        System.out.printf("The Current %s price is: $%s\n", symbol, myTicker.getAsk());
 
         float calculatedQuantify = marketAmount / Float.parseFloat(myTicker.getAsk());
         System.out.printf("Final Quantity: %s", calculatedQuantify);

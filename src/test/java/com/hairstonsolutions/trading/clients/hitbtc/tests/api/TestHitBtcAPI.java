@@ -32,22 +32,22 @@ public class TestHitBtcAPI {
             ex.printStackTrace();
         }
 
-        System.out.println("ApiKey: "+apiKey);
-        System.out.println("SecretKey: "+secretKey);
+        System.out.println("ApiKey: " + apiKey);
+        System.out.println("SecretKey: " + secretKey);
     }
 
     @Test
     public void makeAPIRequest() {
-        HitBtcAPI myhbc = new HitBtcAPI(apiKey,secretKey);
-        System.out.println("Base Url: "+ HitBtcAPI.BaseUrl);
-        System.out.println("Keys: "+ myhbc);
+        HitBtcAPI myhbc = new HitBtcAPI(apiKey, secretKey);
+        System.out.println("Base Url: " + HitBtcAPI.BASE_URL);
+        System.out.println("Keys: " + myhbc);
     }
 
     @Test
     public void testLoadKeysFromPropertiesFile() {
         HitBtcAPI myhbc = new HitBtcAPI(configFile);
-        System.out.println("Base Url: "+ HitBtcAPI.BaseUrl);
-        System.out.println("Keys: "+ myhbc);
+        System.out.println("Base Url: " + HitBtcAPI.BASE_URL);
+        System.out.println("Keys: " + myhbc);
         assert (myhbc.getApiKey().equals("CHANGE-ME"));
         assert (myhbc.getApiSecret().equals("CHANGE-ME"));
     }

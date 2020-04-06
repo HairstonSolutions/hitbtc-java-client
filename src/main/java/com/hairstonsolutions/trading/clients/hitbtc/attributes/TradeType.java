@@ -22,7 +22,7 @@ public class TradeType {
     }
 
     public void setType(String type) {
-        switch(type) {
+        switch (type) {
             case "limit":
                 this.type = LIMIT;
                 break;

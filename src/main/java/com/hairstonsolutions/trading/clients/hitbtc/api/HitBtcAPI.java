@@ -7,7 +7,7 @@ import java.util.Base64;
 import java.util.Properties;
 
 public class HitBtcAPI {
-    public static final String BaseUrl = "https://api.hitbtc.com/api/2";
+    public static final String BASE_URL = "https://api.hitbtc.com/api/2";
 
     private String apiKey;
     private String apiSecret;
@@ -33,7 +33,7 @@ public class HitBtcAPI {
     }
 
     public String getApiAuth() {
-        return apiKey+":"+apiSecret;
+        return apiKey + ":" + apiSecret;
     }
 
     public void setApiKey(String apiKey) {
@@ -46,7 +46,7 @@ public class HitBtcAPI {
 
     @Override
     public String toString() {
-        return apiKey+":"+apiSecret;
+        return apiKey + ":" + apiSecret;
     }
 
     public void loadKeysFromPropertiesFile(String configFile) {

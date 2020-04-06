@@ -15,7 +15,7 @@ public class Ticker {
     private String high;
     private String open;
     private String volume;
-    private String volumeQuote                                                                                                     ;
+    private String volumeQuote;
     private String timestamp;
 
 

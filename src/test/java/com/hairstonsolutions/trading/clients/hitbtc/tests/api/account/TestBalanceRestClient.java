@@ -32,7 +32,7 @@ public class TestBalanceRestClient {
 
         assert balances != null;
 
-        for ( Balance bal : balances ) {
+        for (Balance bal : balances) {
             System.out.println(bal);
         }
 
@@ -44,7 +44,7 @@ public class TestBalanceRestClient {
         BalanceRestClient balanceRestClient = new BalanceRestClient(hitBtcAPI);
         List<Balance> balances = balanceRestClient.getBalances();
 
-        for ( Balance bal : balances ) {
+        for (Balance bal : balances) {
             System.out.println(bal);
         }
 
@@ -55,7 +55,7 @@ public class TestBalanceRestClient {
     public void getAllBalancesStatic() {
         List<Balance> balances = BalanceRestClient.retrieveBalances(hitBtcAPI);
 
-        for ( Balance bal : balances ) {
+        for (Balance bal : balances) {
             System.out.println(bal);
         }
 

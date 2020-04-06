@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 public class SymbolRestClient {
 
     private static final String RESOURCE_PATH = "/public/symbol";
-    private static final String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
+    private static final String REQUEST_URI = HitBtcAPI.BASE_URL + RESOURCE_PATH;
     private static final Log LOG = LogFactory.getLog(SymbolRestClient.class);
 
     public SymbolRestClient() {
@@ -19,7 +19,7 @@ public class SymbolRestClient {
     public ResponseEntity<Symbol> getForEntity(String symbol) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Symbol> responseEntity = restTemplate.getForEntity(REQUEST_URI + "/{symbol}",
-                                                                    Symbol.class, symbol);
+                Symbol.class, symbol);
 
         LOG.info(String.format("Return values: %s", responseEntity.toString()));
 

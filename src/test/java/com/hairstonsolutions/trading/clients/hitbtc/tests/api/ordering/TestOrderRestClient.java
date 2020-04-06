@@ -51,7 +51,7 @@ public class TestOrderRestClient {
     public void getAllOpenOrders() {
         List<Order> openOrders = OrderRestClient.getOpenOrders(hitBtcAPI);
 
-        for ( Order orders : openOrders ) {
+        for (Order orders : openOrders) {
             System.out.println(orders);
         }
         System.out.println(String.format("Orders Total: %s", openOrders.size()));
@@ -60,7 +60,7 @@ public class TestOrderRestClient {
     @Ignore
     @Test
     public void postLowLimitBuyOrder() {
-        String symbol="BTCUSD";
+        String symbol = "BTCUSD";
         String side = Side.BUY;
         TradeType tradeType = new TradeType(TradeType.LIMIT);
         TimeInForce timeInForce = new TimeInForce(TimeInForce.GTC_GOOD_TILL_CANCELLED);
@@ -81,10 +81,10 @@ public class TestOrderRestClient {
     @Ignore
     @Test
     public void buyMarketOrder() {
-        String symbol="BTCUSD";
+        String symbol = "BTCUSD";
         String amount = "15.00";
 
-        Order myMarketOrder = OrderRestClient.sendMarketBuyOrder(hitBtcAPI,symbol,amount);
+        Order myMarketOrder = OrderRestClient.sendMarketBuyOrder(hitBtcAPI, symbol, amount);
 
         System.out.println(myMarketOrder);
         assert (myMarketOrder.getTradesReport() != null);
@@ -93,10 +93,10 @@ public class TestOrderRestClient {
     @Ignore
     @Test
     public void sellMarketOrder() {
-        String symbol="BTCUSD";
+        String symbol = "BTCUSD";
         String amount = "21.00";
 
-        Order myMarketOrder = OrderRestClient.sendMarketSellOrder(hitBtcAPI,symbol,amount);
+        Order myMarketOrder = OrderRestClient.sendMarketSellOrder(hitBtcAPI, symbol, amount);
 
         System.out.println(myMarketOrder);
         assert (myMarketOrder.getTradesReport() != null);

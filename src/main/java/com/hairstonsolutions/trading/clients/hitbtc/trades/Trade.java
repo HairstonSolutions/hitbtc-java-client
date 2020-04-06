@@ -74,14 +74,14 @@ public class Trade {
     }
 
     public static String getAveragePrice(List<Trade> tradeReport) {
-        if ( tradeReport.size() == 0)
+        if (tradeReport.size() == 0)
             return "0.0";
 
         DecimalFormat df = new DecimalFormat("##.##");
         df.setRoundingMode(RoundingMode.HALF_UP);
 
         float sum = 0f;
-        for ( Trade trades : tradeReport ) {
+        for (Trade trades : tradeReport) {
             sum = sum + Float.parseFloat(trades.getPrice());
         }
 
@@ -89,14 +89,14 @@ public class Trade {
     }
 
     public static String getPreciseAveragePrice(List<Trade> tradeReport, String cumQuantity) {
-        if ( tradeReport.size() == 0)
+        if (tradeReport.size() == 0)
             return "0.0";
 
         DecimalFormat df = new DecimalFormat("##.##");
         df.setRoundingMode(RoundingMode.HALF_UP);
 
         float sum = 0f;
-        for ( Trade trade : tradeReport ) {
+        for (Trade trade : tradeReport) {
             float quantityWeightPercentage = Float.parseFloat(trade.getQuantity()) / Float.parseFloat(cumQuantity);
             float weightedPrice = quantityWeightPercentage * Float.parseFloat(trade.getPrice());
             sum += weightedPrice;
@@ -106,14 +106,14 @@ public class Trade {
     }
 
     public static String getTotalFee(List<Trade> tradeReport) {
-        if ( tradeReport.size() == 0)
+        if (tradeReport.size() == 0)
             return "0.0";
 
         DecimalFormat df = new DecimalFormat("##.##################");
         df.setRoundingMode(RoundingMode.HALF_UP);
 
         double sum = 0f;
-        for ( Trade trades : tradeReport )
+        for (Trade trades : tradeReport)
             sum += Double.parseDouble(trades.getFee());
 
         return df.format(sum);

@@ -8,21 +8,21 @@ public class TestTimeInForce {
     @Test
     public void testDefault() {
         TimeInForce mytimeInForce = new TimeInForce();
-        assert(mytimeInForce.getTimeInForce().equals("GTC"));
-        assert(mytimeInForce.getTimeInForce().equals(TimeInForce.DEFAULT));
+        assert (mytimeInForce.getTimeInForce().equals("GTC"));
+        assert (mytimeInForce.getTimeInForce().equals(TimeInForce.DEFAULT));
     }
 
     @Test
     public void testGoodTillCancelled() {
         TimeInForce mytimeInForce = new TimeInForce("GTC");
-        assert(mytimeInForce.getTimeInForce().equals("GTC"));
-        assert(mytimeInForce.getTimeInForce().equals(TimeInForce.GTC_GOOD_TILL_CANCELLED));
+        assert (mytimeInForce.getTimeInForce().equals("GTC"));
+        assert (mytimeInForce.getTimeInForce().equals(TimeInForce.GTC_GOOD_TILL_CANCELLED));
     }
 
     @Test
     public void testImmediateOrCancel() {
         TimeInForce myTimeInForce = new TimeInForce("IOC");
-        assert(myTimeInForce.getTimeInForce().equals("IOC"));
+        assert (myTimeInForce.getTimeInForce().equals("IOC"));
         assert (myTimeInForce.getTimeInForce().equals(TimeInForce.IOC_IMMEDIATE_OR_CANCEL));
     }
 
@@ -43,8 +43,8 @@ public class TestTimeInForce {
     @Test
     public void testGoodTillDatetime() {
         TimeInForce myTimeInForce = new TimeInForce("GTD");
-        assert(myTimeInForce.getTimeInForce().equals("GTD"));
-        assert(myTimeInForce.getTimeInForce().equals(TimeInForce.GTD_GOOD_TILL_DATETIME));
+        assert (myTimeInForce.getTimeInForce().equals("GTD"));
+        assert (myTimeInForce.getTimeInForce().equals(TimeInForce.GTD_GOOD_TILL_DATETIME));
     }
 
     @Test

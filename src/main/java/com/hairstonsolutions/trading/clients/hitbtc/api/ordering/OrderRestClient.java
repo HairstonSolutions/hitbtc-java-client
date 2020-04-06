@@ -21,7 +21,7 @@ import java.util.Objects;
 public class OrderRestClient {
 
     private static final String RESOURCE_PATH = "/order";
-    private static final String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
+    private static final String REQUEST_URI = HitBtcAPI.BASE_URL + RESOURCE_PATH;
     private static final Log LOG = LogFactory.getLog(OrderRestClient.class);
 
     private HitBtcAPI hitBtcAPI;
@@ -39,7 +39,7 @@ public class OrderRestClient {
 
         HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
 
-        ResponseEntity<String> responseEntity = restTemplate.exchange(REQUEST_URI + "/"+clientOrderId, HttpMethod.GET, httpEntity, String.class);
+        ResponseEntity<String> responseEntity = restTemplate.exchange(REQUEST_URI + "/" + clientOrderId, HttpMethod.GET, httpEntity, String.class);
 
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
@@ -56,7 +56,7 @@ public class OrderRestClient {
 
         HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
 
-        ResponseEntity<Order> responseEntity = restTemplate.exchange(REQUEST_URI + "/"+clientOrderId, HttpMethod.GET, httpEntity, Order.class);
+        ResponseEntity<Order> responseEntity = restTemplate.exchange(REQUEST_URI + "/" + clientOrderId, HttpMethod.GET, httpEntity, Order.class);
 
         LOG.info(String.format("Return Values: %s", responseEntity.toString()));
 
@@ -98,9 +98,9 @@ public class OrderRestClient {
     private static Order sendMarketOrder(HitBtcAPI hitBtcAPI, String symbol, String amount, String side) {
         Ticker ticker = TickerRestClient.getTickerById(symbol);
         String price = ticker.getLast();
-        String quantity="";
+        String quantity = "";
 
-        switch (side){
+        switch (side) {
             case "buy":
                 quantity = ticker.getMarketBuyQuantityByAmount(Float.parseFloat(amount));
                 break;

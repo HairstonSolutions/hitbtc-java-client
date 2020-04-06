@@ -17,7 +17,7 @@ import java.util.Objects;
 public class HistoricalTradeRestClient {
 
     private static final String RESOURCE_PATH = "/history/trades";
-    private static final String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
+    private static final String REQUEST_URI = HitBtcAPI.BASE_URL + RESOURCE_PATH;
     private static final Log LOG = LogFactory.getLog(HistoricalTradeRestClient.class);
 
     public static List<Trade> getHistoricalTrades(HitBtcAPI hitBtcAPI) {

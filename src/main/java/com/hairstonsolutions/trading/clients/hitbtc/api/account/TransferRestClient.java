@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 public class TransferRestClient {
 
     private static final String RESOURCE_PATH = "/account/transfer";
-    private static final String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
+    private static final String REQUEST_URI = HitBtcAPI.BASE_URL + RESOURCE_PATH;
     private static final Log LOG = LogFactory.getLog(TransferRestClient.class);
 
     private HitBtcAPI hitBtcAPI;

@@ -23,7 +23,7 @@ public class TestTradingBalanceRestClient {
     public void getAllBalances() {
         List<Balance> balances = TradingBalanceRestClient.getBalances(hitBtcAPI);
 
-        for ( Balance bal : balances ) {
+        for (Balance bal : balances) {
             System.out.println(bal);
         }
 

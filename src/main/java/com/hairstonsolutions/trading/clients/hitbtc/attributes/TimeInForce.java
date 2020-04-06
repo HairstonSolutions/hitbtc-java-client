@@ -23,7 +23,7 @@ public class TimeInForce {
     }
 
     public void setTimeInForce(String timeInForce) {
-        switch(timeInForce) {
+        switch (timeInForce) {
             case "GTC":
                 this.timeInForce = GTC_GOOD_TILL_CANCELLED;
                 break;

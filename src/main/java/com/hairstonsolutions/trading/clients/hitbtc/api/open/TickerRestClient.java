@@ -13,7 +13,7 @@ import java.text.DecimalFormat;
 public class TickerRestClient {
 
     private static final String RESOURCE_PATH = "/public/ticker";
-    private static final String REQUEST_URI = HitBtcAPI.BaseUrl + RESOURCE_PATH;
+    private static final String REQUEST_URI = HitBtcAPI.BASE_URL + RESOURCE_PATH;
     private static final Log LOG = LogFactory.getLog(TickerRestClient.class);
 
     public TickerRestClient() {
