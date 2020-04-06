@@ -130,24 +130,42 @@ public class Ticker {
                 " }";
     }
 
+    public String getAskMinus() {
+        DecimalFormat df = new DecimalFormat("##.#####");
+        df.setRoundingMode(RoundingMode.UP);
+        return df.format(Float.parseFloat(ask) - 0.01);
+    }
+
+    public String getBidPlus() {
+        DecimalFormat df = new DecimalFormat("##.#####");
+        df.setRoundingMode(RoundingMode.DOWN);
+        return df.format(Float.parseFloat(bid) + 0.01);
+    }
+
     public String getMarketBuyQuantityByAmount(float amount) {
         DecimalFormat df = new DecimalFormat("##.#####");
         df.setRoundingMode(RoundingMode.UP);
-        return df.format(amount / Float.valueOf(getAsk()));
+        return df.format(amount / Float.parseFloat(getAsk()));
     }
 
     public String getMarketSellQuantityByAmount(float amount) {
         DecimalFormat df = new DecimalFormat("##.#####");
         df.setRoundingMode(RoundingMode.UP);
-        return df.format(amount / Float.valueOf(getBid()));
+        return df.format(amount / Float.parseFloat(getBid()));
+    }
+
+    public String getMarketQuantityByAmount(float amount, float bidAsk) {
+        DecimalFormat df = new DecimalFormat("##.#####");
+        df.setRoundingMode(RoundingMode.UP);
+        return df.format(amount / bidAsk);
     }
 
     public String getPotentialProfit(String quantity) {
         DecimalFormat df = new DecimalFormat("##.##");
         df.setRoundingMode(RoundingMode.UP);
 
-        float fQuantity = Float.valueOf(quantity);
-        float fAsk = Float.valueOf(bid);
+        float fQuantity = Float.parseFloat(quantity);
+        float fAsk = Float.parseFloat(bid);
 
         return df.format(fQuantity * fAsk);
     }
