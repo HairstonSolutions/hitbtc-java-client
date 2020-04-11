@@ -129,7 +129,7 @@ public class Order {
     }
 
     private void calculatePriceAsTradeReportPriceAverage() {
-        setPrice(Trade.getPreciseAveragePrice(tradesReport, cumQuantity));
+        setPrice(Trade.getPreciseAveragePrice(tradesReport));
     }
 }
 

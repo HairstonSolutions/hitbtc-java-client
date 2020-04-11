@@ -91,6 +91,24 @@ public class TestTrade {
     }
 
     @Test
+    public void calculateListCumulativeQuantity() {
+        long orderId = 176617860956L;
+        List<Trade> tradeReport = HistoricalOrderRestClient.getHistoricalTradesByOrderId(hitBtcAPI, orderId);
+
+        if (!tradeReport.isEmpty()) {
+            System.out.println(tradeReport);
+            for (Trade trade : tradeReport) {
+                System.out.printf("Trade ID %s has quantity: %s\n", trade.getId(), trade.getQuantity());
+            }
+            System.out.println(String.format("Order Trades Total: %s", tradeReport.size()));
+
+            String cumQuantity = Trade.getCumulativeQuantity(tradeReport);
+            System.out.printf("Cumulative Quantity: %s\n", cumQuantity);
+            assert cumQuantity.equals("0.00238");
+        }
+    }
+
+    @Test
     public void calculateAveragePrice() {
         long orderId = 176617860956L;
         List<Trade> tradeReport = HistoricalOrderRestClient.getHistoricalTradesByOrderId(hitBtcAPI, orderId);
@@ -104,6 +122,24 @@ public class TestTrade {
 
             String averagePrice = Trade.getAveragePrice(tradeReport);
             System.out.printf("Average Price: %s\n", averagePrice);
+            assert averagePrice.equals("8835.45");
+        }
+    }
+
+    @Test
+    public void calculatePreciseAveragePrice() {
+        long orderId = 176617860956L;
+        List<Trade> tradeReport = HistoricalOrderRestClient.getHistoricalTradesByOrderId(hitBtcAPI, orderId);
+
+        if (!tradeReport.isEmpty()) {
+            System.out.println(tradeReport);
+            for (Trade trade : tradeReport) {
+                System.out.printf("Trade ID %s has price: %s\n", trade.getId(), trade.getPrice());
+            }
+            System.out.println(String.format("Order Trades Total: %s", tradeReport.size()));
+
+            String averagePrice = Trade.getPreciseAveragePrice(tradeReport);
+            System.out.printf("Precise Average Price: %s\n", averagePrice);
             assert averagePrice.equals("8835.45");
         }
     }

@@ -112,6 +112,19 @@ public class Trade {
         return df.format(sum);
     }
 
+    public static String getCumulativeQuantity(List<Trade> tradeReport) {
+        if (tradeReport.size() == 0)
+            return "0.0";
+
+        DecimalFormat df = new DecimalFormat("##.##################");
+
+        BigDecimal sum = new BigDecimal("0.0");
+        for (Trade trade : tradeReport)
+            sum = sum.add(new BigDecimal(trade.getQuantity()));
+
+        return df.format(sum);
+    }
+
     public static String getAveragePrice(List<Trade> tradeReport) {
         if (tradeReport.size() == 0)
             return "0.0";
@@ -120,25 +133,27 @@ public class Trade {
         df.setRoundingMode(RoundingMode.HALF_UP);
 
         float sum = 0f;
-        for (Trade trades : tradeReport) {
-            sum = sum + Float.parseFloat(trades.getPrice());
+        for (Trade trade : tradeReport) {
+            sum = sum + Float.parseFloat(trade.getPrice());
         }
 
         return df.format(sum / tradeReport.size());
     }
 
-    public static String getPreciseAveragePrice(List<Trade> tradeReport, String cumQuantity) {
+    public static String getPreciseAveragePrice(List<Trade> tradeReport) {
         if (tradeReport.size() == 0)
             return "0.0";
 
         DecimalFormat df = new DecimalFormat("##.##");
         df.setRoundingMode(RoundingMode.HALF_UP);
 
-        float sum = 0f;
+        String cumQuantity = Trade.getCumulativeQuantity(tradeReport);
+        BigDecimal sum = new BigDecimal("0.0");
         for (Trade trade : tradeReport) {
+            BigDecimal tradePrice = new BigDecimal(trade.getPrice());
             float quantityWeightPercentage = Float.parseFloat(trade.getQuantity()) / Float.parseFloat(cumQuantity);
-            float weightedPrice = quantityWeightPercentage * Float.parseFloat(trade.getPrice());
-            sum += weightedPrice;
+            BigDecimal weightedPrice = tradePrice.multiply(new BigDecimal(quantityWeightPercentage));//quantityWeightPercentage.multiply(tradePrice);
+            sum = sum.add(weightedPrice);
         }
 
         return df.format(sum);
@@ -151,8 +166,8 @@ public class Trade {
         DecimalFormat df = new DecimalFormat("##.##################");
 
         BigDecimal sum = new BigDecimal("0.0");
-        for (Trade trades : tradeReport)
-            sum = sum.add(new BigDecimal(trades.getFee()));
+        for (Trade trade : tradeReport)
+            sum = sum.add(new BigDecimal(trade.getFee()));
 
         return df.format(sum);
     }
