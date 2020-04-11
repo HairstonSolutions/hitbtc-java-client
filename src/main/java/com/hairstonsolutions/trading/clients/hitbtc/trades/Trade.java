@@ -4,6 +4,7 @@ import com.hairstonsolutions.trading.clients.hitbtc.attributes.Side;
 import lombok.Data;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -62,15 +63,53 @@ public class Trade {
     }
 
     @ToString.Include
-    public String getTotalCost() {
-        float fQuantity = Float.parseFloat(quantity);
-        float fPrice = Float.parseFloat(price);
-        DecimalFormat df = new DecimalFormat("##.##");
-        df.setRoundingMode(RoundingMode.HALF_UP);
+    public String getTotalCostGross() {
+        BigDecimal bQuantity = new BigDecimal(quantity);
+        BigDecimal bPrice = new BigDecimal(price);
+        DecimalFormat df = new DecimalFormat("##.############");
 
-        float totalCost = fQuantity * fPrice;
+        BigDecimal totalCost = bQuantity.multiply(bPrice);
 
         return df.format(totalCost);
+    }
+
+    @ToString.Include
+    public String getTotalCostNet() {
+        BigDecimal bQuantity = new BigDecimal(quantity);
+        BigDecimal bPrice = new BigDecimal(price);
+        BigDecimal bFee = new BigDecimal(fee);
+        DecimalFormat df = new DecimalFormat("##.############");
+
+        BigDecimal totalCost = bQuantity.multiply(bPrice);
+        totalCost = totalCost.add(bFee);
+
+        return df.format(totalCost);
+    }
+
+    public static String getTotalCostGross(List<Trade> tradeReport) {
+        if (tradeReport.size() == 0)
+            return "0.0";
+
+        DecimalFormat df = new DecimalFormat("##.############");
+        BigDecimal sum = new BigDecimal("0.0");
+
+        for (Trade trade : tradeReport)
+            sum = sum.add(new BigDecimal(trade.getTotalCostGross()));
+
+        return df.format(sum);
+    }
+
+    public static String getTotalCostNet(List<Trade> tradeReport) {
+        if (tradeReport.size() == 0)
+            return "0.0";
+
+        DecimalFormat df = new DecimalFormat("##.############");
+        BigDecimal sum = new BigDecimal("0.0");
+
+        for (Trade trade : tradeReport)
+            sum = sum.add(new BigDecimal(trade.getTotalCostNet()));
+
+        return df.format(sum);
     }
 
     public static String getAveragePrice(List<Trade> tradeReport) {
@@ -110,11 +149,10 @@ public class Trade {
             return "0.0";
 
         DecimalFormat df = new DecimalFormat("##.##################");
-        df.setRoundingMode(RoundingMode.HALF_UP);
 
-        double sum = 0f;
+        BigDecimal sum = new BigDecimal("0.0");
         for (Trade trades : tradeReport)
-            sum += Double.parseDouble(trades.getFee());
+            sum = sum.add(new BigDecimal(trades.getFee()));
 
         return df.format(sum);
     }
