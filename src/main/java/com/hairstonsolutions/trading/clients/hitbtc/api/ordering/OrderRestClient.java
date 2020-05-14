@@ -111,6 +111,14 @@ public class OrderRestClient {
         return sendLikeMarketOrder(hitBtcAPI, symbol, amount, Side.SELL);
     }
 
+    public static Optional<Order> sendQuantityMarketBuyOrder(HitBtcAPI hitBtcAPI, String symbol, String quantity) {
+        return sendQuantityMarketOrder(hitBtcAPI, symbol, quantity, Side.BUY);
+    }
+
+    public static Optional<Order> sendQuantityMarketSellOrder(HitBtcAPI hitBtcAPI, String symbol, String quantity) {
+        return sendQuantityMarketOrder(hitBtcAPI, symbol, quantity, Side.SELL);
+    }
+
     private static Order sendMarketOrder(HitBtcAPI hitBtcAPI, String symbol, String amount, String side) {
         Ticker ticker = TickerRestClient.getTickerById(symbol);
         String price = ticker.getLast();
