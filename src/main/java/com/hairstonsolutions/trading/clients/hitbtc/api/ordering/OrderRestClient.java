@@ -157,6 +157,21 @@ public class OrderRestClient {
         return OrderRestClient.sendOptionalOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
     }
 
+    private static Optional<Order> sendQuantityMarketOrder(HitBtcAPI hitBtcAPI, String symbol, String quantity, String side) {
+        Ticker ticker = TickerRestClient.getTickerById(symbol);
+        String price = ticker.getLast();
+
+        TradeType tradeType = new TradeType(TradeType.MARKET);
+        TimeInForce timeInForce = new TimeInForce(TimeInForce.IOC_IMMEDIATE_OR_CANCEL);
+        boolean postOnly = false;
+
+        Optional<Order> responseOrder = OrderRestClient.sendOptionalOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
+
+        responseOrder.ifPresent(Order::reconcileMarketOrder);
+
+        return responseOrder;
+    }
+
     private static Order sendOrder(HitBtcAPI hitBtcAPI, String symbol, String side, String quantity, String price,
                                    TradeType tradeType, TimeInForce timeInForce, boolean postOnly) {
         RestTemplate restTemplate = new RestTemplate();
