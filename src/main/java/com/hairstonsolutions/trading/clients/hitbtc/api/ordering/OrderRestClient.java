@@ -119,6 +119,14 @@ public class OrderRestClient {
         return sendQuantityMarketOrder(hitBtcAPI, symbol, quantity, Side.SELL);
     }
 
+    public static Optional<Order> sendQuantityLikeMarketBuyOrder(HitBtcAPI hitBtcAPI, String symbol, String quantity) {
+        return sendQuantityMarketOrder(hitBtcAPI, symbol, quantity, Side.BUY);
+    }
+
+    public static Optional<Order> sendQuantityLikeMarketSellOrder(HitBtcAPI hitBtcAPI, String symbol, String quantity) {
+        return sendQuantityLikeMarketOrder(hitBtcAPI, symbol, quantity, Side.SELL);
+    }
+
     private static Order sendMarketOrder(HitBtcAPI hitBtcAPI, String symbol, String amount, String side) {
         Ticker ticker = TickerRestClient.getTickerById(symbol);
         String price = ticker.getLast();
@@ -178,6 +186,26 @@ public class OrderRestClient {
         responseOrder.ifPresent(Order::reconcileMarketOrder);
 
         return responseOrder;
+    }
+
+    private static Optional<Order> sendQuantityLikeMarketOrder(HitBtcAPI hitBtcAPI, String symbol, String quantity, String side) {
+        Ticker ticker = TickerRestClient.getTickerById(symbol);
+        String price = "";
+
+        switch (side) {
+            case "buy":
+                price = ticker.getBidPlus();
+                break;
+            case "sell":
+                price = ticker.getAskMinus();
+                break;
+        }
+
+        TradeType tradeType = new TradeType(TradeType.LIMIT);
+        TimeInForce timeInForce = new TimeInForce(TimeInForce.GTC_GOOD_TILL_CANCELLED);
+        boolean postOnly = true;
+
+        return OrderRestClient.sendOptionalOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
     }
 
     private static Order sendOrder(HitBtcAPI hitBtcAPI, String symbol, String side, String quantity, String price,
