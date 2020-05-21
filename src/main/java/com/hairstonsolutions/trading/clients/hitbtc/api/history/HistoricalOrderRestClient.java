@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class HistoricalOrderRestClient {
 
@@ -118,10 +119,51 @@ public class HistoricalOrderRestClient {
 
         ResponseEntity<Order[]> responseEntity = restTemplate.exchange(REQUEST_URI + "?clientOrderId=" + clientOrderId, HttpMethod.GET, httpEntity, Order[].class);
 
-        Order[] orders = responseEntity.getBody();
+        if (responseEntity.getStatusCodeValue() != 200)
+            LOG.error(String.format("Requesting Historical Order Failed. HTTP Response: %s", responseEntity.toString()));
 
-        assert orders != null;
-        return orders[0];
+        LOG.debug(String.format("Return Status Code: %s", responseEntity.getStatusCode()));
+        if (responseEntity.getBody() != null)
+            LOG.debug(String.format("Return Values: %s", responseEntity.getBody().toString()));
+
+        List<Order> order = Arrays.asList((responseEntity.getBody()));
+
+        if(!order.isEmpty())
+            return order.get(0);
+        else {
+            LOG.info(String.format("Response Successful, but Empty []. The requested clientOrderID %s might be Incorrect, Cancelled, Expired, still an Open order or Inaccessible to this account.", clientOrderId));
+            return null;
+        }
+    }
+
+    public static Optional<Order> getOptionalHistoricalOrder(HitBtcAPI hitBtcAPI, String clientOrderId) {
+        RestTemplate restTemplate = new RestTemplate();
+        String encodedCredentials = hitBtcAPI.getEncodedCredentials();
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        httpHeaders.set("Authorization", "Basic " + encodedCredentials);
+
+        HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
+
+        ResponseEntity<Order[]> responseEntity = restTemplate.exchange(REQUEST_URI + "?clientOrderId=" + clientOrderId, HttpMethod.GET, httpEntity, Order[].class);
+
+        if (responseEntity.getStatusCodeValue() != 200) {
+            LOG.error(String.format("Requesting Historical Order Failed. HTTP Response: %s", responseEntity.toString()));
+            return Optional.empty();
+        }
+
+        LOG.debug(String.format("Return Status Code: %s", responseEntity.getStatusCode()));
+        if (responseEntity.getBody() != null)
+            LOG.debug(String.format("Return Values: %s", responseEntity.getBody().toString()));
+
+        List<Order> order = Arrays.asList((responseEntity.getBody()));
+
+        if (order.isEmpty()) {
+            LOG.info(String.format("Response Successful, but Empty []. The requested clientOrderID %s might be Incorrect, Cancelled, Expired, still an Open order or Inaccessible to this account.", clientOrderId));
+            return Optional.empty();
+        }
+        else
+            return Optional.ofNullable(order.get(0));
     }
 
     public static List<Order> getHistoricalOrdersList(HitBtcAPI hitBtcAPI, int count) {
