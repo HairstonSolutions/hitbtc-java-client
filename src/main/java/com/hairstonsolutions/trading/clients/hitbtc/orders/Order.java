@@ -9,6 +9,7 @@ import com.hairstonsolutions.trading.clients.hitbtc.attributes.TradeType;
 import com.hairstonsolutions.trading.clients.hitbtc.trades.Trade;
 import lombok.Data;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Data
@@ -28,7 +29,7 @@ public class Order {
     private String updatedAt;   //@TODO Convert to Object TimeStamp
     private String stopPrice;
     private String expireTime;
-    private List<Trade> tradesReport;
+    private List<Trade> tradesReport = new LinkedList<>();
 
     public long getId() {
         return id;
