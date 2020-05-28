@@ -134,18 +134,4 @@ public class TestHistoricalOrderRestClient {
         order.ifPresent(System.out::println);
         assert order.isEmpty();
     }
-
-    @Test
-    public void getHistoricalOrdersListByCount() {
-        int number = 10;
-
-        List<Order> historicalOrders = HistoricalOrderRestClient.getHistoricalOrdersList(hitBtcAPI, number);
-
-        int count = 0;
-        for (Order orders : historicalOrders) {
-            System.out.println(orders);
-            count++;
-        }
-        System.out.println(String.format("Orders Total: %s", count));
-    }
 }

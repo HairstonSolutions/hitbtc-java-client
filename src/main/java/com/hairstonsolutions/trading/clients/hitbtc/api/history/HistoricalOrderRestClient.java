@@ -166,19 +166,4 @@ public class HistoricalOrderRestClient {
             return Optional.ofNullable(order.get(0));
     }
 
-    public static List<Order> getHistoricalOrdersList(HitBtcAPI hitBtcAPI, int count) {
-        RestTemplate restTemplate = new RestTemplate();
-        String encodedCredentials = hitBtcAPI.getEncodedCredentials();
-        HttpHeaders httpHeaders = new HttpHeaders();
-
-        httpHeaders.set("Authorization", "Basic " + encodedCredentials);
-
-        HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
-
-        ResponseEntity<Order[]> responseEntity = restTemplate.exchange(REQUEST_URI + "?limit=" + count, HttpMethod.GET, httpEntity, Order[].class);
-
-        LOG.info(String.format("Return Values: %s", responseEntity.toString()));
-
-        return Arrays.asList(Objects.requireNonNull(responseEntity.getBody()));
-    }
 }
