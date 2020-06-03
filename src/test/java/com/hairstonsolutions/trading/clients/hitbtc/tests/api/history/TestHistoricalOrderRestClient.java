@@ -134,4 +134,13 @@ public class TestHistoricalOrderRestClient {
         order.ifPresent(System.out::println);
         assert order.isEmpty();
     }
+
+    @Test
+    public void getOptionalHistoricalOrderBySymbol() {
+        String symbol = "BTCUSDC";
+        Optional<List<Order>> order = HistoricalOrderRestClient.getOptionalOrdersbySymbol(hitBtcAPI, symbol, 10);
+
+        order.ifPresent(System.out::println);
+        assert order.isPresent();
+    }
 }

@@ -166,4 +166,35 @@ public class HistoricalOrderRestClient {
             return Optional.ofNullable(order.get(0));
     }
 
+    public static Optional<List<Order>> getOptionalOrdersbySymbol(HitBtcAPI hitBtcAPI, String symbol, int count) {
+        RestTemplate restTemplate = new RestTemplate();
+        String encodedCredentials = hitBtcAPI.getEncodedCredentials();
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        httpHeaders.set("Authorization", "Basic " + encodedCredentials);
+
+        HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
+
+        ResponseEntity<Order[]> responseEntity = restTemplate.exchange(REQUEST_URI + "?limit=" + count + "?symbol=" + symbol
+
+                , HttpMethod.GET, httpEntity, Order[].class);
+
+        if (responseEntity.getStatusCodeValue() != 200) {
+            LOG.error(String.format("Requesting Historical Order Failed. HTTP Response: %s", responseEntity.toString()));
+            return Optional.empty();
+        }
+
+        LOG.debug(String.format("Return Status Code: %s", responseEntity.getStatusCode()));
+        if (responseEntity.getBody() != null)
+            LOG.debug(String.format("Return Values: %s", responseEntity.getBody().toString()));
+
+        List<Order> order = Arrays.asList((responseEntity.getBody()));
+
+        if (order.isEmpty()) {
+            LOG.info(String.format("Response Successful, but Empty []. The requested clientOrderID %s might be Incorrect, Cancelled, Expired, still an Open order or Inaccessible to this account.", symbol));
+            return Optional.empty();
+        }
+        else
+            return Optional.of(order);
+    }
 }
