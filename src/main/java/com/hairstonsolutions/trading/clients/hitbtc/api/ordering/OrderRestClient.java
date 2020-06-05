@@ -14,10 +14,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class OrderRestClient {
 
@@ -25,62 +22,55 @@ public class OrderRestClient {
     private static final String REQUEST_URI = HitBtcAPI.BASE_URL + RESOURCE_PATH;
     private static final Log LOG = LogFactory.getLog(OrderRestClient.class);
 
-    private HitBtcAPI hitBtcAPI;
-
-    public OrderRestClient(HitBtcAPI hitBtcAPI) {
-        this.hitBtcAPI = hitBtcAPI;
-    }
-
-    public ResponseEntity<String> getOrderStringByClientId(String clientOrderId) {
+    public static Optional<Order> getOpenOrderByClientId(HitBtcAPI hitBtcAPI, String clientOrderId) {
         RestTemplate restTemplate = new RestTemplate();
         String encodedCredentials = hitBtcAPI.getEncodedCredentials();
+
         HttpHeaders httpHeaders = new HttpHeaders();
-
         httpHeaders.set("Authorization", "Basic " + encodedCredentials);
-
         HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
 
-        ResponseEntity<String> responseEntity = restTemplate.exchange(REQUEST_URI + "/" + clientOrderId, HttpMethod.GET, httpEntity, String.class);
+        ResponseEntity<Order> responseEntity;
 
-        LOG.info(String.format("Return Values: %s", responseEntity.toString()));
+        try {
+            responseEntity = restTemplate.exchange(REQUEST_URI + "/" + clientOrderId, HttpMethod.GET, httpEntity, Order.class);
+        }
+        catch (Exception e) {
+            LOG.error(String.format("Error Retrieving Open order %s: from API. API Response: %s", clientOrderId, e.getMessage()));
+            return Optional.empty();
+        }
 
-        return responseEntity;
-    }
+        LOG.debug(String.format("Return Values: %s", responseEntity.toString()));
 
-
-    public static Order getOrderByClientId(String clientOrderId, HitBtcAPI hitBtcAPI) {
-        RestTemplate restTemplate = new RestTemplate();
-        String encodedCredentials = hitBtcAPI.getEncodedCredentials();
-        HttpHeaders httpHeaders = new HttpHeaders();
-
-        httpHeaders.set("Authorization", "Basic " + encodedCredentials);
-
-        HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
-
-        ResponseEntity<Order> responseEntity = restTemplate.exchange(REQUEST_URI + "/" + clientOrderId, HttpMethod.GET, httpEntity, Order.class);
-
-        LOG.info(String.format("Return Values: %s", responseEntity.toString()));
-
-        return responseEntity.getBody();
+        return Optional.ofNullable(responseEntity.getBody());
     }
 
     public static List<Order> getOpenOrders(HitBtcAPI hitBtcAPI) {
+        List<Order> openOrders = new LinkedList<>();
         RestTemplate restTemplate = new RestTemplate();
         String encodedCredentials = hitBtcAPI.getEncodedCredentials();
+
         HttpHeaders httpHeaders = new HttpHeaders();
-
         httpHeaders.set("Authorization", "Basic " + encodedCredentials);
-
         HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
 
-        ResponseEntity<Order[]> responseEntity = restTemplate.exchange(REQUEST_URI, HttpMethod.GET, httpEntity, Order[].class);
+        ResponseEntity<Order[]> responseEntity;
 
-        LOG.info(String.format("Return Values: %s", responseEntity.toString()));
+        try {
+            responseEntity = restTemplate.exchange(REQUEST_URI, HttpMethod.GET, httpEntity, Order[].class);
+            if (responseEntity.getStatusCodeValue() == 200) {
+                LOG.info(String.format("Return Values: %s", responseEntity.toString()));
+                openOrders = Arrays.asList(Objects.requireNonNull(responseEntity.getBody()));
+            }
+        }
+        catch (Exception e){
+            LOG.error(String.format("Error in retrieving all Open Orders from API. API Response: %s", e.getMessage()));
+        }
 
-        return Arrays.asList(Objects.requireNonNull(responseEntity.getBody()));
+        return openOrders;
     }
 
-    public static Order sendLimitOrder(HitBtcAPI hitBtcAPI, String symbol, String side, String quantity, String price) {
+    public static Optional<Order> sendLimitOrder(HitBtcAPI hitBtcAPI, String symbol, String side, String quantity, String price) {
         TradeType tradeType = new TradeType(TradeType.LIMIT);
         TimeInForce timeInForce = new TimeInForce(TimeInForce.GTC_GOOD_TILL_CANCELLED);
         boolean postOnly = false;
@@ -88,11 +78,11 @@ public class OrderRestClient {
         return OrderRestClient.sendOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
     }
 
-    public static Order sendMarketBuyOrder(HitBtcAPI hitBtcAPI, String symbol, String amount) {
+    public static Optional<Order> sendMarketBuyOrder(HitBtcAPI hitBtcAPI, String symbol, String amount) {
         return sendMarketOrder(hitBtcAPI, symbol, amount, Side.BUY);
     }
 
-    public static Order sendMarketSellOrder(HitBtcAPI hitBtcAPI, String symbol, String amount) {
+    public static Optional<Order> sendMarketSellOrder(HitBtcAPI hitBtcAPI, String symbol, String amount) {
         return sendMarketOrder(hitBtcAPI, symbol, amount, Side.SELL);
     }
 
@@ -127,7 +117,7 @@ public class OrderRestClient {
         return sendQuantityLikeMarketOrder(hitBtcAPI, symbol, quantity, Side.SELL);
     }
 
-    private static Order sendMarketOrder(HitBtcAPI hitBtcAPI, String symbol, String amount, String side) {
+    private static Optional<Order> sendMarketOrder(HitBtcAPI hitBtcAPI, String symbol, String amount, String side) {
         Ticker ticker = TickerRestClient.getTickerById(symbol);
         String price = ticker.getLast();
         String quantity = "";
@@ -145,9 +135,8 @@ public class OrderRestClient {
         TimeInForce timeInForce = new TimeInForce(TimeInForce.IOC_IMMEDIATE_OR_CANCEL);
         boolean postOnly = false;
 
-        Order responseOrder = OrderRestClient.sendOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
-        responseOrder.reconcileMarketOrder();
-
+        Optional<Order> responseOrder = OrderRestClient.sendOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
+        responseOrder.ifPresent(Order::reconcileMarketOrder);
         return responseOrder;
     }
 
@@ -170,7 +159,7 @@ public class OrderRestClient {
         TimeInForce timeInForce = new TimeInForce(TimeInForce.GTC_GOOD_TILL_CANCELLED);
         boolean postOnly = true;
 
-        return OrderRestClient.sendOptionalOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
+        return OrderRestClient.sendOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
     }
 
     private static Optional<Order> sendQuantityMarketOrder(HitBtcAPI hitBtcAPI, String symbol, String quantity, String side) {
@@ -181,7 +170,7 @@ public class OrderRestClient {
         TimeInForce timeInForce = new TimeInForce(TimeInForce.IOC_IMMEDIATE_OR_CANCEL);
         boolean postOnly = false;
 
-        Optional<Order> responseOrder = OrderRestClient.sendOptionalOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
+        Optional<Order> responseOrder = OrderRestClient.sendOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
 
         responseOrder.ifPresent(Order::reconcileMarketOrder);
 
@@ -205,11 +194,11 @@ public class OrderRestClient {
         TimeInForce timeInForce = new TimeInForce(TimeInForce.GTC_GOOD_TILL_CANCELLED);
         boolean postOnly = true;
 
-        return OrderRestClient.sendOptionalOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
+        return OrderRestClient.sendOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
     }
 
-    private static Order sendOrder(HitBtcAPI hitBtcAPI, String symbol, String side, String quantity, String price,
-                                   TradeType tradeType, TimeInForce timeInForce, boolean postOnly) {
+    private static Optional<Order> sendOrder(HitBtcAPI hitBtcAPI, String symbol, String side, String quantity, String price,
+                                             TradeType tradeType, TimeInForce timeInForce, boolean postOnly) {
         RestTemplate restTemplate = new RestTemplate();
         String encodedCredentials = hitBtcAPI.getEncodedCredentials();
 
@@ -233,49 +222,13 @@ public class OrderRestClient {
         LOG.info(String.format("Submitted %s %s Order: Price=%s, Quantity=%s, Symbol=%s, TimeInForce=%s",
                 tradeType.toString(), side, price, quantity, symbol, timeInForce.toString()));
 
-        ResponseEntity<Order> responseEntity = restTemplate.exchange(REQUEST_URI, HttpMethod.POST, request, Order.class);
+        ResponseEntity<Order> responseEntity;
 
-        if (responseEntity.getStatusCodeValue() != 200) {
-            LOG.error(String.format("Submitting Order Failed. HTTP Response: %s", responseEntity.toString()));
-            return null;
+        try {
+            responseEntity = restTemplate.exchange(REQUEST_URI, HttpMethod.POST, request, Order.class);
         }
-
-        LOG.debug(String.format("Return Status Code: %s", responseEntity.getStatusCode()));
-        if (responseEntity.getBody() != null)
-            LOG.info(String.format("Return Values: %s", responseEntity.getBody().toString()));
-
-        return responseEntity.getBody();
-    }
-
-    private static Optional<Order> sendOptionalOrder(HitBtcAPI hitBtcAPI, String symbol, String side, String quantity, String price,
-                                   TradeType tradeType, TimeInForce timeInForce, boolean postOnly) {
-        RestTemplate restTemplate = new RestTemplate();
-        String encodedCredentials = hitBtcAPI.getEncodedCredentials();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Basic " + encodedCredentials);
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
-        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-        map.add("symbol", symbol);
-        map.add("side", side);
-        map.add("type", tradeType.toString());
-        map.add("timeInForce", timeInForce.toString());
-        map.add("quantity", quantity);
-        map.add("price", price);
-        if (postOnly)
-            map.add("postOnly", "true");
-        else map.add("postOnly", "false");
-
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
-
-        LOG.info(String.format("Submitted %s %s Order: Price=%s, Quantity=%s, Symbol=%s, TimeInForce=%s",
-                tradeType.toString(), side, price, quantity, symbol, timeInForce.toString()));
-
-        ResponseEntity<Order> responseEntity = restTemplate.exchange(REQUEST_URI, HttpMethod.POST, request, Order.class);
-
-        if (responseEntity.getStatusCodeValue() != 200) {
-            LOG.error(String.format("Submitting Order Failed. HTTP Response: %s", responseEntity.toString()));
+        catch (Exception e){
+            LOG.error(String.format("Submitting Order Failed. HTTP Response: %s", e.getMessage()));
             return Optional.empty();
         }
 

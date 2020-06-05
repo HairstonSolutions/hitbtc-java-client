@@ -3,13 +3,10 @@ package com.hairstonsolutions.trading.clients.hitbtc.tests.api.ordering;
 import com.hairstonsolutions.trading.clients.hitbtc.api.HitBtcAPI;
 import com.hairstonsolutions.trading.clients.hitbtc.api.ordering.OrderRestClient;
 import com.hairstonsolutions.trading.clients.hitbtc.attributes.Side;
-import com.hairstonsolutions.trading.clients.hitbtc.attributes.TimeInForce;
-import com.hairstonsolutions.trading.clients.hitbtc.attributes.TradeType;
 import com.hairstonsolutions.trading.clients.hitbtc.orders.Order;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,26 +23,18 @@ public class TestOrderRestClient {
     }
 
     @Test
-    public void getOrderByClientIdString() {
-        String clientOrderId = "9dde33f8-afbb-4d3f-a182-6fa90dc";
-
-        OrderRestClient orderRestClient = new OrderRestClient(hitBtcAPI);
-
-        ResponseEntity<String> responseEntity = orderRestClient.getOrderStringByClientId(clientOrderId);
-
-        assert responseEntity.getStatusCode().toString().equals("200 OK");
-        System.out.println(responseEntity.getStatusCode().toString());
-
-        String orderResponse = responseEntity.getBody();
-        System.out.println(orderResponse);
-    }
-
-    @Test
     public void getOrderByClientIdObject() {
         String clientOrderId = "9dde33f8-afbb-4d3f-a182-6fa90dc";
 
-        Order orderResponse = OrderRestClient.getOrderByClientId(clientOrderId, hitBtcAPI);
-        System.out.println(orderResponse);
+        Optional<Order> orderResponse = OrderRestClient.getOpenOrderByClientId(hitBtcAPI, clientOrderId);
+
+        if (orderResponse.isPresent()) {
+            System.out.printf("Open Order %s was Found:\n", clientOrderId);
+            orderResponse.ifPresent(System.out::println);
+        }
+        else {
+            System.out.printf("Order %s was not found as an open order.\n", clientOrderId);
+        }
     }
 
     @Test
@@ -60,23 +49,16 @@ public class TestOrderRestClient {
 
     @Ignore
     @Test
-    public void postLowLimitBuyOrder() {
+    public void postLimitBuyOrder() {
         String symbol = "BTCUSD";
         String side = Side.BUY;
-        TradeType tradeType = new TradeType(TradeType.LIMIT);
-        TimeInForce timeInForce = new TimeInForce(TimeInForce.GTC_GOOD_TILL_CANCELLED);
         String quantity = "0.00130";
         String price = "8002.16";
 
-        Order OrderReponse = OrderRestClient.sendLimitOrder(
+        Optional<Order> orderReponse = OrderRestClient.sendLimitOrder(
                 hitBtcAPI, symbol, side, quantity, price);
 
-        System.out.println(OrderReponse);
-    }
-
-    @Test
-    public void postHighLimitSellOrder() {
-
+        orderReponse.ifPresent(System.out::println);
     }
 
     @Ignore
@@ -85,10 +67,10 @@ public class TestOrderRestClient {
         String symbol = "BTCUSD";
         String amount = "15.00";
 
-        Order myMarketOrder = OrderRestClient.sendMarketBuyOrder(hitBtcAPI, symbol, amount);
+        Optional<Order> myMarketOrder = OrderRestClient.sendMarketBuyOrder(hitBtcAPI, symbol, amount);
 
-        System.out.println(myMarketOrder);
-        assert (myMarketOrder.getTradesReport() != null);
+        myMarketOrder.ifPresent(System.out::println);
+        assert myMarketOrder.isEmpty() || !myMarketOrder.get().getTradesReport().isEmpty();
     }
 
     @Ignore
@@ -97,10 +79,10 @@ public class TestOrderRestClient {
         String symbol = "BTCUSD";
         String amount = "21.00";
 
-        Order myMarketOrder = OrderRestClient.sendMarketSellOrder(hitBtcAPI, symbol, amount);
+        Optional<Order> myMarketOrder = OrderRestClient.sendMarketSellOrder(hitBtcAPI, symbol, amount);
 
-        System.out.println(myMarketOrder);
-        assert (myMarketOrder.getTradesReport() != null);
+        myMarketOrder.ifPresent(System.out::println);
+        assert myMarketOrder.isEmpty() || !myMarketOrder.get().getTradesReport().isEmpty();
     }
 
     @Ignore
@@ -112,7 +94,6 @@ public class TestOrderRestClient {
         Optional<Order> myLikeMarketOrder = OrderRestClient.sendLikeMarketBuyOrder(hitBtcAPI, symbol, amount);
 
         myLikeMarketOrder.ifPresent(System.out::println);
-
         assert (myLikeMarketOrder.isPresent());
     }
 
@@ -125,8 +106,7 @@ public class TestOrderRestClient {
         Optional<Order> myLikeMarketOrder = OrderRestClient.sendLikeMarketSellOrder(hitBtcAPI, symbol, amount);
 
         myLikeMarketOrder.ifPresent(System.out::println);
-
-        assert (myLikeMarketOrder != null);
+        assert myLikeMarketOrder.isPresent();
     }
 
     @Test
