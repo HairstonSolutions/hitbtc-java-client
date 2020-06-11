@@ -25,8 +25,7 @@ public class ApiAuthRequestTest {
         String resourcePath = "/history/order";
         String uri = HitBtcAPI.BASE_URL + resourcePath + "?clientOrderId=" + clientOrderId;
 
-        ApiAuthRequest apiAuthRequest;
-        apiAuthRequest = new ApiAuthRequest<Order>(hitBtcAPI);
+        ApiAuthRequest<Order> apiAuthRequest = new ApiAuthRequest<>(hitBtcAPI);
         Optional<Order> order = apiAuthRequest.getItemRequest(uri, Order[].class);
 
         order.ifPresent(System.out::println);
@@ -37,7 +36,7 @@ public class ApiAuthRequestTest {
         String resourcePath = "/history/order";
         String uri = HitBtcAPI.BASE_URL + resourcePath;
 
-        ApiAuthRequest apiAuthRequest = new ApiAuthRequest<Order>(hitBtcAPI);
+        ApiAuthRequest<Order> apiAuthRequest = new ApiAuthRequest<>(hitBtcAPI);
         List<Order> historicalOrders = apiAuthRequest.getListRequest(uri, Order[].class);
 
         int count = 0;
