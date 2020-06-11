@@ -2,10 +2,8 @@ package com.hairstonsolutions.trading.clients.hitbtc.api;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
@@ -42,12 +40,12 @@ public class ApiAuthRequest<T> {
 
         LOG.debug(String.format("Return Values: %s", responseEntity.toString()));
 
-        if (!responseEntity.hasBody())
+        if (responseEntity.hasBody()) {
+            List<T> items = Arrays.asList(responseEntity.getBody());
+            return Optional.of(items.get(0));
+        }
+        else
             return Optional.empty();
-
-        List<T> items = Arrays.asList(responseEntity.getBody());
-
-        return Optional.of(items.get(0));
     }
 
     public List<T> getListRequest(String requestURI, Class<T[]> responseType) {
@@ -67,10 +65,33 @@ public class ApiAuthRequest<T> {
 
         LOG.debug(String.format("Return Values: %s", responseEntity.toString()));
 
-        if (!responseEntity.hasBody())
-            return items;
-
-        items = Arrays.asList(responseEntity.getBody());
+        if (responseEntity.hasBody()) {
+            items = Arrays.asList(responseEntity.getBody());
+        }
         return items;
+    }
+
+    public Optional<T> postRequest(String requestURI, MultiValueMap<String, String> map, Class<T> responseType){
+        RestTemplate restTemplate = new RestTemplate();
+        httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(map, httpHeaders);
+
+        ResponseEntity<T> responseEntity;
+
+        try {
+            responseEntity = restTemplate.exchange(requestURI, HttpMethod.POST, httpEntity, responseType);
+        }
+        catch (Exception e) {
+            LOG.error(String.format("Error Posting request to API. API Response: %s", e.getMessage()));
+            return Optional.empty();
+        }
+
+        LOG.debug(String.format("Return Values: %s", responseEntity.toString()));
+
+        if (responseEntity.hasBody())
+            return Optional.of(responseEntity.getBody());
+        else
+            return Optional.empty();
     }
 }
