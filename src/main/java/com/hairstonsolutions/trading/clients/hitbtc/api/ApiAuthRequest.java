@@ -51,6 +51,28 @@ public class ApiAuthRequest<T> {
             return Optional.empty();
     }
 
+    public Optional<T> getTrueItemRequest(String requestURI, Class<T> responseType) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
+
+        ResponseEntity<T> responseEntity;
+
+        try {
+            responseEntity = restTemplate.exchange(requestURI, HttpMethod.GET, httpEntity, responseType);
+        }
+        catch (Exception e) {
+            LOG.error(String.format("Error Retrieving request from API. API Response: %s", e.getMessage()));
+            return Optional.empty();
+        }
+
+        LOG.debug(String.format("Return Values: %s", responseEntity.toString()));
+
+        if (responseEntity.hasBody())
+            return Optional.of(responseEntity.getBody());
+        else
+            return Optional.empty();
+    }
+
     public List<T> getListRequest(String requestURI, Class<T[]> responseType) {
         List<T> items = new LinkedList<>();
         RestTemplate restTemplate = new RestTemplate();

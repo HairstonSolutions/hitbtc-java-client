@@ -15,13 +15,13 @@ import java.util.List;
 import java.util.Optional;
 
 public class ApiAuthRequestTest {
-    final String TESTCONFIGFILE = "src/test/resources/hitbtckey.properties";
+    final String TEST_CONFIG_FILE = "src/test/resources/hitbtckey.properties";
     private HitBtcAPI hitBtcAPI;
 
     @Before
     public void load() {
         hitBtcAPI = new HitBtcAPI();
-        hitBtcAPI.loadKeysFromPropertiesFile(TESTCONFIGFILE);
+        hitBtcAPI.loadKeysFromPropertiesFile(TEST_CONFIG_FILE);
     }
 
     @Test
@@ -35,6 +35,24 @@ public class ApiAuthRequestTest {
 
         order.ifPresent(System.out::println);
         assert order.isPresent();
+    }
+
+    @Test
+    public void trueSingleItemAsOptionalHistoricalOrder() {
+        String clientOrderId = "9dde33f8-afbb-4d3f-a182-6fa90dc";
+
+        String resourcePath = "/order";
+        String uri = HitBtcAPI.BASE_URL + resourcePath + "/" + clientOrderId;
+        ApiAuthRequest<Order> apiAuthRequest = new ApiAuthRequest<>(hitBtcAPI);
+        Optional<Order> openOrder = apiAuthRequest.getTrueItemRequest(uri, Order.class);
+
+        if (openOrder.isPresent()) {
+            System.out.printf("Open Order %s was Found:\n", clientOrderId);
+            openOrder.ifPresent(System.out::println);
+        }
+        else {
+            System.out.printf("Order %s was not found as an open order.\n", clientOrderId);
+        }
     }
 
     @Test
