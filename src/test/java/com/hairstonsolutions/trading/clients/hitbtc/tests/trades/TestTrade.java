@@ -22,7 +22,7 @@ public class TestTrade {
     @Test
     public void calculateTotalCostGross() {
         long orderId = 176617860956L;
-        List<Trade> tradeReport = HistoricalOrderRestClient.getHistoricalTradesByOrderId(hitBtcAPI, orderId);
+        List<Trade> tradeReport = HistoricalOrderRestClient.getTradesByOrderId(hitBtcAPI, orderId);
 
         if (!tradeReport.isEmpty()) {
             System.out.println(tradeReport);
@@ -38,7 +38,7 @@ public class TestTrade {
     @Test
     public void calculateTotalCostNet() {
         long orderId = 176617860956L;
-        List<Trade> tradeReport = HistoricalOrderRestClient.getHistoricalTradesByOrderId(hitBtcAPI, orderId);
+        List<Trade> tradeReport = HistoricalOrderRestClient.getTradesByOrderId(hitBtcAPI, orderId);
 
         if (!tradeReport.isEmpty()) {
             System.out.println(tradeReport);
@@ -54,7 +54,7 @@ public class TestTrade {
     @Test
     public void calculateListTotalCostGross() {
         long orderId = 176617860956L;
-        List<Trade> tradeReport = HistoricalOrderRestClient.getHistoricalTradesByOrderId(hitBtcAPI, orderId);
+        List<Trade> tradeReport = HistoricalOrderRestClient.getTradesByOrderId(hitBtcAPI, orderId);
 
         if (!tradeReport.isEmpty()) {
             System.out.println(tradeReport);
@@ -72,7 +72,7 @@ public class TestTrade {
     @Test
     public void calculateListTotalCostNet() {
         long orderId = 176617860956L;
-        List<Trade> tradeReport = HistoricalOrderRestClient.getHistoricalTradesByOrderId(hitBtcAPI, orderId);
+        List<Trade> tradeReport = HistoricalOrderRestClient.getTradesByOrderId(hitBtcAPI, orderId);
 
         if (!tradeReport.isEmpty()) {
             System.out.println(tradeReport);
@@ -93,7 +93,7 @@ public class TestTrade {
     @Test
     public void calculateListCumulativeQuantity() {
         long orderId = 176617860956L;
-        List<Trade> tradeReport = HistoricalOrderRestClient.getHistoricalTradesByOrderId(hitBtcAPI, orderId);
+        List<Trade> tradeReport = HistoricalOrderRestClient.getTradesByOrderId(hitBtcAPI, orderId);
 
         if (!tradeReport.isEmpty()) {
             System.out.println(tradeReport);
@@ -111,7 +111,7 @@ public class TestTrade {
     @Test
     public void calculateAveragePrice() {
         long orderId = 176617860956L;
-        List<Trade> tradeReport = HistoricalOrderRestClient.getHistoricalTradesByOrderId(hitBtcAPI, orderId);
+        List<Trade> tradeReport = HistoricalOrderRestClient.getTradesByOrderId(hitBtcAPI, orderId);
 
         if (!tradeReport.isEmpty()) {
             System.out.println(tradeReport);
@@ -129,7 +129,7 @@ public class TestTrade {
     @Test
     public void calculatePreciseAveragePrice() {
         long orderId = 176617860956L;
-        List<Trade> tradeReport = HistoricalOrderRestClient.getHistoricalTradesByOrderId(hitBtcAPI, orderId);
+        List<Trade> tradeReport = HistoricalOrderRestClient.getTradesByOrderId(hitBtcAPI, orderId);
 
         if (!tradeReport.isEmpty()) {
             System.out.println(tradeReport);
@@ -147,7 +147,7 @@ public class TestTrade {
     @Test
     public void calculateTotalFee() {
         long orderId = 176617860956L;
-        List<Trade> tradeReport = HistoricalOrderRestClient.getHistoricalTradesByOrderId(hitBtcAPI, orderId);
+        List<Trade> tradeReport = HistoricalOrderRestClient.getTradesByOrderId(hitBtcAPI, orderId);
 
         if (!tradeReport.isEmpty()) {
             System.out.println(tradeReport);

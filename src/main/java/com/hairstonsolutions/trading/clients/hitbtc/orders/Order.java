@@ -105,7 +105,7 @@ public class Order {
 
     public void pullTradesReport(HitBtcAPI hitBtcAPI) {
         if (this.getStatus().equals(Status.FILLED)) {
-            this.tradesReport = HistoricalOrderRestClient.getHistoricalTradesListByOrderId(hitBtcAPI, this.id);
+            this.tradesReport = HistoricalOrderRestClient.getTradesByOrderId(hitBtcAPI, this.id);
             calculatePriceAsTradeReportPriceAverage();
         }
     }

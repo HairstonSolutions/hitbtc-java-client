@@ -12,18 +12,36 @@ import java.util.Optional;
 
 public class TestHistoricalOrderRestClient {
 
-    final String TESTCONFIGFILE = "src/test/resources/hitbtckey.properties";
+    final String TEST_CONFIG_FILE = "src/test/resources/hitbtckey.properties";
     private HitBtcAPI hitBtcAPI;
 
     @Before
     public void load() {
         hitBtcAPI = new HitBtcAPI();
-        hitBtcAPI.loadKeysFromPropertiesFile(TESTCONFIGFILE);
+        hitBtcAPI.loadKeysFromPropertiesFile(TEST_CONFIG_FILE);
     }
 
     @Test
-    public void getAllHistoricalOrders() {
-        List<Order> historicalOrders = HistoricalOrderRestClient.getHistoricalOrders(hitBtcAPI);
+    public void getHistoricalOrderByClientOrderID() {
+        String clientOrderId = "84c5b2b6a1dc0ad12d257a5ce77cf58f";
+        Optional<Order> order = HistoricalOrderRestClient.getOrderByClientOrderId(hitBtcAPI, clientOrderId);
+
+        order.ifPresent(System.out::println);
+        assert order.isEmpty() || order.get().getClientOrderId().equals(clientOrderId);
+    }
+
+    @Test
+    public void getEmptyHistoricalOrderByClientOrderID() {
+        String clientOrderId = "c992694fe26cac96c4417a9a272a39d8";
+        Optional<Order> order = HistoricalOrderRestClient.getOrderByClientOrderId(hitBtcAPI, clientOrderId);
+
+        order.ifPresent(System.out::println);
+        assert order.isEmpty();
+    }
+
+    @Test
+    public void getHistoricalOrders() {
+        List<Order> historicalOrders = HistoricalOrderRestClient.getOrders(hitBtcAPI);
 
         int count = 0;
         for (Order orders : historicalOrders) {
@@ -31,13 +49,13 @@ public class TestHistoricalOrderRestClient {
             count++;
         }
         System.out.println(String.format("Orders Total: %s", count));
+        assert historicalOrders.size() > 0;
     }
 
     @Test
     public void getHistoricalOrdersByCount() {
         int number = 10;
-
-        List<Order> historicalOrders = HistoricalOrderRestClient.getHistoricalOrders(hitBtcAPI, number);
+        List<Order> historicalOrders = HistoricalOrderRestClient.getOrders(hitBtcAPI, number);
 
         int count = 0;
         for (Order orders : historicalOrders) {
@@ -45,16 +63,36 @@ public class TestHistoricalOrderRestClient {
             count++;
         }
         System.out.println(String.format("Orders Total: %s", count));
+        assert count == number;
+    }
+
+    @Test
+    public void getHistoricalOrdersBySymbol() {
+        String symbol = "BTCUSDC";
+        int amountToPull = 50;
+        List<Order> orders = HistoricalOrderRestClient.getOrdersBySymbol(hitBtcAPI, symbol, amountToPull);
+
+        int count=0;
+        for (Order order : orders) {
+            System.out.print(order.getSymbol() + ", ");
+            count++;
+        }
+
+        System.out.println();
+        System.out.println(orders);
+        System.out.println("Count: " + count);
+        assert !orders.isEmpty();
+        assert count <= amountToPull;
     }
 
     @Test
     public void getHistoricalTradesByHistoricalOrderID() {
         long orderId = 169111509127L;
-
-        List<Trade> historicalTrades = HistoricalOrderRestClient.getHistoricalTradesByOrderId(hitBtcAPI, orderId);
+        List<Trade> historicalTrades = HistoricalOrderRestClient.getTradesByOrderId(hitBtcAPI, orderId);
 
         for (Trade trades : historicalTrades) {
             System.out.println(trades);
+            assert trades.getOrderId() == orderId;
         }
         System.out.println(String.format("Order Trades Total: %s", historicalTrades.size()));
     }
@@ -62,7 +100,7 @@ public class TestHistoricalOrderRestClient {
     @Test
     public void historicalTradesPullForOrder() {
         String clientOrderId = "84c5b2b6a1dc0ad12d257a5ce77cf58f";
-        Optional<Order> order = HistoricalOrderRestClient.getOptionalHistoricalOrder(hitBtcAPI, clientOrderId);
+        Optional<Order> order = HistoricalOrderRestClient.getOrderByClientOrderId(hitBtcAPI, clientOrderId);
 
         order.ifPresent(value -> value.setTradesReport(HistoricalOrderRestClient.pullOrderTradeReport(hitBtcAPI, value)));
 
@@ -82,7 +120,7 @@ public class TestHistoricalOrderRestClient {
     @Test
     public void historicalTradesPullWithinAnOrder() {
         String clientOrderId = "84c5b2b6a1dc0ad12d257a5ce77cf58f";
-        Optional<Order> order = HistoricalOrderRestClient.getOptionalHistoricalOrder(hitBtcAPI, clientOrderId);
+        Optional<Order> order = HistoricalOrderRestClient.getOrderByClientOrderId(hitBtcAPI, clientOrderId);
 
         order.ifPresent(value -> value.pullTradesReport(hitBtcAPI));
 
@@ -97,50 +135,5 @@ public class TestHistoricalOrderRestClient {
             System.out.println(String.format("Order Trades Total: %s", count));
             System.out.println(order);
         }
-    }
-
-    @Test
-    public void getHistoricalOrderByClientOrderID() {
-        String clientOrderId = "84c5b2b6a1dc0ad12d257a5ce77cf58f";
-        Optional<Order> order = HistoricalOrderRestClient.getOptionalHistoricalOrder(hitBtcAPI, clientOrderId);
-
-        order.ifPresent(System.out::println);
-        assert order.isEmpty() || order.get().getClientOrderId().equals(clientOrderId);
-    }
-
-    @Test
-    public void getEmptyHistoricalOrderByClientOrderID() {
-        String clientOrderId = "c992694fe26cac96c4417a9a272a39d8";
-        Order order = HistoricalOrderRestClient.getHistoricalOrder(hitBtcAPI, clientOrderId);
-
-        System.out.println(order);
-        assert order == null;
-    }
-
-    @Test
-    public void getOptionalHistoricalOrderByClientOrderID() {
-        String clientOrderId = "84c5b2b6a1dc0ad12d257a5ce77cf58f";
-        Optional<Order> order = HistoricalOrderRestClient.getOptionalHistoricalOrder(hitBtcAPI, clientOrderId);
-
-        order.ifPresent(System.out::println);
-        assert order.isPresent();
-    }
-
-    @Test
-    public void getEmptyOptionalHistoricalOrderByClientOrderID() {
-        String clientOrderId = "c992694fe26cac96c4417a9a272a39d8";
-        Optional<Order> order = HistoricalOrderRestClient.getOptionalHistoricalOrder(hitBtcAPI, clientOrderId);
-
-        order.ifPresent(System.out::println);
-        assert order.isEmpty();
-    }
-
-    @Test
-    public void getOptionalHistoricalOrderBySymbol() {
-        String symbol = "BTCUSDC";
-        Optional<List<Order>> order = HistoricalOrderRestClient.getOptionalOrdersbySymbol(hitBtcAPI, symbol, 10);
-
-        order.ifPresent(System.out::println);
-        assert order.isPresent();
     }
 }
