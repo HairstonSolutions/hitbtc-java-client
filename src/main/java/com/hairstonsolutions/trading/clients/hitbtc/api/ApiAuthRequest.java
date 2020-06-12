@@ -42,7 +42,10 @@ public class ApiAuthRequest<T> {
 
         if (responseEntity.hasBody()) {
             List<T> items = Arrays.asList(responseEntity.getBody());
-            return Optional.of(items.get(0));
+            if (items.isEmpty())
+                return Optional.empty();
+            else
+                return Optional.of(items.get(0));
         }
         else
             return Optional.empty();
