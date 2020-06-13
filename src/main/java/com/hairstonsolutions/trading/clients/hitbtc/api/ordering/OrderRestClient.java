@@ -38,6 +38,15 @@ public class OrderRestClient {
         return openOrders;
     }
 
+    public static List<Order> getOpenOrders(HitBtcAPI hitBtcAPI, String symbol) {
+        String uri = REQUEST_URI + "?symbol=" + symbol;
+        ApiAuthRequest<Order> apiAuthRequest = new ApiAuthRequest<>(hitBtcAPI);
+        List<Order> openOrders = apiAuthRequest.getListRequest(uri, Order[].class);
+        if (openOrders.isEmpty())
+            LOG.error("Error Retrieving Open orders.");
+        return openOrders;
+    }
+
     public static Optional<Order> sendLimitOrder(HitBtcAPI hitBtcAPI, String symbol, String side, String quantity, String price) {
         TradeType tradeType = new TradeType(TradeType.LIMIT);
         TimeInForce timeInForce = new TimeInForce(TimeInForce.GTC_GOOD_TILL_CANCELLED);

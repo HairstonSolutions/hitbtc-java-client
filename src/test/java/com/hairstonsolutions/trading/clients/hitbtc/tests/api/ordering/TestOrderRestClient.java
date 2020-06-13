@@ -41,8 +41,20 @@ public class TestOrderRestClient {
     public void getAllOpenOrders() {
         List<Order> openOrders = OrderRestClient.getOpenOrders(hitBtcAPI);
 
-        for (Order orders : openOrders) {
-            System.out.println(orders);
+        for (Order order : openOrders) {
+            System.out.println(order);
+        }
+        System.out.println(String.format("Orders Total: %s", openOrders.size()));
+    }
+
+    @Test
+    public void getOpenOrdersBySymbol() {
+        String symbol = "BTCUSD";
+        List<Order> openOrders = OrderRestClient.getOpenOrders(hitBtcAPI, symbol);
+
+        for (Order order : openOrders) {
+            System.out.println(order);
+            assert order.getSymbol().equals(symbol);
         }
         System.out.println(String.format("Orders Total: %s", openOrders.size()));
     }
