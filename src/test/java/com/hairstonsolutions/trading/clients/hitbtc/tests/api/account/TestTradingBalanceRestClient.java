@@ -7,35 +7,33 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 public class TestTradingBalanceRestClient {
 
-    final String TESTCONFIGFILE = "src/test/resources/hitbtckey.properties";
+    final String TEST_CONFIG_FILE = "src/test/resources/hitbtckey.properties";
     private HitBtcAPI hitBtcAPI;
 
     @Before
     public void load() {
         hitBtcAPI = new HitBtcAPI();
-        hitBtcAPI.loadKeysFromPropertiesFile(TESTCONFIGFILE);
+        hitBtcAPI.loadKeysFromPropertiesFile(TEST_CONFIG_FILE);
     }
 
     @Test
     public void getAllBalances() {
         List<Balance> balances = TradingBalanceRestClient.getBalances(hitBtcAPI);
 
-        for (Balance bal : balances) {
-            System.out.println(bal);
-        }
-
-        System.out.println(String.format("Balances Retrived: %s", balances.size()));
+        System.out.println(balances);
+        System.out.println(String.format("Balances Retrieved: %s", balances.size()));
     }
 
     @Test
     public void getOneBalance() {
         String currency = "BTC";
-        Balance balance = TradingBalanceRestClient.getBalance(hitBtcAPI, currency);
-        System.out.println(balance);
-        assert balance.getCurrency().equals(currency);
+        Optional<Balance> balance = TradingBalanceRestClient.getBalance(hitBtcAPI, currency);
+        balance.ifPresent(System.out::println);
+        assert balance.isEmpty() || balance.get().getCurrency().equals(currency);
     }
 
 }
