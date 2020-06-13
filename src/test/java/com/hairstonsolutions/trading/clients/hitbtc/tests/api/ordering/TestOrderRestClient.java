@@ -13,13 +13,13 @@ import java.util.Optional;
 
 public class TestOrderRestClient {
 
-    final String TESTCONFIGFILE = "src/test/resources/hitbtckey.properties";
+    final String TEST_CONFIG_FILE = "src/test/resources/hitbtckey.properties";
     private HitBtcAPI hitBtcAPI;
 
     @Before
     public void load() {
         hitBtcAPI = new HitBtcAPI();
-        hitBtcAPI.loadKeysFromPropertiesFile(TESTCONFIGFILE);
+        hitBtcAPI.loadKeysFromPropertiesFile(TEST_CONFIG_FILE);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class TestOrderRestClient {
         String symbol = "BTCUSD";
         String side = Side.BUY;
         String quantity = "0.00130";
-        String price = "8002.16";
+        String price = "9002.16";
 
         Optional<Order> orderReponse = OrderRestClient.sendLimitOrder(
                 hitBtcAPI, symbol, side, quantity, price);
