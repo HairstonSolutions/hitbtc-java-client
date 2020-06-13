@@ -121,13 +121,28 @@ public class TestOrderRestClient {
         assert myLikeMarketOrder.isPresent();
     }
 
+    @Ignore
     @Test
-    public void stopLimitOrder() {
+    public void deleteOpenOrder() {
+        String openOrderClientId = "26694086791eae0424ac1e03151c67de";
+        Optional<Order> deletedOrder = OrderRestClient.deleteOpenOrder(hitBtcAPI, openOrderClientId);
 
+        if (deletedOrder.isPresent()) {
+            System.out.printf("Open Order %s was Found and Deleted:\n", openOrderClientId);
+            deletedOrder.ifPresent(System.out::println);
+        }
+        else {
+            System.out.printf("Order %s was not found as an open order to be deleted.\n", openOrderClientId);
+        }
     }
 
+    @Ignore
     @Test
-    public void stopMarketOrder() {
+    public void deleteAllOpenOrders() {
+        List<Order> deletedOrders = OrderRestClient.deleteAllOpenOrders(hitBtcAPI);
+        assert !deletedOrders.isEmpty();
 
+        List<Order> openOrders = OrderRestClient.getOpenOrders(hitBtcAPI);
+        assert openOrders.isEmpty();
     }
 }

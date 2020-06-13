@@ -34,7 +34,7 @@ public class OrderRestClient {
         ApiAuthRequest<Order> apiAuthRequest = new ApiAuthRequest<>(hitBtcAPI);
         List<Order> openOrders = apiAuthRequest.getListRequest(REQUEST_URI, Order[].class);
         if (openOrders.isEmpty())
-            LOG.error("Error Retrieving Open orders.");
+            LOG.error("Error Retrieving Open orders. There may Not be any open orders currently.");
         return openOrders;
     }
 
@@ -192,5 +192,22 @@ public class OrderRestClient {
         if (submittedOrder.isEmpty())
             LOG.error("Submitting Order Failed.");
         return submittedOrder;
+    }
+
+    public static Optional<Order> deleteOpenOrder(HitBtcAPI hitBtcAPI, String clientOrderId) {
+        String uri = REQUEST_URI + "/" + clientOrderId;
+        ApiAuthRequest<Order> apiAuthRequest = new ApiAuthRequest<>(hitBtcAPI);
+        Optional<Order> deletedOrder = apiAuthRequest.deleteRequest(uri, Order.class);
+        deletedOrder.ifPresent(order -> LOG.info(String.format("Open Order %s was Found and Deleted: %s", clientOrderId, order)));
+        return deletedOrder;
+    }
+
+    public static List<Order> deleteAllOpenOrders(HitBtcAPI hitBtcAPI) {
+        ApiAuthRequest<Order> apiAuthRequest = new ApiAuthRequest<>(hitBtcAPI);
+        List<Order> deletedOrders = apiAuthRequest.deleteMultipleRequest(REQUEST_URI, Order[].class);
+        if (!deletedOrders.isEmpty())
+            for (Order deletedOrder : deletedOrders)
+                LOG.info(String.format("Open Order %s was Found and Deleted: %s", deletedOrder.getClientOrderId(), deletedOrder));
+        return deletedOrders;
     }
 }
