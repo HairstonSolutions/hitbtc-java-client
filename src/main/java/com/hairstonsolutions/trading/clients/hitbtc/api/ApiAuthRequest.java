@@ -99,7 +99,6 @@ public class ApiAuthRequest<T> {
     public Optional<T> postRequest(String requestURI, MultiValueMap<String, String> map, Class<T> responseType){
         RestTemplate restTemplate = new RestTemplate();
         httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
         HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(map, httpHeaders);
 
         ResponseEntity<T> responseEntity;
@@ -118,5 +117,52 @@ public class ApiAuthRequest<T> {
             return Optional.of(responseEntity.getBody());
         else
             return Optional.empty();
+    }
+
+    public Optional<T> deleteRequest(String requestURI, Class<T> responseType) {
+        RestTemplate restTemplate = new RestTemplate();
+        httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
+
+        ResponseEntity<T> responseEntity;
+
+        try {
+            responseEntity = restTemplate.exchange(requestURI, HttpMethod.DELETE, httpEntity, responseType);
+        }
+        catch (Exception e) {
+            LOG.error(String.format("Error Posting DELETE request to API. API Response: %s", e.getMessage()));
+            return Optional.empty();
+        }
+
+        LOG.debug(String.format("Return Values: %s", responseEntity.toString()));
+
+        if (responseEntity.hasBody())
+            return Optional.of(responseEntity.getBody());
+        else
+            return Optional.empty();
+    }
+
+    public List<T> deleteMultipleRequest(String requestURI, Class<T[]> responseType) {
+        List<T> items = new LinkedList<>();
+        RestTemplate restTemplate = new RestTemplate();
+        httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
+
+        ResponseEntity<T[]> responseEntity;
+
+        try {
+            responseEntity = restTemplate.exchange(requestURI, HttpMethod.DELETE, httpEntity, responseType);
+        }
+        catch (Exception e) {
+            LOG.error(String.format("Error Posting DELETE request to API. API Response: %s", e.getMessage()));
+            return items;
+        }
+
+        LOG.debug(String.format("Return Values: %s", responseEntity.toString()));
+
+        if (responseEntity.hasBody()) {
+            items = Arrays.asList(responseEntity.getBody());
+        }
+        return items;
     }
 }

@@ -40,9 +40,9 @@ public class ApiAuthRequestTest {
     @Test
     public void trueSingleItemAsOptionalHistoricalOrder() {
         String clientOrderId = "9dde33f8-afbb-4d3f-a182-6fa90dc";
-
         String resourcePath = "/order";
         String uri = HitBtcAPI.BASE_URL + resourcePath + "/" + clientOrderId;
+
         ApiAuthRequest<Order> apiAuthRequest = new ApiAuthRequest<>(hitBtcAPI);
         Optional<Order> openOrder = apiAuthRequest.getTrueItemRequest(uri, Order.class);
 
@@ -92,5 +92,39 @@ public class ApiAuthRequestTest {
 
         response.ifPresent(System.out::println);
         assert response.isPresent();
+    }
+
+    @Ignore
+    @Test
+    public void deleteAnOpenOrder() {
+        String openOrderClientId = "7ff6dc44aed32a671367c2bca835474b";
+        String resourcePath = "/order";
+        String uri = HitBtcAPI.BASE_URL + resourcePath + "/" + openOrderClientId;
+
+        ApiAuthRequest<Order> apiAuthRequest = new ApiAuthRequest<>(hitBtcAPI);
+        Optional<Order> deletedOrder = apiAuthRequest.deleteRequest(uri, Order.class);
+
+        if (deletedOrder.isPresent()) {
+            System.out.printf("Open Order %s was Found and Deleted:\n", openOrderClientId);
+            deletedOrder.ifPresent(System.out::println);
+        }
+        else {
+            System.out.printf("Order %s was not found as an open order to be deleted.\n", openOrderClientId);
+        }
+    }
+
+    @Ignore
+    @Test
+    public void deleteAllOpenOrders() {
+        String resourcePath = "/order";
+        String uri = HitBtcAPI.BASE_URL + resourcePath;
+
+        ApiAuthRequest<Order> apiAuthRequest = new ApiAuthRequest<>(hitBtcAPI);
+        List<Order> deletedOrders = apiAuthRequest.deleteMultipleRequest(uri, Order[].class);
+
+        for (Order deletedOrder : deletedOrders) {
+            System.out.printf("Open Order %s was Found and Deleted:\n", deletedOrder.getClientOrderId());
+            System.out.println(deletedOrder);
+        }
     }
 }
