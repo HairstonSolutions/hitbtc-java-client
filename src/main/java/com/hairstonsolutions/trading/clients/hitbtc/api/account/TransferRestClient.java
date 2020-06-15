@@ -2,13 +2,14 @@ package com.hairstonsolutions.trading.clients.hitbtc.api.account;
 
 import com.hairstonsolutions.trading.clients.hitbtc.account.Direction;
 import com.hairstonsolutions.trading.clients.hitbtc.account.TransferResponse;
+import com.hairstonsolutions.trading.clients.hitbtc.api.ApiAuthRequest;
 import com.hairstonsolutions.trading.clients.hitbtc.api.HitBtcAPI;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
+
+import java.util.Optional;
 
 public class TransferRestClient {
 
@@ -16,56 +17,28 @@ public class TransferRestClient {
     private static final String REQUEST_URI = HitBtcAPI.BASE_URL + RESOURCE_PATH;
     private static final Log LOG = LogFactory.getLog(TransferRestClient.class);
 
-    private HitBtcAPI hitBtcAPI;
-
-    public TransferRestClient(HitBtcAPI hitBtcAPI) {
-        this.hitBtcAPI = hitBtcAPI;
+    public static Optional<TransferResponse> moveToTrading(HitBtcAPI hitBtcAPI, String currency, String amount) {
+        String direction = Direction.TO_TRADING;
+        return transfer(hitBtcAPI, currency, amount, direction);
     }
 
-    public ResponseEntity<TransferResponse> transferExecution(String currency, String direction, String amount) {
-        RestTemplate restTemplate = new RestTemplate();
-        String encodedCredentials = hitBtcAPI.getEncodedCredentials();
+    public static Optional<TransferResponse> moveToMain(HitBtcAPI hitBtcAPI, String currency, String amount) {
+        String direction = Direction.TO_MAIN_BANK;
+        return transfer(hitBtcAPI, currency, amount, direction);
+    }
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Basic " + encodedCredentials);
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+    private static Optional<TransferResponse> transfer(HitBtcAPI hitBtcAPI, String currency, String amount, String direction) {
+        ApiAuthRequest<TransferResponse> apiAuthRequest = new ApiAuthRequest<>(hitBtcAPI);
 
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("currency", currency);
         map.add("type", direction);
         map.add("amount", amount);
 
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
+        Optional<TransferResponse> transferResponse = apiAuthRequest.postRequest(REQUEST_URI, map, TransferResponse.class);
 
-        ResponseEntity<TransferResponse> responseEntity = restTemplate.exchange(REQUEST_URI, HttpMethod.POST, request, TransferResponse.class);
+        transferResponse.ifPresent(response -> LOG.info(String.format("Transfer Response: %s", response)));
 
-        LOG.info(String.format("Return Values: %s", responseEntity.toString()));
-
-        return responseEntity;
+        return transferResponse;
     }
-
-    public static void moveToTrading(HitBtcAPI hitBtcAPI, String currency, String amount) {
-        String direction = Direction.TO_TRADING;
-
-        transfer(hitBtcAPI, currency, amount, direction);
-    }
-
-    public static void moveToMain(HitBtcAPI hitBtcAPI, String currency, String amount) {
-        String direction = Direction.TO_MAIN_BANK;
-
-        transfer(hitBtcAPI, currency, amount, direction);
-    }
-
-    private static void transfer(HitBtcAPI hitBtcAPI, String currency, String amount, String direction) {
-        TransferRestClient transferRestClient = new TransferRestClient(hitBtcAPI);
-
-        ResponseEntity<TransferResponse> responseEntity = transferRestClient.transferExecution(currency, direction, amount);
-
-        LOG.info(responseEntity.getStatusCode().toString());
-
-        TransferResponse transferResponse = responseEntity.getBody();
-        assert transferResponse != null;
-        LOG.info(transferResponse.toString());
-    }
-
 }
