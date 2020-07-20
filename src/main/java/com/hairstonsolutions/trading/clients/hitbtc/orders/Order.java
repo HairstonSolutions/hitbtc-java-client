@@ -116,8 +116,10 @@ public class Order {
       This method Calculates those values & fills them in for both the Order and Trade Objects.
     */
     public void reconcileMarketOrder() {
-        reconcileRetrievedTradeReport();
-        calculatePriceAsTradeReportPriceAverage();
+        if (status.equals(Status.FILLED) && !tradesReport.isEmpty()) {
+            reconcileRetrievedTradeReport();
+            calculatePriceAsTradeReportPriceAverage();
+        }
     }
 
     public void reconcileRetrievedTradeReport() {

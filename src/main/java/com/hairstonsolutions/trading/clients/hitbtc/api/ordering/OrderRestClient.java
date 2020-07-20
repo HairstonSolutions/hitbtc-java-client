@@ -26,7 +26,7 @@ public class OrderRestClient {
         ApiAuthRequest<Order> apiAuthRequest = new ApiAuthRequest<>(hitBtcAPI);
         Optional<Order> openOrder = apiAuthRequest.getTrueItemRequest(uri, Order.class);
         if (openOrder.isEmpty())
-            LOG.error(String.format("Error Retrieving Open order %s: from API.", clientOrderId));
+            LOG.error(String.format("Error Retrieving Open order %s from API.", clientOrderId));
         return openOrder;
     }
 
