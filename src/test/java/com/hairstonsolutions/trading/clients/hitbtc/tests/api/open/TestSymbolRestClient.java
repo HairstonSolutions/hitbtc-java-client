@@ -24,7 +24,7 @@ public class TestSymbolRestClient {
         assert (mySymbol.getQuoteCurrency().equals("USD"));
         assert (mySymbol.getQuantityIncrement().equals("0.00001"));
         assert (mySymbol.getTickSize().equals("0.01"));
-        assert (mySymbol.getTakeLiquidityRate().equals("0.002"));
+        assert (mySymbol.getTakeLiquidityRate().equals("0.0025"));
         assert (mySymbol.getProvideLiquidityRate().equals("0.001"));
         assert (mySymbol.getFeeCurrency().equals("USD"));
     }
@@ -45,7 +45,7 @@ public class TestSymbolRestClient {
         assert (mySymbol.getQuoteCurrency().equals("BTC"));
         assert (mySymbol.getQuantityIncrement().equals("100"));
         assert (mySymbol.getTickSize().equals("0.00000000001"));
-        assert (mySymbol.getTakeLiquidityRate().equals("0.002"));
+        assert (mySymbol.getTakeLiquidityRate().equals("0.0025"));
         assert (mySymbol.getProvideLiquidityRate().equals("0.001"));
         assert (mySymbol.getFeeCurrency().equals("BTC"));
     }
@@ -62,7 +62,7 @@ public class TestSymbolRestClient {
         assert (mySymbol.getQuoteCurrency().equals("BTC"));
         assert (mySymbol.getQuantityIncrement().equals("100"));
         assert (mySymbol.getTickSize().equals("0.00000000001"));
-        assert (mySymbol.getTakeLiquidityRate().equals("0.002"));
+        assert (mySymbol.getTakeLiquidityRate().equals("0.0025"));
         assert (mySymbol.getProvideLiquidityRate().equals("0.001"));
         assert (mySymbol.getFeeCurrency().equals("BTC"));
     }
@@ -78,7 +78,7 @@ public class TestSymbolRestClient {
         assert (mySymbol.getQuoteCurrency().equals("BTC"));
         assert (mySymbol.getQuantityIncrement().equals("100"));
         assert (mySymbol.getTickSize().equals("0.00000000001"));
-        assert (mySymbol.getTakeLiquidityRate().equals("0.002"));
+        assert (mySymbol.getTakeLiquidityRate().equals("0.0025"));
         assert (mySymbol.getProvideLiquidityRate().equals("0.001"));
         assert (mySymbol.getFeeCurrency().equals("BTC"));
     }
