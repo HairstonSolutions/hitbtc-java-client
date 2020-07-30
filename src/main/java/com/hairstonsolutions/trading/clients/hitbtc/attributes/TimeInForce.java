@@ -9,7 +9,6 @@ public class TimeInForce {
     public static final String DEFAULT = GTC_GOOD_TILL_CANCELLED;
 
     public static String selectTimeInForce(String timeInForce) {
-
         String timeInForceSetting;
 
         switch (timeInForce) {

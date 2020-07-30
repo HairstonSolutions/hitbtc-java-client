@@ -20,7 +20,6 @@ public class TestStatus {
     @Test
     public void testWrongInput() {
         String myStatus = Status.selectStatus("fdafdsa");
-
         assert (myStatus.equals(Status.DEFAULT));
     }
 

@@ -10,7 +10,6 @@ public class Status {
     public static final String DEFAULT = NEW;
 
     public static String selectStatus(String status) {
-
         String statusSetting;
 
         switch (status) {

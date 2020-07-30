@@ -3,8 +3,8 @@ package com.hairstonsolutions.trading.clients.hitbtc.attributes;
 public class TradeType {
     public static final String LIMIT = "limit";
     public static final String MARKET = "market";
-    public static final String STOPLIMIT = "stopLimit";
-    public static final String STOPMARKET = "stopMarket";
+    public static final String STOP_LIMIT = "stopLimit";
+    public static final String STOP_MARKET = "stopMarket";
     public static final String DEFAULT = LIMIT;
 
     public static String selectTradeType(String tradeType) {
@@ -18,10 +18,10 @@ public class TradeType {
                 tradeTypeSetting = MARKET;
                 break;
             case "stopLimit":
-                tradeTypeSetting = STOPLIMIT;
+                tradeTypeSetting = STOP_LIMIT;
                 break;
             case "stopMarket":
-                tradeTypeSetting = STOPMARKET;
+                tradeTypeSetting = STOP_MARKET;
                 break;
             default:
                 tradeTypeSetting = DEFAULT;

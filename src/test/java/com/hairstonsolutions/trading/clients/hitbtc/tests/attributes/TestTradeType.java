@@ -26,13 +26,13 @@ public class TestTradeType {
     @Test
     public void testStopLimit() {
         String tradeType = TradeType.selectTradeType("stopLimit");
-        assert (tradeType.equals(TradeType.STOPLIMIT));
+        assert (tradeType.equals(TradeType.STOP_LIMIT));
     }
 
     @Test
     public void testStopMarket() {
         String tradeType = TradeType.selectTradeType("stopMarket");
-        assert (tradeType.equals(TradeType.STOPMARKET));
+        assert (tradeType.equals(TradeType.STOP_MARKET));
     }
 
     @Test

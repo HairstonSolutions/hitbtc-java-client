@@ -19,8 +19,8 @@ public class Order {
     private String symbol;
     private String side;
     private String status;
-    private TradeType type;
-    private TimeInForce timeInForce;
+    private String type;
+    private String timeInForce;
     private String price;
     private String quantity;
     private boolean postOnly;
@@ -51,11 +51,11 @@ public class Order {
         return status;
     }
 
-    public TradeType getType() {
+    public String getType() {
         return type;
     }
 
-    public TimeInForce getTimeInForce() {
+    public String getTimeInForce() {
         return timeInForce;
     }
 
@@ -93,6 +93,14 @@ public class Order {
 
     public void setStatus(String status) {
         this.status = Status.selectStatus(status);
+    }
+
+    public void setType(String tradeType) {
+        this.type = TradeType.selectTradeType(tradeType);
+    }
+
+    public void setTimeInForce(String timeInForce) {
+        this.timeInForce = TimeInForce.selectTimeInForce(timeInForce);
     }
 
     public void setPrice(String price) {

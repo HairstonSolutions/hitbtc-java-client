@@ -6,7 +6,6 @@ public class Side {
     public static final String DEFAULT = BUY;
 
     public static String selectSide(String side) {
-
         String sideSetting;
 
         switch (side) {
