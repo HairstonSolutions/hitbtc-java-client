@@ -25,8 +25,9 @@ public class Order {
     private String quantity;
     private boolean postOnly;
     private String cumQuantity;
-    private String createdAt;   //@TODO Convert to Object TimeStamp
-    private String updatedAt;   //@TODO Convert to Object TimeStamp
+    private String createdAt;
+    private String updatedAt;
+    private String avgPrice;
     private String stopPrice;
     private String expireTime;
     private List<Trade> tradesReport = new LinkedList<>();
@@ -140,7 +141,8 @@ public class Order {
     }
 
     private void calculatePriceAsTradeReportPriceAverage() {
-        setPrice(Trade.getPreciseAveragePrice(tradesReport));
+        setAvgPrice(Trade.getPreciseAveragePrice(tradesReport));
+        setPrice(getAvgPrice());
     }
 }
 
