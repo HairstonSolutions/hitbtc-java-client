@@ -19,14 +19,15 @@ public class Order {
     private String symbol;
     private String side;
     private String status;
-    private TradeType type;
-    private TimeInForce timeInForce;
+    private String type;
+    private String timeInForce;
     private String price;
     private String quantity;
     private boolean postOnly;
     private String cumQuantity;
-    private String createdAt;   //@TODO Convert to Object TimeStamp
-    private String updatedAt;   //@TODO Convert to Object TimeStamp
+    private String createdAt;
+    private String updatedAt;
+    private String avgPrice;
     private String stopPrice;
     private String expireTime;
     private List<Trade> tradesReport = new LinkedList<>();
@@ -51,11 +52,11 @@ public class Order {
         return status;
     }
 
-    public TradeType getType() {
+    public String getType() {
         return type;
     }
 
-    public TimeInForce getTimeInForce() {
+    public String getTimeInForce() {
         return timeInForce;
     }
 
@@ -95,6 +96,14 @@ public class Order {
         this.status = Status.selectStatus(status);
     }
 
+    public void setType(String tradeType) {
+        this.type = TradeType.selectTradeType(tradeType);
+    }
+
+    public void setTimeInForce(String timeInForce) {
+        this.timeInForce = TimeInForce.selectTimeInForce(timeInForce);
+    }
+
     public void setPrice(String price) {
         this.price = price;
     }
@@ -132,7 +141,8 @@ public class Order {
     }
 
     private void calculatePriceAsTradeReportPriceAverage() {
-        setPrice(Trade.getPreciseAveragePrice(tradesReport));
+        setAvgPrice(Trade.getPreciseAveragePrice(tradesReport));
+        setPrice(getAvgPrice());
     }
 }
 

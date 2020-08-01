@@ -3,45 +3,29 @@ package com.hairstonsolutions.trading.clients.hitbtc.attributes;
 public class TradeType {
     public static final String LIMIT = "limit";
     public static final String MARKET = "market";
-    public static final String STOPLIMIT = "stopLimit";
-    public static final String STOPMARKET = "stopMarket";
+    public static final String STOP_LIMIT = "stopLimit";
+    public static final String STOP_MARKET = "stopMarket";
     public static final String DEFAULT = LIMIT;
 
-    private String type;
+    public static String selectTradeType(String tradeType) {
+        String tradeTypeSetting;
 
-    public TradeType() {
-        setType(LIMIT);
-    }
-
-    public TradeType(String type) {
-        setType(type);
-    }
-
-    public String getType() {
-        return this.type;
-    }
-
-    public void setType(String type) {
-        switch (type) {
+        switch (tradeType) {
             case "limit":
-                this.type = LIMIT;
+                tradeTypeSetting = LIMIT;
                 break;
             case "market":
-                this.type = MARKET;
+                tradeTypeSetting = MARKET;
                 break;
             case "stopLimit":
-                this.type = STOPLIMIT;
+                tradeTypeSetting = STOP_LIMIT;
                 break;
             case "stopMarket":
-                this.type = STOPMARKET;
+                tradeTypeSetting = STOP_MARKET;
                 break;
             default:
-                this.type = DEFAULT;
+                tradeTypeSetting = DEFAULT;
         }
-    }
-
-    @Override
-    public String toString() {
-        return type;
+        return tradeTypeSetting;
     }
 }

@@ -48,8 +48,8 @@ public class OrderRestClient {
     }
 
     public static Optional<Order> sendLimitOrder(HitBtcAPI hitBtcAPI, String symbol, String side, String quantity, String price) {
-        TradeType tradeType = new TradeType(TradeType.LIMIT);
-        TimeInForce timeInForce = new TimeInForce(TimeInForce.GTC_GOOD_TILL_CANCELLED);
+        String tradeType = TradeType.LIMIT;
+        String timeInForce = TimeInForce.GTC_GOOD_TILL_CANCELLED;
         boolean postOnly = false;
 
         return OrderRestClient.sendOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, postOnly);
@@ -108,8 +108,8 @@ public class OrderRestClient {
                 break;
         }
 
-        TradeType tradeType = new TradeType(TradeType.MARKET);
-        TimeInForce timeInForce = new TimeInForce(TimeInForce.IOC_IMMEDIATE_OR_CANCEL);
+        String tradeType = TradeType.MARKET;
+        String timeInForce = TimeInForce.IOC_IMMEDIATE_OR_CANCEL;
 
         Optional<Order> responseOrder = OrderRestClient.sendOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, false);
         responseOrder.ifPresent(Order::reconcileMarketOrder);
@@ -131,8 +131,8 @@ public class OrderRestClient {
 
         String quantity = ticker.getMarketQuantityByAmount(Float.parseFloat(amount), Float.parseFloat(price));
 
-        TradeType tradeType = new TradeType(TradeType.LIMIT);
-        TimeInForce timeInForce = new TimeInForce(TimeInForce.GTC_GOOD_TILL_CANCELLED);
+        String tradeType = TradeType.LIMIT;
+        String timeInForce = TimeInForce.GTC_GOOD_TILL_CANCELLED;
 
         return OrderRestClient.sendOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, true);
     }
@@ -141,8 +141,8 @@ public class OrderRestClient {
         Ticker ticker = TickerRestClient.getTickerById(symbol);
         String price = ticker.getLast();
 
-        TradeType tradeType = new TradeType(TradeType.MARKET);
-        TimeInForce timeInForce = new TimeInForce(TimeInForce.IOC_IMMEDIATE_OR_CANCEL);
+        String tradeType = TradeType.MARKET;
+        String timeInForce = TimeInForce.IOC_IMMEDIATE_OR_CANCEL;
 
         Optional<Order> responseOrder = OrderRestClient.sendOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, false);
 
@@ -164,21 +164,21 @@ public class OrderRestClient {
                 break;
         }
 
-        TradeType tradeType = new TradeType(TradeType.LIMIT);
-        TimeInForce timeInForce = new TimeInForce(TimeInForce.GTC_GOOD_TILL_CANCELLED);
+        String tradeType = TradeType.LIMIT;
+        String timeInForce = TimeInForce.GTC_GOOD_TILL_CANCELLED;
 
         return OrderRestClient.sendOrder(hitBtcAPI, symbol, side, quantity, price, tradeType, timeInForce, true);
     }
 
     private static Optional<Order> sendOrder(HitBtcAPI hitBtcAPI, String symbol, String side, String quantity, String price,
-                                             TradeType tradeType, TimeInForce timeInForce, boolean postOnly) {
+                                             String tradeType, String timeInForce, boolean postOnly) {
         ApiAuthRequest<Order> apiAuthRequest = new ApiAuthRequest<>(hitBtcAPI);
 
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("symbol", symbol);
         map.add("side", side);
-        map.add("type", tradeType.toString());
-        map.add("timeInForce", timeInForce.toString());
+        map.add("type", tradeType);
+        map.add("timeInForce", timeInForce);
         map.add("quantity", quantity);
         map.add("price", price);
         if (postOnly)
@@ -186,7 +186,7 @@ public class OrderRestClient {
         else map.add("postOnly", "false");
 
         LOG.info(String.format("Submitted %s %s Order: Price=%s, Quantity=%s, Symbol=%s, TimeInForce=%s",
-                tradeType.toString(), side, price, quantity, symbol, timeInForce.toString()));
+                tradeType, side, price, quantity, symbol, timeInForce));
 
         Optional<Order> submittedOrder = apiAuthRequest.postRequest(REQUEST_URI, map, Order.class);
         if (submittedOrder.isEmpty())

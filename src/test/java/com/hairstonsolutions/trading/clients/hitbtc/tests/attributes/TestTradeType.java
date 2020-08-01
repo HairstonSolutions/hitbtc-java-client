@@ -7,53 +7,43 @@ public class TestTradeType {
 
     @Test
     public void testDefault() {
-        TradeType tradeType = new TradeType();
-        assert (tradeType.getType().equals(TradeType.DEFAULT));
+        String tradeType = TradeType.selectTradeType(TradeType.DEFAULT);
+        assert (tradeType.equals(TradeType.LIMIT));
     }
 
     @Test
     public void testLimit() {
-        TradeType tradeType = new TradeType("limt");
-        assert (tradeType.getType().equals("limit"));
-        assert (tradeType.getType().equals(TradeType.LIMIT));
+        String tradeType = TradeType.selectTradeType("limit");
+        assert (tradeType.equals(TradeType.LIMIT));
     }
 
     @Test
     public void testMarket() {
-        TradeType tradeType = new TradeType("market");
-        assert (tradeType.getType().equals("market"));
-        assert (tradeType.getType().equals(TradeType.MARKET));
+        String tradeType = TradeType.selectTradeType("market");
+        assert (tradeType.equals(TradeType.MARKET));
     }
 
     @Test
     public void testStopLimit() {
-        TradeType tradeType = new TradeType("stopLimit");
-        assert (tradeType.getType().equals("stopLimit"));
-        assert (tradeType.getType().equals(TradeType.STOPLIMIT));
+        String tradeType = TradeType.selectTradeType("stopLimit");
+        assert (tradeType.equals(TradeType.STOP_LIMIT));
     }
 
     @Test
     public void testStopMarket() {
-        TradeType tradeType = new TradeType("stopMarket");
-        assert (tradeType.getType().equals("stopMarket"));
-        assert (tradeType.getType().equals(TradeType.STOPMARKET));
+        String tradeType = TradeType.selectTradeType("stopMarket");
+        assert (tradeType.equals(TradeType.STOP_MARKET));
     }
 
     @Test
     public void testEmptyInput() {
-        TradeType tradeType = new TradeType("");
-        assert (tradeType.getType().equals(TradeType.DEFAULT));
+        String tradeType = TradeType.selectTradeType("");
+        assert (tradeType.equals(TradeType.DEFAULT));
     }
 
     @Test
     public void testWrongInput() {
-        TradeType tradeType = new TradeType("dafsa");
-        assert (tradeType.getType().equals(TradeType.DEFAULT));
-    }
-
-    @Test
-    public void testObjectPrintout() {
-        TradeType tradeType = new TradeType();
-        assert (tradeType.toString().equals(TradeType.DEFAULT));
+        String tradeType = TradeType.selectTradeType("dafsa");
+        assert (tradeType.equals(TradeType.DEFAULT));
     }
 }
