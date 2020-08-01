@@ -6,18 +6,24 @@ import com.hairstonsolutions.trading.clients.hitbtc.api.account.TransferRestClie
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.core.env.ConfigurableEnvironment;
 
 import java.util.Optional;
 
 public class TestTransferRestClient {
-
-    final String TEST_CONFIG_FILE = "src/test/resources/hitbtckey.properties";
     private HitBtcAPI hitBtcAPI;
+    private AnnotationConfigApplicationContext context;
+    private ConfigurableEnvironment env;
 
     @Before
     public void load() {
-        hitBtcAPI = new HitBtcAPI();
-        hitBtcAPI.loadKeysFromPropertiesFile(TEST_CONFIG_FILE);
+        context = new AnnotationConfigApplicationContext();
+        env = context.getEnvironment();
+
+        String apiKey = env.getProperty("TEST_HITBTC_API_KEY");
+        String secretKey = env.getProperty("TEST_HITBTC_API_SECRET");
+        hitBtcAPI = new HitBtcAPI(apiKey, secretKey);
     }
 
     @Ignore
