@@ -1,10 +1,6 @@
 package com.hairstonsolutions.trading.clients.hitbtc.api;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Base64;
-import java.util.Properties;
 
 public class HitBtcAPI {
     public static final String BASE_URL = "https://api.hitbtc.com/api/2";
@@ -18,10 +14,6 @@ public class HitBtcAPI {
     public HitBtcAPI(String apiKey, String apiSecret) {
         this.apiKey = apiKey;
         this.apiSecret = apiSecret;
-    }
-
-    public HitBtcAPI(String configFile) {
-        loadKeysFromPropertiesFile(configFile);
     }
 
     public String getApiKey() {
@@ -49,22 +41,7 @@ public class HitBtcAPI {
         return apiKey + ":" + apiSecret;
     }
 
-    public void loadKeysFromPropertiesFile(String configFile) {
-        try (InputStream input = new FileInputStream(configFile)) {
-
-            Properties prop = new Properties();
-            prop.load(input);
-
-            this.apiKey = prop.getProperty("hitbtc.api.key");
-            this.apiSecret = prop.getProperty("hitbtc.api.secret");
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
     public String getEncodedCredentials() {
         return Base64.getEncoder().encodeToString(getApiAuth().getBytes());
     }
-
 }

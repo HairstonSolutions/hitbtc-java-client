@@ -6,20 +6,26 @@ import com.hairstonsolutions.trading.clients.hitbtc.orders.Order;
 import com.hairstonsolutions.trading.clients.hitbtc.trades.Trade;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.core.env.ConfigurableEnvironment;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
 public class TestOrder {
-
-    final String TESTCONFIGFILE = "src/test/resources/hitbtckey.properties";
     private HitBtcAPI hitBtcAPI;
+    private AnnotationConfigApplicationContext context;
+    private ConfigurableEnvironment env;
 
     @Before
     public void load() {
+        context = new AnnotationConfigApplicationContext();
+        env = context.getEnvironment();
+
         hitBtcAPI = new HitBtcAPI();
-        hitBtcAPI.loadKeysFromPropertiesFile(TESTCONFIGFILE);
+        hitBtcAPI.setApiKey(env.getProperty("TEST_HITBTC_API_KEY"));
+        hitBtcAPI.setApiSecret(env.getProperty("TEST_HITBTC_API_SECRET"));
     }
 
     @Test
@@ -99,5 +105,4 @@ public class TestOrder {
             System.out.println("Order Price After Pull + Calculation: " + retrievedHistoricalOrder.get().getPrice());
         }
     }
-
 }
