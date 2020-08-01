@@ -23,7 +23,7 @@
 
     <properties>
         <java.version>11</java.version>
-        <spring.version>5.2.6.RELEASE</spring.version>
+        <spring.version>5.2.8.RELEASE</spring.version>
     </properties>
 
     <dependencies>
