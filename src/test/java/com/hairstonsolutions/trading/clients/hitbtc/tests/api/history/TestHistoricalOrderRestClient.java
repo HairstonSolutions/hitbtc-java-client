@@ -14,13 +14,11 @@ import java.util.Optional;
 
 public class TestHistoricalOrderRestClient {
     private HitBtcAPI hitBtcAPI;
-    private AnnotationConfigApplicationContext context;
-    private ConfigurableEnvironment env;
 
     @Before
     public void load() {
-        context = new AnnotationConfigApplicationContext();
-        env = context.getEnvironment();
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        ConfigurableEnvironment env = context.getEnvironment();
 
         String apiKey = env.getProperty("TEST_HITBTC_API_KEY");
         String secretKey = env.getProperty("TEST_HITBTC_API_SECRET");
@@ -60,7 +58,7 @@ public class TestHistoricalOrderRestClient {
 
     @Test
     public void getHistoricalOrdersByCount() {
-        int number = 10;
+        int number = 110;
         List<Order> historicalOrders = HistoricalOrderRestClient.getOrders(hitBtcAPI, number);
 
         int count = 0;
@@ -74,7 +72,8 @@ public class TestHistoricalOrderRestClient {
 
     @Test
     public void getHistoricalOrdersBySymbol() {
-        String symbol = "BTCUSDC";
+        String symbol = "LTCUSD";
+//        String symbol = "BTCUSDC";
         int amountToPull = 50;
         List<Order> orders = HistoricalOrderRestClient.getOrdersBySymbol(hitBtcAPI, symbol, amountToPull);
 
